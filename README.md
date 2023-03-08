@@ -1,4 +1,4 @@
-# depresio
+# Depresio
 
 This Git repository contains the source code and documentation for an AI-powered virtual mental consulting system. The system is designed to provide personalized mental health support to individuals through virtual counseling sessions, using natural language processing (NLP) and machine learning (ML) techniques.
 
