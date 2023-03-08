@@ -1,1 +1,1 @@
-print("Hello montornio")
+print("Hello montornio, initilizing...")
