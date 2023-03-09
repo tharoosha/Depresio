@@ -1,0 +1,1 @@
+print("depresio is initilizing...")
