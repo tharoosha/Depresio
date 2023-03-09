@@ -1,1 +1,1 @@
-print("Hello depresio, initilizing... plz be wait")
+print("Hello depresio, initilizing...")
