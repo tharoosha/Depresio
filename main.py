@@ -1,1 +1,1 @@
-print("depresio is instaling...")
+print("depresio")
