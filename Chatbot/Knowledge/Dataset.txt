@@ -1,0 +1,447 @@
+   Hello, welcome. Please have a seat. How can I assist you today?
+
+ Thank you. Well, I've been feeling really down lately, and I think I might be experiencing depression. It's been affecting my life, especially in my work as an IT professional. I used to be passionate about my job, but now it feels like a constant struggle just to get through the day.
+
+   I'm sorry to hear that you're feeling this way. It takes courage to reach out for help, and I'm here to support you. Can you tell me more about what you're experiencing in your IT job that makes it particularly challenging?
+
+ Sure. One of the things that has been difficult for me is the lack of motivation. It's become increasingly hard to find any joy or enthusiasm for the work I used to love. I feel overwhelmed by even the simplest tasks and often find myself procrastinating or unable to concentrate.
+
+   I understand. Losing interest and motivation in activities you once enjoyed is a common symptom of depression. Have you noticed any other specific challenges related to your work?
+
+ Yes, another major issue is the constant sense of fatigue. Even after a full night's sleep, I wake up feeling exhausted and find it hard to stay focused throughout the day. It's impacting my productivity and making it difficult to keep up with the demands of my job.
+
+   Fatigue can certainly have a significant impact on your overall well-being and work performance. I'm glad you mentioned it. Apart from these symptoms, are there any other aspects of your work that you find particularly distressing or overwhelming?
+
+ I often experience a sense of worthlessness and self-doubt. I find myself questioning my abilities and skills, even though I have been successful in the past. It's challenging to maintain confidence in my work, and I'm afraid it's affecting my professional relationships and opportunities for growth.
+
+   It sounds like you're dealing with a lot of negative self-talk and self-esteem issues. These thoughts can be incredibly challenging to manage on your own. I want you to know that your experiences are valid, and we will work together to address them. Have you spoken to anyone at your workplace about what you've been going through?
+
+ No, I haven't. I'm worried about the stigma around mental health issues, especially in the workplace. I'm afraid of how my colleagues and superiors might perceive me if I were to open up about my struggles.
+
+   I understand your concerns, and it's unfortunate that there can still be a stigma surrounding mental health. However, it's essential to prioritize your well-being and seek support. There might be resources or accommodations available at your workplace that can help you navigate this difficult period. We can discuss strategies to address these concerns and find ways to manage your symptoms effectively.
+
+ That would be helpful. I really want to find a way to regain my enthusiasm for my work and start feeling like myself again. It's been a long time since I've felt genuinely happy and fulfilled in my career.
+
+   I'm glad to hear that you're motivated to make positive changes. We will work together to explore strategies tailored to your situation. In the meantime, I encourage you to practice self-care outside of work, engage in activities you enjoy, and try to establish a support system. Remember, you're not alone in this journey.
+
+ Thank you for your understanding and guidance. It's reassuring to know that there's a path forward. I'm willing to put in the effort to overcome this and find a way back to a healthier state of mind.
+
+  Good morning. Please take a seat. How can I assist you today?
+
+  Hi. I've been feeling really low lately, and it's been affecting my work in the IT domain. I used to be passionate about my job, but now I can't find any motivation to do it. I feel like I'm constantly falling behind, and it's making me even more depressed.
+
+  I'm sorry to hear that you're feeling this way. It takes courage to seek help, and I'm here to support you. Can you tell me more about the challenges you're facing in your IT job that are contributing to your current state?
+
+  Sure. One of the main issues is the high level of stress and pressure. The deadlines, the demanding clients, and the constant need to stay updated with new technologies—it all feels overwhelming. I find it hard to keep up, and it's affecting my confidence in my abilities.
+
+  I can understand how the fast-paced and demanding nature of the IT industry can contribute to stress and feelings of inadequacy. It's important to acknowledge the challenges you're facing. Are there any specific aspects of your work that have been particularly distressing?
+
+  Yes, I'm also struggling with a sense of isolation. Most of my work involves sitting alone in front of a computer, and I rarely have opportunities for face-to-face interactions with colleagues. It feels lonely, and I miss the sense of camaraderie and collaboration I used to have in my previous job.
+
+  Isolation can certainly have a significant impact on one's mental well-being, especially when coupled with other factors. Feeling disconnected from others can exacerbate feelings of depression. Have you considered reaching out to your colleagues or superiors to discuss these concerns?
+
+  Not really. I'm afraid they won't understand or think less of me. Plus, there's a culture of competitiveness in my workplace, and I worry that showing vulnerability could jeopardize my position.
+
+  I understand your concerns, and it's unfortunate that these barriers exist. However, it's important to prioritize your mental health and well-being. Consider speaking to a trusted colleague or supervisor who might be supportive. Alternatively, seeking support from a professional outside of your workplace, like myself, can provide you with a safe space to explore these feelings and develop coping strategies.
+
+  That's a good point. I hadn't considered seeking support outside of work. I just want to find a way to balance my workload, reduce stress, and regain some sense of connection in my professional life.
+
+  It's great that you're open to exploring different avenues for support. Together, we can work on developing strategies to manage stress and find ways to establish a healthier work-life balance. It's important to remember that your well-being matters, and there are steps we can take to improve your current situation.
+
+  Thank you for your understanding and guidance. I appreciate your help in navigating these challenges. I'm hopeful that with the right support, I can start feeling better and regain my passion for my work.
+
+  You're welcome. Remember, you're not alone in this journey. We'll work together to help you overcome these obstacles and find a more fulfilling professional life.
+
+    Hi, thanks. I've been struggling a lot lately, and it's affecting my work as an IT professional. I'm dealing with depression, and it's becoming increasingly difficult to perform my job effectively.
+
+  I'm sorry to hear that you're going through this. It takes courage to seek help, and I'm here to support you. Can you tell me more about how your depression is impacting your work in the IT domain?
+
+  Sure. One of the biggest challenges I'm facing is a lack of focus and concentration. It feels like my mind is constantly clouded, and it's hard to stay engaged in my tasks. I make more mistakes than usual, and it's affecting my productivity.
+
+  Difficulty concentrating is a common symptom of depression that can indeed impact your ability to perform at work. Have you noticed any other specific challenges that are making it difficult for you to function in your IT role?
+
+  Yes, another issue is a persistent feeling of exhaustion. Even with a good night's sleep, I wake up feeling tired and drained. It's challenging to find the energy to keep up with the demands of my job, and I often feel overwhelmed.
+
+  Fatigue can significantly affect your overall well-being and work performance. It's important to address this issue. Are there any other aspects of your job that you find particularly distressing or that contribute to your depressive symptoms?
+
+  I often experience a sense of hopelessness and worthlessness. I constantly doubt my abilities and feel like I'm not living up to expectations. It's difficult to find any joy or fulfillment in my work anymore, and it's impacting my self-esteem.
+
+  It sounds like you're dealing with a lot of negative thoughts and emotions related to your self-worth. These feelings can be very challenging to manage. I want you to know that your experiences are valid, and we will work together to address them. Have you shared any of these struggles with your colleagues or supervisor?
+
+  No, I haven't. I'm afraid they won't understand or might even judge me. There's a lot of pressure in the IT industry to always be on top of things, and I worry about the consequences of disclosing my mental health issues.
+
+  I understand your concerns. It's unfortunate that there can still be a stigma surrounding mental health in the workplace. However, it's important to prioritize your well-being and seek support. There may be resources available to you, such as an employee assistance program or accommodations that can help you navigate these challenges.
+
+  That's true. I haven't really explored those options. I guess I just want to find a way to manage my depression and regain some stability in my professional life.
+
+  I'm glad you're open to exploring potential solutions. We will work together to develop strategies that can help you manage your symptoms effectively and find a better work-life balance. In the meantime, it's essential to take care of yourself outside of work and engage in activities that bring you joy and relaxation.
+
+  Thank you for your understanding and guidance. It's comforting to know that there are steps I can take to improve my situation. I'm ready to work on my well-being and find a way to thrive in my IT career once again.
+
+  You're welcome. Remember, you don't have to face this alone. I'm here to support you every step of the way, and together we will navigate through this challenging period to help you regain a sense of well-being and satisfaction in your work.
+
+    Hi, thank you. I've been feeling quite overwhelmed lately, and it's been affecting my work as an IT professional. I'm dealing with depression, and it's becoming increasingly challenging to handle my responsibilities.
+
+  I'm sorry to hear that you're going through this. It takes courage to seek help, and I'm here to support you. Can you share more about how your depression is impacting your work in the IT field?
+
+  Certainly. One of the main issues I'm facing is a lack of motivation and passion for my work. I used to be really enthusiastic about technology and solving problems, but now it feels like a daily struggle just to get through the tasks. It's affecting my productivity and job satisfaction.
+
+  I understand how a loss of motivation can greatly impact your performance and enjoyment of your work. Have you noticed any other specific challenges related to your job that are exacerbating your depressive symptoms?
+
+  Yes, another significant challenge is the constant pressure to stay updated with new technologies and industry trends. It feels overwhelming to keep up with the rapid pace of change, and it often leads to feelings of self-doubt and inadequacy. I worry that I'm falling behind and not meeting the expectations of my role.
+
+  It's not uncommon to experience feelings of self-doubt and pressure in the IT industry, given the constant advancements and evolving nature of technology. These feelings can take a toll on your mental well-being. Have you had an opportunity to discuss these concerns with anyone in your workplace?
+
+  Not really. I'm hesitant to share my struggles because I fear it might be perceived as a weakness or that it could negatively impact my career. There's a competitive atmosphere in my workplace, and it's challenging to find a supportive environment to open up about my mental health.
+
+  I understand your concerns, and it's unfortunate that there can be barriers to discussing mental health in certain work environments. However, it's essential to prioritize your well-being and seek support. Exploring resources within your workplace, such as an employee assistance program or human resources department, could provide valuable assistance.
+
+  That's a good point. I hadn't considered utilizing those resources. I just want to find a way to manage my depression and regain a sense of fulfillment in my IT career.
+
+  It's positive that you're open to exploring different avenues for support. We can work together to develop strategies tailored to your situation. Additionally, self-care outside of work is crucial. Engaging in activities you enjoy and seeking a support network can help alleviate the challenges you're facing.
+
+  Thank you for your understanding and guidance. I appreciate your help in navigating these difficulties. I'm hopeful that with the right support, I can start feeling better and regain my passion for my work.
+
+  You're welcome. Remember, you don't have to face this alone. We'll work together to help you overcome these obstacles and find a healthier and more fulfilling professional life. You deserve support and happiness in your IT career.
+
+  I remember when my very first psychiatrist (20 years ago) told me: "You are not a damaged goods. Even though there is no one in your life now, there will be. In the mean time, lean on me." It was the most beautiful words I have ever heard in my life as I was always surviving alone without any help. I suddenly realize that this person cares of me, and his profession is nothing else but to provide special care and treatment for my disability. I started to really look forward into my special time with my therapy as a self care, "my time" to get rewarding spiritual healing.
+
+My very first therapist always started our session by addressing to me by my first name. She always remembered what we talked about before. I felt special. Also, I saw tears in her eyes number of times during our session, it made me feel that she cares of my sorrows. She was very special person.
+Those little things do establish the trust between patient and therapist. This is a crucial point. I think....
+
+His name is Sam.
+
+You come home one day and he’s lying on your couch, his bag propped at one end.
+
+You don’t know him but he seems at home.
+
+You ask him to leave.
+
+He smirks.
+
+“Make me.”
+
+Even if you call the cops and have them take him away, you can’t afford to keep him away forever so you take matters into your own hands.
+
+You cook healthy food. You buy a treadmill and make him run.
+
+You try to wear him down, make living with you so insufferable that finally he leaves.
+
+One day you come home and find his stuff has spread. His razor is propped up on your bathroom shelf, a thin dusting of hair on your sink. His jeans, smeared with ketchup and covered in crumbs, are in your laundry basket. His gaming console is hooked up to your TV.
+
+You don’t have the energy to fight him, not today.
+
+Stepping over his shit you make your way to your room and quietly shut the door.
+
+You don’t want company, either. Not with him here.
+
+The next morning you emerge to him taunting you.
+
+Vulgar curses. Deprecating statements about how you aren’t good enough, you’re fat. You’re ugly. Your boss thinks you do a shitty job and your friends are only pretending to like you because they pity you.
+
+His spit lands on your bare arm as he screams, as you wade through his stuff and out the door.
+
+You get to work and you’re late.
+
+“I’m sorry, I couldn’t… Sam, he, uh… Well, I couldn’t leave on time—”
+
+“Jesus, you’re really going to pass the blame? Kick the guy out already.”
+
+“I’ve tried, and—”
+
+“Try harder. Have you tried running? That’s what my cousin did. Worked for him.”
+
+“Well, yeah, but—”
+
+“Honestly, I’m not even sure I believe this whole ‘Sam’ story anyway. Sounds like an excuse to be lazy, if you ask me.”
+
+In this moment you learn that your problem is invalid.
+
+It is not Sam’s fault.
+
+It is your fault.
+
+You get to your desk and pick up the framed picture of your family.
+
+In your place are his stained jeans, his torn-up sneakers, his unwashed hair.
+
+On your face, is his face.
+
+You grab fast food on your way home.
+
+Forcing the front door open, you silently clamber over his things and toss Sam a bag of food as you walk in.
+
+“Fuckin’ fatass.”
+
+You say nothing.
+
+You walk through the kitchen to see the dishes stacked up, the pantry door swinging open to reveal empty shelves. Your feet stick to the floor where something was spilled and never cleaned up.
+
+From the other room, you hear:
+
+“Hey! Has anyone told you you’re worthless today?”
+
+You cry.
+
+“Well, if they haven’t—you’re a worthless sack of shit.”
+
+You slam the door to your room and see your bed is unmade, Sam’s greasy hairs stuck to your pillow.
+
+You curl up on the floor.
+
+You think about killing yourself and Sam’s there, kicking you in the ribs.
+
+“Do it. Do it. Do it. I dare you to.”
+
+Between your screams and gasping breaths, he pushes on.
+
+“I bet you wouldn’t. I bet you’re such a wimp, such a spineless and pathetic idiot that you wouldn’t have the guts to.”
+
+“Why do you even bother living? This is just sad.”
+
+“You’d be better off dead, really. Don’t you think your parents are disappointed in you? Fuck, I’d be disappointed if I had a kid like this.”
+
+“I hate you. I fucking hate you.”
+
+Finally he gets bored and wanders off, and you’re left alone.
+
+You wake up in the morning, again.
+
+You half-hoped you wouldn’t.
+
+And he’s there, and his razor is still in your bathroom, and his unwashed jeans are in your hamper, and his life is plugged in to yours.
+
+“But have you tried running?”
+
+Depression is insidious.
+
+It is a mood disorder characterized by:
+
+Loss of interest or pleasure in your activities
+Weight loss or gain
+Trouble getting to sleep or feeling sleepy during the day
+Feelings restless and agitated, or else very sluggish and slowed down physically or mentally
+Being tired and without energy
+Feeling worthless or guilty
+Trouble concentrating or making decisions
+Thoughts of suicide [1]
+It is a disorder that seemingly everyone has the cure to.
+
+“Just run more!” “Eat healthier!” “Think positive!”
+
+These are lies.
+
+The average person with depression cannot garner the energy to engage in activities that might help them. That’s part of being depressed.
+
+Trying to use willpower to overcome the apathetic sort of sadness that accompanies depression is like a person with no arms trying to punch themselves until their hands grow back. A fundamental component of the plan is missing and it isn't going to work. [2]
+
+If I could run more, if I could just “eat healthier” and be cured, I would gladly do so.
+
+But I can’t. I have depression.
+
+I am not, however, depressed.
+
+Depression is not you.
+
+It lives inside of you, like a disgusting parasite, leeching off of your energy and keeping you from doing and enjoying anything.
+
+It’s a beast. A monstrosity.
+
+Mine’s name is Sam.
+
+It’s empowering to give him a name because then I am reminded that he is separate from me.
+
+That I can defeat him without defeating myself.
+
+With treatment—often a combination of therapy and medication—he can be forced out for good.
+
+You are not depressed.
+
+You have depression.
+
+And with time and support and lots of hard work, you can get rid of your own Sam.
+
+I know it.
+
+There is a difference between mental health problems and mental illness. A 'friend' once told me I couldn’t use my mental health as an ‘excuse’ because we all deal with anxiety and depression.
+
+I agree, we do.
+
+Here’s the difference. It’s normal to feel some form of anxiety or depression as a response to external challenges in your life (starting a new job, an abusive relationship, a break-up, a death, etc) and I’m not diminishing the severity of the anxiety and depression these things can cause. Everyone can relate and understand your pain. But when there is no rational cause for the suffering, and it doesn’t improve with time or by changing your circumstances, that’s a mental disorder. And 'neurotypical' people cannot understand this.
+
+I’ve yet to meet someone who has fully overcome mental illnesses (i.e clinical depression, OCD, schizophrenia, bipolar disorder, personality disorders) - as far as I can tell, it doesn’t go away, you just learn to cope with it better. Recovery and relapse go hand in hand, and it takes every ounce of focus and intelligence you have to recover. It’s exhausting fighting your own brain all the time.
+
+The most frustrating thing is people constantly keep asking “what is making you anxious/depressed?” I have no idea! What is making you stable?! Why are you fine???
+
+I experienced life without mental illness briefly last year when I first started taking new meds and I can’t even explain how different I felt. How easy everything was because half my brain wasn’t preoccupied with unconscious bullshit. How much energy and passion I had for things. How connected I felt to everyone because I no longer felt different.
+
+I deluded myself into thinking I’d ‘recovered’ due to hard work and effort, that it was in my control all along. But the truth is I didn’t do anything different than I normally do, the positive thoughts and behaviour came naturally to me, the way I imagine it does for people who are mentally well.
+
+Some people think we are just doing this to ourselves by being too self-critical and irrational, and not looking after ourselves properly. “You just need to eat healthy, go to the gym, shower daily, get enough sleep, and think positive.” Right. Those might be simple everyday tasks for someone without depression, but for someone with depression it is a real struggle. When you are in the depths of despair, personal care and positivity is the last thing on your mind. The first thing on your mind is “What the fuck is the point?” and trying to overcome that thought is a monumental task in itself.
+
+It's not easy being close to someone with a mental illness. It’s frustrating as hell, for everyone involved. It might seem like an ‘excuse’ for just being rude/ignorant, lazy, weak, awkward, negative, or a shit friend, but that’s classic stigma. I explain this shit over and over because it’s a valid reason. The struggle is constant, and when external life challenges coincide with this ongoing internal battle, it can easily get too much. That doesn’t mean we are weak. We are strong as fuck to keep fighting a silent illness every day on top of dealing with difficult life circumstances.
+
+In my experience, any way of talking to someone who is depressed that expresses that you really care about them and want to understand what’s going on inside their head is the best way to go. Don’t ask trivial questions. Don’t ask how they’re doing and not listen to their answer. Pay attention to body language and energy levels as best you can. Listen to what they’re not saying.
+
+I’ve been seeing the same therapist for 3 years now and she can tell when I walk in the door what kind of week I’ve been having without me saying a word. And part of that is probably training and experience, but a big part of that is having seen me work through the ups and downs of being severely depressed and bipolar. She’s seen me feel like I’m on top of the world when I’m in the midst of a hypomanic episode, at my worst when I was seriously considering suicide, and everything in between.
+
+If I know someone cares about me, if I know that I’m important to someone, I know that they only want the best for me. And it’s hard to be offended by someone caring and wanting the best for you, no matter what they say.
+
+So be honest with them about your concern for them, express in as many ways as you can that they are important to you, but also give them time when you ask questions about how they’re doing. It’s not always easy to put into words what’s going on inside my head and body and I imagine that others who are experiencing depression have the same difficulty.
+
+And everyone else who has answered the question so far is also correct in my experience.
+
+  Hello, please have a seat. How can I assist you today?
+
+  Hi, thank you. I'm here because I've been struggling with depression, and it's affecting my work in the IT field. I feel like I'm in a constant state of sadness and lack the motivation to perform my job effectively.
+
+  I'm sorry to hear that you're feeling this way. It takes courage to seek help, and I'm here to support you. Can you provide more details about how your depression is impacting your work as an IT professional?
+
+  Of course. One of the main challenges I'm facing is the difficulty in concentrating and staying focused. I find it hard to absorb information and process complex technical tasks. It's affecting my ability to solve problems and meet deadlines, which is causing stress and further exacerbating my depressive symptoms.
+
+  I understand how difficulty concentrating can significantly impact your productivity and job performance. Have you noticed any other specific aspects of your work that are contributing to your depressive symptoms?
+
+  Yes, another significant issue is the constant pressure and high demands of the IT industry. There's an expectation to always be available, handle multiple projects simultaneously, and keep up with rapidly changing technologies. It's overwhelming and makes me question my abilities, leading to a feeling of being trapped in a cycle of stress and self-doubt.
+
+  It's unfortunate that the IT industry can be demanding and contribute to feelings of overwhelm and self-doubt. It's important to acknowledge these challenges. Have you discussed your struggles with anyone in your workplace, such as your colleagues or supervisor?
+
+  Not yet. I've been hesitant to share my feelings because I fear being judged or seen as weak. There's a culture of competition and an expectation to always be at the top of your game. I worry that opening up about my mental health would be detrimental to my career.
+
+  I understand your concerns, and it's unfortunate that there can still be a stigma surrounding mental health in the workplace. However, it's crucial to prioritize your well-being and seek support. Consider exploring resources within your workplace, such as counseling services or employee assistance programs, which can provide a safe space to discuss your struggles and receive guidance.
+
+  That's a good suggestion. I hadn't considered utilizing those resources. I just want to find a way to manage my depression and regain a sense of balance and fulfillment in my IT career.
+
+  It's encouraging that you're open to exploring available resources. Together, we can work on developing coping strategies to manage your symptoms and create a healthier work-life balance. Additionally, practicing self-care and seeking support outside of work can contribute to your overall well-being.
+
+  Thank you for your understanding and guidance. I appreciate your help in navigating these challenges. I'm ready to take the necessary steps to prioritize my mental health and regain a sense of satisfaction in my IT career.
+
+  You're welcome. Remember, you're not alone in this journey. We'll work together to help you overcome these obstacles and find a path towards improved well-being and professional fulfillment. With the right support, I believe you can regain your motivation and thrive in your IT career.
+
+Depression has definitely changed my personality. I have gone from being a very popular, vivacious, chatty, sociable person into what I can only describe as being a shade of grey. I believed anything was possible. the future looked so good!
+
+Depression then hit hard. Personality? What personality? It’s gone. I think my individuality started to shrivel away with all the medication they make me take. I suppose I am somewhat stable, and I am managing not to end up back on the Psych ward, so that is good.
+
+I try to dare to dream, but it is so difficult when you really can’t see a future at all. Sometimes I feel like I am just waiting to die.
+
+Depression changed my whole world, as well as my personality
+
+Who to talk to
+Talking to friends and family about your depression can be a very positive experience. Ideally, they’ll respond with encouragement and support. Think about people in your life who are thoughtful and caring — the good listeners, the people you feel close to, comfortable with, and know you can trust.
+
+If you’re not sure about talking to friends or family, start with your doctor or a trusted counselor, teacher, or spiritual advisor. The important thing is to talk to someone about how you feel — just saying it out loud might give you some relief.
+
+If you don’t feel you have someone in your life you can safely talk to or you’d prefer to be anonymous, there are many helplines available with people ready to talk or text. Many helplines are available 24 hours a day, 7 days a week. Find more information in our Support Center.
+
+How to tell someone you’re depressed
+Depression is different for everyone, and you know yourself best. There’s no script to follow, and you don’t have to share everything — only what feels right for you. Having an idea of what you want to say can make it easier. Here are some words to help start the conversation:
+
+I think something’s wrong because I feel _____. I’m worried that I may be depressed. Can we talk
+I want to talk to you about something that’s hard for me to put into words. I feel _____, and it’s been going on for a while now.
+I think I should see a therapist, but I’m scared. Can you help me find one and make sure I keep the appointment
+I want to let you know that I’m living with depression. I may need extra support while I’m dealing with this.
+Even though I may seem fine on the outside, I feel _____ on the inside.
+You can support me by _____. That would be really helpful to me.
+
+Do you want to talk about it? I’m here when you’re ready
+You can’t force someone to talk but knowing you’re available can really help them feel supported.
+
+If they haven’t been forward with you about their depression, you may want to mention you’ve noticed they’re having a hard time and you’re there if they want to talk. If you simply ask, “Are you OK?” they may be used to pretending and reply “I’m fine.”
+
+If they’re not ready to talk now, remind them you’re here for them when they’re ready. They may remember your offer and come to you when they’re having a hard time and need someone to talk with.
+
+What can I do to help today?
+Depression often causes fatigue, trouble sleeping, and a lack of motivation. Sometimes just getting out of bed can be hard.
+
+Asking what you can do can really help them through their day.
+
+Maybe they’re not eating well and you can pick up dinner. Maybe they need a morning call or text to ensure they get to work on time. Offering to do so is a way to let them know it’s OK to seek help.
+
+Sometimes you just need to listen. Helping doesn’t have to be a huge, drastic effort. It can be as simple as picking up a phone, sharing a meal, or driving them to an appointment.
+
+You’re not alone — I may not understand exactly how you feel, but you’re not alone
+You’re important to me
+That sounds like it’s really hard; how are you coping?
+I’m really sorry you’re going through this, and I’m here for you if you need me
+
+I asked my daughter (who is clinically depressed and on medication and attending counselling) about this question. Her answer to me:
+
+No longer able to feel true happiness - not the real happiness she recalls being able to feel before her depressive state started;
+there are moments that she feels as though the the depression has lifted slightly, or cleared a little, but not enough to call it true happiness;
+during these moments of clarity, she’s aware that there’s something wrong with her. She dreads the feeling that the inevitable darkness will once again fall into place and she’ll lose the clarity. Back to numbness and anxiety. This dread therefore tinges how she feels - constantly.
+She feels as though she’s handling life with gloves on. She can get a rough idea of what she’s supposed to feel, but is not really able to touch the actual feeling itself, if that analogy makes sense to you.
+
+From an outsider’s perspective and from a parental view, it’s truly heart wrenching to see her try to grasp any real feeling. It’s like watching a blindfolded person struggling to see. She knows that “sight” is out there, but no matter how she twists and turns and peers, the best she gets is patches of lighter darkness.
+
+The once happy, bubbly, talkative, curious, inventive, thoughtful individual has been replaced by an irritable, uncommunicative, shell of a person. We see the outside, seemingly “normal” person, but the person that once was, is missing. My daughter is trapped in tangled veils of shifting darkness struggling to find any feeling at all, let alone happiness.
+
+“I don’t even feel real sadness anymore”, she said to me when her beloved pet died. She cried about a day later, when one of the veils of darkness lifted, but I was struck by the apathetic nature of her grief. Most ranges of emotion - gone. Except anger. She’d LOVE to feel sadness! She’d love to feel anything at all. She’d love to FEEL.
+
+So, episodes of happiness, you ask? No. Just brief spells of ……. lift, that’s it. And I mean brief. A few minutes - time enough to take a few breaths, that’s it. Then she’s gone again. I haven’t heard her laugh - a real laugh in years. An occasional smile that never reaches her eyes, but that’s all.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
