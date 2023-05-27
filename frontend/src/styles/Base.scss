@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import 'variables';
+
+// prefix classname - dep
 
 * {
    padding: 0;
@@ -6,16 +9,28 @@
    box-sizing: border-box;
 }
 
-// base variables
-$dark-bg: #0d1117;
-$txt-light: #fff;
-$default-size: 16px;
-
 body {
    font-family: 'Poppins', sans-serif;
    background-color: $dark-bg;
    color: $txt-light;
    font-size: $default-size;
+   // background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+   background-image: linear-gradient(315deg, #6639ba26 0%, #000000 74%);
+   background-size: 400% 400%;
+   animation: gradient 15s ease infinite;
+   overflow-x: hidden;
+
+   @keyframes gradient {
+      0% {
+         background-position: 0% 50%;
+      }
+      50% {
+         background-position: 100% 50%;
+      }
+      100% {
+         background-position: 0% 50%;
+      }
+   }
 
    a {
       color: $txt-light;
@@ -163,6 +178,9 @@ body {
 .mb--32 {
    margin-bottom: 32px;
 }
+.mb--48 {
+   margin-bottom: 48px;
+}
 .mb--64 {
    margin-bottom: 64px;
 }
@@ -207,6 +225,110 @@ body {
    display: flex;
 }
 
+.flex-1 {
+   flex: 1;
+}
+
+.flex-2 {
+   flex: 2;
+}
+
+.flex-3 {
+   flex: 3;
+}
+
+.justify--center {
+   justify-content: center;
+}
+
 .align--center {
    align-items: center;
+}
+
+section {
+   margin: 0;
+   padding: 50px 0;
+}
+
+.dep__sub__heading {
+   font-size: 48px;
+   line-height: 1.1em;
+   background: linear-gradient(187deg, #7ee787 0%, #543c82 100%);
+   -webkit-background-clip: text;
+   -moz-background-clip: text;
+   -webkit-text-fill-color: transparent;
+}
+
+.dep__sub__inner__heading {
+   font-size: 44px;
+   line-height: 1.1em;
+   background: linear-gradient(187deg, #7ee787 0%, #543c82 100%);
+   -webkit-background-clip: text;
+   -moz-background-clip: text;
+   -webkit-text-fill-color: transparent;
+}
+
+.sub--heading--4 {
+   font-size: 18px;
+}
+
+.text--center {
+   text-align: center;
+}
+
+.gap--16 {
+   gap: 16px;
+}
+
+.gap--24 {
+   gap: 24px;
+}
+
+.btn {
+   outline: none;
+   border: none;
+   padding: 14px 45px;
+   color: #fff;
+   font-size: 16px;
+   margin-top: 24px;
+   cursor: pointer;
+   -moz-background-clip: text;
+   // background-image: linear-gradient(to right, #9b3ce5b0, #945affe3, #8666c3, #846bb3);
+   background-image: linear-gradient(271deg, #7ee787ba 0%, #594189 100%, #8666c3, #846bb3);
+   transition: all 0.8s ease-in-out;
+   background-size: 280% 30%;
+
+   &:hover {
+      background-position: 100% 0;
+   }
+}
+
+h5 {
+   font-size: 30px;
+}
+
+.x-line {
+   height: 5px;
+   max-width: 2%;
+   background-image: linear-gradient(271deg, #7ee787ba 0%, #594189 100%, #8666c3, #846bb3);
+   margin: 48px auto;
+}
+
+.pre--green {
+   color: #74bc86;
+}
+
+::-webkit-scrollbar {
+   width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+   background: #e7e7e7;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+   // background: #74bc86c2;
+   background: linear-gradient(187deg, #7ee787 0%, #543c82 100%);
 }

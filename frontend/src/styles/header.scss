@@ -1,12 +1,26 @@
+@import 'variables';
+
 .header {
    display: flex;
    justify-content: space-between;
    align-items: center;
+   z-index: 999;
+   position: relative;
 
    .header__left {
       display: flex;
       align-items: center;
       gap: 24px;
+
+      .logo-link {
+         img {
+            width: 42px;
+         }
+
+         &::before {
+            content: none;
+         }
+      }
 
       li {
          display: flex;
@@ -32,7 +46,7 @@
          border: 2px solid #fff;
          min-height: 34px;
          min-width: 70px;
-         color: #fff;
+         color: $txt-light;
          cursor: pointer;
          border-radius: 16px;
          padding: 0 16px;

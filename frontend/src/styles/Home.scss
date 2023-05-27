@@ -1,0 +1,272 @@
+@import 'variables';
+
+.depFeatures {
+   padding-top: 100px !important;
+
+   .depFeatures__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+
+      .depFeatures__grid__item {
+         background-color: $grid--item--color;
+         padding: 30px;
+         border: 1px solid $border--line--color;
+
+         .sub--heading--4 {
+            font-size: 22px;
+            margin-top: 16px;
+         }
+
+         .para--grey {
+            color: $para--grey;
+            font-size: 16px;
+            margin-top: 24px;
+         }
+      }
+   }
+}
+
+.essential {
+   .flex {
+      gap: 18px;
+   }
+
+   .flex__inner {
+      img {
+         width: 40px;
+         height: 40px;
+         align-self: center;
+      }
+   }
+
+   .essential__encrypt {
+      background-color: rgba(118, 198, 134, 0.0509803922);
+      padding: 30px;
+      border: 1px solid rgba(238, 238, 238, 0.1411764706);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 48px;
+
+      .essential__encrypt__left {
+         flex: 1;
+      }
+
+      .essential__encrypt__right {
+         flex: 1;
+
+         .essential__encrypt__right__header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+
+            .essential__encrypt__right__header__left {
+               display: flex;
+               gap: 12px;
+               width: 135px;
+               justify-content: space-between;
+               cursor: pointer;
+
+               div {
+                  display: flex;
+                  gap: 12px;
+               }
+            }
+
+            .essential__encrypt__right__header__right {
+               display: flex;
+               gap: 12px;
+               cursor: pointer;
+            }
+         }
+
+         .essential__encrypt__right__body {
+            .essential__encrypt__right__body__item {
+               background-color: rgb(118 198 134 / 8%);
+               padding: 15px 18px;
+               border: 1px solid rgba(238, 238, 238, 0.1411764706);
+
+               .flex {
+                  div {
+                     flex: 4;
+                  }
+
+                  p {
+                     flex: 1;
+                  }
+               }
+
+               .chat_details__name {
+                  font-size: 14px;
+                  color: #fff;
+               }
+
+               .chat_details__email {
+                  font-size: 12px;
+                  color: #eee;
+               }
+
+               .chat_details__date {
+                  font-size: 12px;
+                  color: #eee;
+                  text-align: end;
+               }
+            }
+         }
+      }
+   }
+
+   .mobileResponsive {
+      .essential__encrypt__left {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+
+         div {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+         }
+
+         .essential__upload__image {
+            margin-bottom: 0;
+         }
+      }
+   }
+}
+
+.testimonials__inner {
+   .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-column-gap: 24px;
+      margin-top: 32px;
+
+      .testimonials__inner__item {
+         background-color: rgba(118, 198, 134, 0.08);
+         padding: 24px;
+         border-radius: 2px;
+         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+         z-index: 10;
+
+         .testimonials__inner__item__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .flex {
+               align-items: center;
+               gap: 24px;
+            }
+
+            .testimonials__details {
+               .testimonials__details__name {
+                  font-size: 18px;
+               }
+
+               .testimonials__details__position {
+                  font-size: 12px;
+               }
+            }
+         }
+
+         .testimonials__inner__item__header__body {
+            // &::after {
+            //    content: url('../images/testimonial-bg.svg');
+            //    position: absolute;
+            //    z-index: -99;
+            // }
+
+            p {
+               font-size: 14px;
+               font-weight: 400;
+               margin-top: 24px;
+            }
+         }
+      }
+   }
+
+   .testimonials__footer {
+      img {
+         cursor: pointer;
+      }
+   }
+}
+
+.community {
+   .community__image__wrapper {
+      position: relative;
+
+      .community__body {
+         position: absolute;
+         top: 20%;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         gap: 16px;
+
+         .community__logo {
+            width: 60px;
+            height: auto;
+         }
+
+         p {
+            max-width: 500px;
+         }
+      }
+   }
+}
+
+.news {
+   .news__wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-column-gap: 24px;
+
+      .news__wrapper__item {
+         background-color: rgba(118, 198, 134, 0.08);
+         padding: 24px;
+         border-radius: 2px;
+         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+         h4 {
+            font-size: 18px;
+            margin-top: 12px;
+            margin-bottom: 16px;
+         }
+
+         p {
+            font-size: 15px;
+         }
+
+         .news--line {
+            height: 1px;
+            width: 100%;
+            background: #ffffff14;
+            margin: 24px 0;
+         }
+
+         .news__footer {
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+
+            .flex {
+               gap: 8px;
+               cursor: pointer;
+
+               img {
+                  position: relative;
+                  top: -2px;
+               }
+            }
+
+            .news__link {
+               cursor: pointer;
+            }
+         }
+      }
+   }
+}

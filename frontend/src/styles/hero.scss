@@ -1,13 +1,41 @@
+@import 'variables';
+
 .linear--line {
    background: linear-gradient(#d2a8ff, #a371f7 10%, #196c2e 70%, #2ea043 80%, #56d364);
 }
 
 .linear--green {
-   fill: #7ee787;
+   fill: $primary-green;
+}
+
+.hero {
+   background: url('../images/hero-bg.webp');
+   background-position: 82% 0%;
+   background-size: initial;
+   padding: 0;
+
+   .hero__content {
+      img {
+         width: auto;
+         // height: 400px;
+         height: 495px;
+      }
+
+      .flex {
+         position: relative;
+         padding: 50px 0;
+         align-items: center;
+
+         .linear--green {
+            position: absolute;
+            bottom: 5%;
+         }
+      }
+   }
 }
 
 .hero__heading {
-   transform: translate(-40%, 30%);
+   height: max-content;
 
    h1 {
       font-size: 80px;
@@ -16,5 +44,9 @@
       -webkit-background-clip: text;
       -moz-background-clip: text;
       -webkit-text-fill-color: transparent;
+   }
+
+   p {
+      font-size: 20px;
    }
 }

@@ -1,0 +1,283 @@
+@import 'variables';
+
+.TreatmentWrapper {
+   padding: 16px;
+   background-color: rgba(118, 198, 134, 0.0509803922);
+   border: 1px solid rgba(238, 238, 238, 0.1411764706);
+   display: grid;
+   grid-template-columns: 1fr 3fr 1fr;
+   gap: 24px;
+   min-height: 82vh;
+
+   .Tr__inner {
+      background-color: #0d0f10;
+      border-radius: 5px;
+      padding: 16px;
+      position: relative;
+   }
+
+   .TreatmentWrapper__inner__1__header {
+      display: flex;
+      justify-content: space-between;
+
+      .flex {
+         gap: 16px;
+
+         img {
+            width: 50px;
+            height: auto;
+            cursor: pointer;
+         }
+      }
+
+      h4 {
+         font-size: 15px;
+      }
+
+      label {
+         font-size: 13px;
+         color: green;
+      }
+   }
+
+   .TreatmentWrapper__inner__1__body {
+      margin-top: 32px;
+      max-height: 465px;
+      overflow-y: auto;
+      padding-right: 8px;
+
+      .dashboard--heading {
+         font-size: 12px;
+         color: #686b6e;
+         font-weight: 500;
+         text-transform: uppercase;
+         letter-spacing: 1px;
+         margin-bottom: 24px;
+         margin-left: 2px;
+      }
+
+      .dashboard__nav__item {
+         &:first-of-type {
+            background: linear-gradient(117.58deg, rgba(79, 255, 128, 0.16) -47.79%, rgba(204, 235, 235, 0) 100%);
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+         }
+
+         display: flex;
+         align-items: center;
+         gap: 16px;
+         margin-bottom: 16px;
+         background-color: rgba(118, 198, 134, 0.0509803922);
+         border: 1px solid rgba(238, 238, 238, 0.1411764706);
+         border-radius: 2px;
+         padding: 12px;
+         display: flex;
+         cursor: pointer;
+
+         svg {
+            font-size: 20px;
+            cursor: pointer;
+         }
+
+         p {
+            font-size: 14px;
+            cursor: pointer;
+         }
+      }
+
+      .Tr__nav__flex__2 {
+         position: absolute;
+         bottom: 12px;
+
+         div {
+            gap: 10px;
+         }
+
+         svg {
+            font-size: 16px;
+            cursor: pointer;
+         }
+
+         p {
+            font-size: 14px;
+            cursor: pointer;
+         }
+      }
+   }
+
+   .TreatmentWrapper__inner__2 {
+      h3 {
+         font-size: 24px;
+      }
+
+      p {
+         font-size: 14px;
+         margin-top: 5px;
+         color: #b1b1b1;
+      }
+
+      .TreatmentWrapper__inner__2__header__box__wrapper {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 16px;
+
+         .header__box__wrapper__1,
+         .header__box__wrapper__2 {
+            img {
+               margin-bottom: 16px;
+            }
+
+            .progress {
+               margin-bottom: 0;
+            }
+
+            .progress__flex {
+               display: flex;
+               align-items: center;
+               gap: 8px;
+               margin-top: 12px;
+               margin-bottom: 12px;
+
+               label {
+                  font-size: 12px;
+               }
+            }
+
+            .progress--round {
+               width: 10px;
+               height: 10px;
+               background-color: #f1bf3e;
+               border-radius: 100%;
+            }
+
+            .box-2-img {
+               width: 80px;
+            }
+
+            min-height: 200px;
+            padding: 16px;
+            background-color: rgba(118, 198, 134, 0.0509803922);
+            border: 1px solid rgba(238, 238, 238, 0.1411764706);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            p {
+               text-align: center;
+            }
+         }
+      }
+
+      .TreatmentWrapper__inner__2__body {
+         .recommendations__wrapper {
+            .recommendations__wrapper__inner {
+               display: flex;
+               padding: 16px;
+               background-color: rgba(118, 198, 134, 0.0509803922);
+               border: 1px solid rgba(238, 238, 238, 0.1411764706);
+
+               h4 {
+                  text-align: center;
+
+                  &:first-of-type {
+                     text-align: left;
+                  }
+               }
+            }
+
+            .recommendations__wrapper__inner__body {
+               p {
+                  font-size: 12px;
+                  text-align: center;
+
+                  &:first-of-type {
+                     font-size: 12px;
+                     text-align: left;
+                  }
+
+                  &:nth-child(3) {
+                     div {
+                        gap: 16px;
+                        justify-content: center;
+
+                        svg {
+                           font-size: 16px;
+                           cursor: pointer;
+                        }
+                     }
+                  }
+
+                  &:nth-child(4) {
+                     svg {
+                        font-size: 16px;
+                        cursor: pointer;
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   .TreatmentWrapper__inner__3 {
+      .TreatmentWrapper__inner__3__header {
+         display: flex;
+         justify-content: center;
+         flex-direction: column;
+         align-items: center;
+         padding-bottom: 32px;
+         border-bottom: 1px solid rgba(238, 238, 238, 0.1411764706);
+
+         img {
+            width: 150px;
+            height: auto;
+            border-radius: 100%;
+            padding: 16px;
+            background-color: rgba(118, 198, 134, 0.0509803922);
+            border: 1px solid rgba(238, 238, 238, 0.1411764706);
+         }
+
+         .profile--name {
+            margin-top: 16px;
+         }
+      }
+
+      .TreatmentWrapper__inner__3__body {
+         padding-top: 32px;
+
+         .flex {
+            justify-content: space-between;
+            align-items: center;
+         }
+
+         .reminders__wrapper {
+            .reminders__wrapper__inner {
+               padding: 5px;
+               border: 1px solid #fbbc0033;
+               border-radius: 5px;
+               margin-bottom: 24px;
+
+               .flex {
+                  align-items: flex-start;
+
+                  .flex {
+                     gap: 12px;
+
+                     p {
+                        font-size: 14px;
+                     }
+
+                     label {
+                        font-size: 12px;
+                     }
+                  }
+
+                  svg {
+                     cursor: pointer;
+                  }
+               }
+            }
+         }
+      }
+   }
+}
