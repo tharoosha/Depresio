@@ -1,1 +1,0 @@
-print("depresio is loading...")
