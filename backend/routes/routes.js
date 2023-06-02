@@ -1,45 +1,26 @@
-const express = require('express');
-
-const router = express.Router()
-
-module.exports = router;
-
-// endpoints
-
-//Post Method
-router.post('/post', (req, res) => {
-    res.send('Post API')
-})
-
-//Get all Method
-router.get('/getAll', (req, res) => {
-    res.send('Get All API')
-})
-
-//Get by ID Method
-router.get('/getOne/:id', (req, res) => {
-    res.send('Get by ID API')
-})
-
-//Update by ID Method
-router.patch('/update/:id', (req, res) => {
-    res.send('Update by ID API')
-})
-
-//Delete by ID Method
-router.delete('/delete/:id', (req, res) => {
-    res.send('Delete by ID API')
-})
+import { Router } from "express";
+const router = Router();
 
 
+/** import all controllers */
+import * as controller from '../controllers/appController.js'
 
-// importing model
-const Model = require('../models/model');
+// // endpoints
 
-// create the data body to post
-router.post('/post', (req, res) => {
-    const data = new Model({
-        name: req.body.name,
-        age: req.body.age
-    })
-})
+/** POST Methods */
+router.route ('/register').post(controller.register);
+// router.route ('/registerMail').post();
+router.route ('/authenticate').post((req,res) => res.end());
+router.route ('/login').post(controller.verifyUser, controller.login);
+
+/** GET Methods */
+router.route('/user/:username').get(controller.getUser);
+router.route('/generateOTP').get(controller.generateOTP);
+router.route('/verifyOTP').get(controller.verifyOTP);
+router.route('/createResetSession').get(controller.createResetSession);
+
+/** PUT Methods */
+router.route('/updateuser').put(controller.updateUser);
+router.route("/resetPassword").put(controller.resetPassword);
+
+export default router;
