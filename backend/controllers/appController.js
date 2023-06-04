@@ -181,8 +181,8 @@ body: {
 export async function updateUser(req,res){
     try {
         
-        const userId = req.query.id;
-        // const { userId } = req.user;
+        // const userId = req.query.id;
+        const { userId } = req.user;
 
         if(userId){
             const body = req.body;
