@@ -11,6 +11,37 @@ try{
   let isYoutubeActive = false;
   let isYoutubecreation = false;
 
+  chrome.action.setBadgeText({ 'text': '?'});
+  chrome.action.setBadgeBackgroundColor({ 'color': "#777" });
+
+  function FormatDuration(d) {
+    if (d < 0) {
+      return "?";
+    }
+    var divisor = d < 3600000 ? [60000, 1000] : [3600000, 60000];
+    function pad(x) {
+      return x < 10 ? "0" + x : x;
+    }
+    return Math.floor(d / divisor[0]) + ":" + pad(Math.floor((d % divisor[0]) / divisor[1]));
+  }
+
+  function convertSecondsToMMSS(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+    var minutesStr = minutes < 10 ? "0" + minutes : minutes.toString();
+    var secondsStr = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds.toString();
+    return minutesStr + ":" + secondsStr;
+  }
+
+  function UpdateBadges() {
+    var now = new Date();
+    var description = convertSecondsToMMSS(timeSpent + elapsedTime);
+    console.log(convertSecondsToMMSS(timeSpent + elapsedTime));
+    chrome.action.setBadgeText({'text': description});
+  }
+  
+  setInterval(UpdateBadges, 1000);
+
   function getCurrentTimeInSeconds() {
     const now = new Date();
     const hours = now.getHours();
@@ -29,12 +60,15 @@ try{
   function timer(){
     if (!isYoutubetrans && isYoutubeActive && isYoutubecreation){
       elapsedTime = Math.round((new Date().getTime() - startTime) / 1000);
+      chrome.action.setBadgeBackgroundColor({ 'color': "#FF0000" });
       // timeSpent = elapsedTime
     }else if (isYoutubetrans && isYoutubeActive && !isYoutubecreation){
       elapsedTime = Math.round((new Date().getTime() - startTime) / 1000);
+      chrome.action.setBadgeBackgroundColor({ 'color': "#FF0000" });
       // timeSpent += elapsedTime;
       // isYoutubecreation = true;
     } else if (!isYoutubetrans && isYoutubeActive && !isYoutubecreation){
+      chrome.action.setBadgeBackgroundColor({ 'color': "#777" });
       timeSpent += elapsedTime;
       elapsedTime = 0;
     }
