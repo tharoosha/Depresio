@@ -1,14 +1,14 @@
 // popup.js
 
 // Function to retrieve data from the background script
-chrome.runtime.sendMessage({ action: 'getPreviousData' }, function(response) {
-  const previousUrlElement = document.getElementById('previousUrl');
-  const timeSpentElement = document.getElementById('timeSpent');
+chrome.runtime.sendMessage({ action: 'exceededTime' }, function(response) {
+  const currentUrlElement = document.getElementById('currentUrl');
+  const timeSpentElement = document.getElementById('exceededTime');
   // const videotitleElement = document.getElementById('Vtitle');
 
   if (response) {
-    previousUrlElement.textContent = response.previousUrl;
-    timeSpentElement.textContent = response.timeSpent;
+    currentUrlElement.textContent = response.currentUrl;
+    timeSpentElement.textContent = response.exceededTime;
     // videotitleElement.textContent = response.Vtitle;
   } else {
     previousUrlElement.textContent = 'N/A';
@@ -17,7 +17,7 @@ chrome.runtime.sendMessage({ action: 'getPreviousData' }, function(response) {
   }
 
 
-  if (response.timeSpent >= 20){
-    alert(`you are spending too much on ${response.previousUrl}`);
-  }
+  // if (response.timeSpent >= 20){
+  //   alert(`you are spending too much on ${response.previousUrl}`);
+  // }
 });
