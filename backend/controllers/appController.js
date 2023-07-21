@@ -137,6 +137,20 @@ export async function login(req, res){
 }
 
 
+// /** POST: http://localhost:3000/api/analyze */
+// /** 
+//  * @param : {
+//   "message" : "Hello",
+// }
+//  */
+// export async function analyzer(req,res){
+//     const {message} = req.body;
+//     res.status(200).send({
+//         message: message
+//     })
+// }
+
+
 /** GET: http://localhost:3000/api/user/example123 */
 export async function getUser(req, res){
     const {username} = req.params;
@@ -224,3 +238,5 @@ export async function createResetSession(req,res){
 export async function resetPassword(req,res){
     res.json('resetPassword route')
 }
+
+

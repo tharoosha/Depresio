@@ -2,6 +2,8 @@ import connect  from './database/conn.js';
 // initializing the server and connecting to the database,
 import express from 'express';
 import router from './routes/routes.js';
+import cors from 'cors';
+
 
 const app = express();
 
@@ -11,6 +13,9 @@ const app = express();
 app.use(express.json());
 
 const port = 3000;
+
+// Enable CORS for all routes
+app.use(cors());
 
 app.get('/', (req,res)=>{
     res.status(201).json("Home Get Request")
