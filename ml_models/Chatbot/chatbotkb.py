@@ -5,22 +5,23 @@ import json
 import os
 import openai
 from llama_index import ServiceContext
+import backoff
 
 
-openai.api_key = "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"
-os.environ['OPENAI_API_KEY'] = "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"
+openai.api_key = "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"
+os.environ['OPENAI_API_KEY'] = "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"
 
 
 def create_Index(path):
     max_input = 4096
-    tokens = 256
+    tokens = 100
     chuck_size = 1000
     max_chunk_overlap = 0.2
 
     promptHelper = PromptHelper(max_input, tokens, max_chunk_overlap, chunk_size_limit=chuck_size)
 
     #define LLM 
-    llmPredictor = LLMPredictor(llm=OpenAI(temperature=0, model_name="text-ada-001",max_tokens=tokens))
+    llmPredictor = LLMPredictor(llm=OpenAI(temperature=0.7, model_name="text-ada-003",max_tokens=tokens))
 
     #load data
     docs = SimpleDirectoryReader(path).load_data()
@@ -36,8 +37,9 @@ def create_Index(path):
     vectorIndex.storage_context.persist(persist_dir = 'Store')
     return vectorIndex
 
+# create_Index()
 
-
+@backoff.on_exception(backoff.expo, openai.error.RateLimitError)  # Decorate with backoff
 def answerMe(question):
     try:
         # create_Index("/Volumes/Transcend/Development/Depresio/ml_models/Chatbot/Knowledge")
@@ -60,7 +62,7 @@ def answerMe(question):
         # print(output)
         # print(response)
         sys.stdout.flush()
-        # return response
+        return response
     except Exception as e:
         error_message = str(e)
         output = {"error2011": error_message}

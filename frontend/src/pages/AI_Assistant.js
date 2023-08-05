@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState, useRef }  from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/AI.scss';
@@ -20,6 +20,15 @@ const AI_Assistant = () => {
 
    const [message, setMessage] = useState('');
    const [response, setResponse] = useState('');
+
+   const chatContainerRef = useRef(null);
+   //Scroll to the bottom of the chat container whenever a new message is added
+   useEffect(()=>{
+      if (chatContainerRef.current){
+         chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      }
+   }, [response]);
+
 
    const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,8 +60,8 @@ const AI_Assistant = () => {
          <div className="AI mt--24 mb--48">
             <div className="container">
                <div className="AI__wrapper">
-                  <div className="AI__wrapper__inner AI__wrapper__inner__1">
-                     <div className="AI__wrapper__inner__1__header flex">
+                  {/* <div className="AI__wrapper__inner AI__wrapper__inner__1"> */}
+                     {/* <div className="AI__wrapper__inner__1__header flex">
                         <div className="flex gap--16">
                            <img src={profileImg} alt="profileImg" />
                            <div className="AI__wrapper__inner__1__header__details">
@@ -61,74 +70,74 @@ const AI_Assistant = () => {
                            </div>
                         </div>
                         <img className="chevrown--icon" src={chevronDown} alt="chevronDown" />
-                     </div>
-                     <div className="AI__wrapper__inner__1__body">
-                        <p className="history--heading">Chat History</p>
-                        <div className="AI__wrapper__inner__1__body__item">
+                     </div> */}
+                     {/* <div className="AI__wrapper__inner__1__body"> */}
+                        {/* <p className="history--heading">Chat History</p> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>New Chat</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>I'm feeling overwhelmed and stressed out with my workload. It's becoming difficult to keep up.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>A bit down and unmotivated. The long hours and repetitive tasks are draining my enthusiasm.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>The constant changes and high expectations are making it hard to relax.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>I'm feeling frustrated and exhausted. It seems like there's always something urgent demanding my attention.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>I'm feeling quite anxious and burnt out lately. The constant pressure and deadlines are taking a toll on me.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>The long hours and repetitive tasks are draining my enthusiasm.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>I'm feeling overwhelmed and stressed out with my workload. It's becoming difficult to keep up.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                        <div className="AI__wrapper__inner__1__body__item">
+                        </div> */}
+                        {/* <div className="AI__wrapper__inner__1__body__item">
                            <p>I'm feeling overwhelmed and stressed out with my workload. It's becoming difficult to keep up.</p>
                            <div className="history--edit--delete">
                               <img src={edit} alt="Edit" />
                               <AiOutlineDelete />
                            </div>
-                        </div>
-                     </div>
-                     <div className="AI__wrapper__inner__1__footer">
+                        </div> */}
+                     {/* </div> */}
+                     {/* <div className="AI__wrapper__inner__1__footer">
                         <div className="AI__wrapper__inner__1__footer__item">
                            <AiOutlineDelete />
                            <p>Clear All Conversations</p>
@@ -141,14 +150,14 @@ const AI_Assistant = () => {
                            <FiSettings />
                            <p>Settings</p>
                         </div>
-                     </div>
-                  </div>
-                  <div className="AI__wrapper__inner AI__wrapper__inner__2">
+                     </div> */}
+                  {/* </div> */}
+                  <div className=" AI__wrapper__inner__2">
                      <div className="AI__wrapper__inner__2__header">
                         <h3>Good Evening, John!🥳</h3>
                         <p>I'm here to help you. Please let me know what you need assistance with, and I'll do my best to provide the information or guidance you're looking for!</p>
                      </div>
-                     <div className="AI__wrapper__inner__2__body mt--24">
+                     <div className="AI__wrapper__inner__2__body mt--24 chat-container" ref={chatContainerRef}>
                         <div className="AI__wrapper__inner__2__body__chat chat--wrapper">
                            <div className="flex">
                               <div className="disp--block">
@@ -156,15 +165,15 @@ const AI_Assistant = () => {
                                     <img src={profileImg} alt="profileImg" />
                                     <div className="chat--item--meta">
                                        <label>You</label>
-                                       <label>1 min ago</label>
+                                       {/* <label>1 min ago</label> */}
                                     </div>
                                  </div>
                               </div>
-                              <div className="flex gap--12">
+                              {/* <div className="flex gap--12">
                                  <FiThumbsUp className="chat--options" />
                                  <FiThumbsDown className="chat--options" />
                                  <HiDotsHorizontal className="chat--options" />
-                              </div>
+                              </div> */}
                            </div>
                            <p>{message}</p>
                         </div>
@@ -175,15 +184,15 @@ const AI_Assistant = () => {
                                     <img src={logo} alt="logo" />
                                     <div className="chat--item--meta">
                                        <label>Depresio Assistant</label>
-                                       <label>Just now</label>
+                                       {/* <label>Just now</label> */}
                                     </div>
                                  </div>
                               </div>
-                              <div className="flex gap--12">
+                              {/* <div className="flex gap--12">
                                  <FiThumbsUp className="chat--options" />
                                  <FiThumbsDown className="chat--options" />
                                  <HiDotsHorizontal className="chat--options" />
-                              </div>
+                              </div> */}
                            </div>
                            <p className="chat--para">{response}</p>
                            {/* <p className="chat--para">Here are a few suggestions to help manage your situation:</p>

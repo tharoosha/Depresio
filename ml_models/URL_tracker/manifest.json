@@ -3,7 +3,7 @@
     "name": "URL Tracker",
     "version": "1.0",
     "description": "Tracks URLs, time spent on each page, and user interactions",
-    "permissions": ["scripting", "tabs", "storage", "webNavigation"],
+    "permissions": ["scripting", "tabs", "storage", "webNavigation","notifications"],
     "host_permissions": ["https://*.youtube.com/*"],
     "background": {
       "service_worker": "scripts/background.js",

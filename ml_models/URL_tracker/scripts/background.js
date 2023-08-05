@@ -1,3 +1,5 @@
+// import { convertSecondsToMMSS, getCurrentTimeInSeconds, FormatDuration} from "./serviceModules";
+
 //  // background.js
 try{
   // Track URLs and time spent on each page
@@ -11,8 +13,24 @@ try{
   let isYoutubeActive = false;
   let isYoutubecreation = false;
 
+  var tabData = {};
+  let previousUrl = null;
+  let spendTime = 0;
+
+  let displaymsg = false;
+  // Get the correct URL for the icon image
+  const iconUrl = chrome.runtime.getURL('/images/depresio-128.png');
+
   chrome.action.setBadgeText({ 'text': '?'});
   chrome.action.setBadgeBackgroundColor({ 'color': "#777" });
+
+  function convertSecondsToMMSS(seconds) {
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+    var minutesStr = minutes < 10 ? "0" + minutes : minutes.toString();
+    var secondsStr = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds.toString();
+    return minutesStr + ":" + secondsStr;
+  }
 
   function FormatDuration(d) {
     if (d < 0) {
@@ -25,23 +43,6 @@ try{
     return Math.floor(d / divisor[0]) + ":" + pad(Math.floor((d % divisor[0]) / divisor[1]));
   }
 
-  function convertSecondsToMMSS(seconds) {
-    var minutes = Math.floor(seconds / 60);
-    var remainingSeconds = seconds % 60;
-    var minutesStr = minutes < 10 ? "0" + minutes : minutes.toString();
-    var secondsStr = remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds.toString();
-    return minutesStr + ":" + secondsStr;
-  }
-
-  function UpdateBadges() {
-    var now = new Date();
-    var description = convertSecondsToMMSS(timeSpent + elapsedTime);
-    console.log(convertSecondsToMMSS(timeSpent + elapsedTime));
-    chrome.action.setBadgeText({'text': description});
-  }
-  
-  setInterval(UpdateBadges, 1000);
-
   function getCurrentTimeInSeconds() {
     const now = new Date();
     const hours = now.getHours();
@@ -51,11 +52,64 @@ try{
     const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
     return totalSeconds;
   }
+
+  function showPopup() {
+    chrome.notifications.create({
+      type: 'basic',
+      title: 'How is your life?',
+      message: 'Click to go to the AI Assistant page!',
+      iconUrl: iconUrl, // Replace with the path to your icon
+      appIconMaskUrl: null,
+      buttons: [
+        { title: 'Go to AI Assistant' }
+      ],
+      priority: 0
+    }, (notificationId) => {
+      // Add a listener to handle button click
+      chrome.notifications.onButtonClicked.addListener((clickedNotificationId, buttonIndex) => {
+        if (clickedNotificationId === notificationId && buttonIndex === 0) {
+          // User clicked the 'Go to AI Assistant' button
+          // Replace 'your-ai-assistant-url' with the URL of your AI Assistant page
+          chrome.tabs.create({ url: 'http://localhost:3001/assistant' });
+        }
+      });
+    });
+  }
+
+  function UpdateBadges() {
+    var now = new Date();
+    var description = convertSecondsToMMSS(timeSpent + elapsedTime);
+    console.log(convertSecondsToMMSS(timeSpent + elapsedTime));
+    chrome.action.setBadgeText({'text': description});
+    
+    // Check if the video time exceeds 10 seconds
+    // if (elapsedTime + timeSpent > 10) {
+    //   showPopup();
+    //   console.log('popup...!')
+    // }
+  }
+
+  function notifymsg() {
+    if (!displaymsg && (timeSpent + elapsedTime) >= 5){
+      showPopup();
+      displaymsg = true;
+    }
+  }
+
+  function loop(){
+    UpdateBadges();
+    timer();
+    notifymsg();
+  }
+  
+  // setInterval(UpdateBadges, 1000);
+  // const intervalId = setInterval(timer, 1000);
+
+  setInterval(loop,1000);
   
   // Example usage
   const currentTimeInSeconds = getCurrentTimeInSeconds();
 
-  const intervalId = setInterval(timer, 1000);
 
   function timer(){
     if (!isYoutubetrans && isYoutubeActive && isYoutubecreation){
@@ -76,14 +130,41 @@ try{
 
   function handleTabUpdate (tabId, changeInfo, tab){
     if (tab.url && tab.url.includes("youtube.com/watch")) {
-      console.log("update url..", tabId);
+
       currentUrl = tab.url;
+
       YtabId = tabId;
+
       isYoutubecreation = true;
       isYoutubeActive = true;
       isYoutubetrans = false;
+
       startTime = new Date().getTime();
       console.log(startTime,elapsedTime,timeSpent);
+
+      // add tab and tab opening time to tab list 
+      // if ( tab.url in tabData && tab.url != previousUrl){
+      //   tabData[previousUrl].spendTime = startTime - tabData[previousUrl].startTime;
+      //   tabData[tab.url] = {startTime: startTime};
+      //   previousUrl = tab.url;
+      //   console.log(startTime,spendTime,previousUrl);
+
+      // }else {
+      //   if (previousUrl != null){
+      //     tabData[previousUrl].spendTime = startTime - tabData[previousUrl].startTime;
+      //     tabData[tab.url] = {startTime, spendTime};
+      //     previousUrl = tab.url;
+      //     console.log(startTime,spendTime,previousUrl);
+
+      //   }else{
+      //     tabData[tab.url] = {startTime, spendTime};
+      //     previousUrl = tab.url;
+      //     console.log(startTime,spendTime,previousUrl);
+      //   }
+
+      // }
+
+      console.log(tabData);
 
       const queryParameters = tab.url.split("?")[1];
       const urlParameters = new URLSearchParams(queryParameters);
@@ -93,7 +174,7 @@ try{
   // Function to handle tab removal
   function handleTabRemoval(tabId, removeInfo){
       if (YtabId == tabId) {
-        isYoutube = false;
+        isYoutubetrans = false;
         isYoutubeActive = false;
         isYoutubecreation = false;
         timeSpent += elapsedTime;
@@ -108,6 +189,7 @@ try{
     let gettingTab = chrome.tabs.get(activeInfo.tabId);
 
     gettingTab.then((tab) => {
+
       if (tab.url.includes('youtube.com/watch') && isYoutubeActive) {
         // Transition to YouTube page from another page
         isYoutubeActive = true;
@@ -126,7 +208,6 @@ try{
 
       }
     });
-    
   }
 
   // Add a listener to respond to popup requests for previous URL and time spent

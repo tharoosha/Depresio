@@ -41,10 +41,10 @@ export async function registerUser(credentials){
 
         let { username, email } = credentials;
 
-        // /** send email */
-        // if(status === 201){
-        //     await axios.post('/api/registerMail', { username, userEmail : email, text : msg})
-        // }
+        /** send email */
+        if(status === 201){
+            await axios.post('/api/registerMail', { username, userEmail : email, text : msg})
+        }
 
         return Promise.resolve(msg)
     } catch (error) {
@@ -74,6 +74,43 @@ export async function updateUser(response){
         return Promise.resolve({ data })
     } catch (error) {
         return Promise.reject({ error : "Couldn't Update Profile...!"})
+    }
+}
+
+/** generate OTP */
+export async function generateOTP(username){
+    try {
+        const {data : { code }, status } = await axios.get('/api/generateOTP', { params : { username }});
+
+        // send mail with the OTP
+        if(status === 201){
+            let { data : { email }} = await getUser({ username });
+            let text = `Your Password Recovery OTP is ${code}. Verify and recover your password.`;
+            await axios.post('/api/registerMail', { username, userEmail: email, text, subject : "Password Recovery OTP"})
+        }
+        return Promise.resolve(code);
+    } catch (error) {
+        return Promise.reject({ error });
+    }
+}
+
+/** verify OTP */
+export async function verifyOTP({ username, code }){
+    try {
+       const { data, status } = await axios.get('/api/verifyOTP', { params : { username, code }})
+       return { data, status }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+}
+
+/** reset password */
+export async function resetPassword({ username, password }){
+    try {
+        const { data, status } = await axios.put('/api/resetPassword', { username, password });
+        return Promise.resolve({ data, status})
+    } catch (error) {
+        return Promise.reject({ error })
     }
 }
 
