@@ -2,7 +2,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 import mood_TO_video
 import youtube_search
 import break_time_suggest
-import video_to_mood
+# import video_to_mood
 from pydantic import BaseModel
 from fastapi import FastAPI
 
@@ -22,7 +22,9 @@ def predict_model1(work_time: float):
     return JSONResponse(content=result)
 
 
+"""
 @app.get("/mood_from_video", response_class=HTMLResponse)
 def predict_model1(link: str):
     result = video_to_mood.video_to_mood(link)
     return JSONResponse(content=result)
+"""
