@@ -3,15 +3,15 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/AI.scss';
 import profileImg from '../images/chat-user.svg';
-import chevronDown from '../images/chevron-down.svg';
+// import chevronDown from '../images/chevron-down.svg';
 import logo from '../images/depresio-logo-bg-removed.jpeg';
-import edit from '../images/edit.svg';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { MdDeleteForever } from 'react-icons/md';
-import { BsFillSunFill } from 'react-icons/bs';
-import { FiSettings } from 'react-icons/fi';
-import { HiDotsHorizontal } from 'react-icons/hi';
-import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
+// import edit from '../images/edit.svg';
+// import { AiOutlineDelete } from 'react-icons/ai';
+// import { MdDeleteForever } from 'react-icons/md';
+// import { BsFillSunFill } from 'react-icons/bs';
+// import { FiSettings } from 'react-icons/fi';
+// import { HiDotsHorizontal } from 'react-icons/hi';
+// import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { BsFillMicFill, BsSendCheck } from 'react-icons/bs';
 
 import axios from 'axios';
@@ -229,6 +229,7 @@ const AI_Assistant = () => {
                                  </button>
                               </div>
                            </form>
+                           
                            
                            
                            {/* <div className="AI__wrapper__inner__2__footer__left"> */}

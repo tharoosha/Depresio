@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 
 
 def predict_break_time(working_time):
-    df = pd.read_csv('break_time.csv')
+    df = pd.read_csv('/Volumes/Transcend/Development/Depresio/ml_models/recommanded_system/break_time.csv')
 
     z_scores = np.abs((df - df.mean()) / df.std())
     df_filtered = df[(z_scores < 3).all(axis=1)]
@@ -18,3 +18,6 @@ def predict_break_time(working_time):
     predicted_break_time = model.predict([[working_time]])
 
     return {"break_time": predicted_break_time[0]}
+
+
+print(predict_break_time(12.5))

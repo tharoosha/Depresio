@@ -22,6 +22,9 @@ router.route('/user/:username').get(controller.getUser);
 router.route('/generateOTP').get(controller.verifyUser,localVariables, controller.generateOTP);
 router.route('/verifyOTP').get(controller.verifyOTP);
 router.route('/createResetSession').get(controller.createResetSession);
+router.route('/youtube_videos').get(mlcontroller.video_predict);
+router.route('/break_time').get(mlcontroller.break_time);
+
 
 
 /** PUT Methods */
