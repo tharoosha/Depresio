@@ -24,24 +24,27 @@ import Profile from './components/Profile';
 import Reset from './components/Reset';
 import Recovery from './components/Recovery';
 import PageNotFound from './components/PageNotFound';
+import { AuthorizeUser, ProtectRoute } from './middleware/auth';
 
 /* root routes */
 const router = createBrowserRouter(
    createRoutesFromElements(
       <Route path="/">
-         <Route index element={<Home />} />
+         <Route index element={<Username/>} />
+         {/* <Route index element={<Home />} /> */}
          <Route path="/assistant" element={<AI />} />
          <Route path="/music-therapy" element={<MusicTherapy />} />
          <Route path="/treatment-plan" element={<TreatmentPlan />} />
          <Route path="/yt-recommendation" element={<YT_RecommendationView />} />
 
          <Route path="/register" element={<Register />} />
-         <Route path="/username" element={<Username />} />
-         <Route path="/password" element={<Password />} />
-         <Route path="/profile" element={<Profile />} />
+         {/* <Route path="/username" element={<Username />} /> */}
+         <Route path="/password" element={<ProtectRoute><Password /></ProtectRoute>} />
+         <Route path="/profile" element={<AuthorizeUser><Profile /></AuthorizeUser>} />
          <Route path="/reset" element={<Reset />} />
          <Route path="/recovery" element={<Recovery />} />
          <Route path="/pagenotfound" element={<PageNotFound />} />
+         <Route path="/home" element={<Home />} />
       </Route>
    )
 );

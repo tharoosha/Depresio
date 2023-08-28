@@ -8,7 +8,7 @@ const Header = () => {
       <header className="header--line">
          <div className="container header pt--24 pb--16">
             <div className="header__left">
-               <Link className="logo-link" to="/">
+               <Link className="logo-link" to="/home">
                   <img src={logo} alt="Depresio Logo" />
                </Link>
                <ul>
@@ -17,6 +17,7 @@ const Header = () => {
                      <Link to="/music-therapy">Music Therapy</Link>
                      {/* <Link to="/treatment-plan">Treatment Plan</Link> */}
                      <Link to="/yt-recommendation">Recommendations</Link>
+                     <Link to='/profile'>Profile</Link>
                   </li>
                </ul>
             </div>

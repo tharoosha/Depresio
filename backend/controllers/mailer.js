@@ -3,24 +3,35 @@ import Mailgen from 'mailgen';
 
 import ENV from '../config.js';
 
-
-// https://ethereal.email/create
-let nodeConfig = {
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+// Gmail SMTP settings
+let gmailConfig = {
+    service: 'gmail',
     auth: {
-        user: ENV.EMAIL, // generated ethereal user
-        pass: ENV.PASSWORD, // generated ethereal password
+        user: ENV.EMAIL,     // Your Gmail email address
+        pass: ENV.PASSWORD   // Your Gmail app password (not your actual password)
     }
-}
+};
 
-let transporter = nodemailer.createTransport(nodeConfig);
+
+// // https://ethereal.email/create
+// let nodeConfig = {
+//     host: "smtp.ethereal.email",
+//     port: 587,
+//     secure: false, // true for 465, false for other ports
+//     auth: {
+//         user: ENV.EMAIL, // generated ethereal user
+//         pass: ENV.PASSWORD, // generated ethereal password
+//     }
+// }
+
+// let transporter = nodemailer.createTransport(nodeConfig);
+let transporter = nodemailer.createTransport(gmailConfig);
+
 
 let MailGenerator = new Mailgen({
     theme: "default",
     product : {
-        name: "Mailgen",
+        name: "Depresio Team",
         link: 'https://mailgen.js/'
     }
 })
@@ -59,6 +70,6 @@ export const registerMail = async (req, res) => {
         .then(() => {
             return res.status(200).send({ msg: "You should receive an email from us."})
         })
-        .catch(error => res.status(500).send({ error }))
+        .catch(error => res.status(500).send({ error: error }))
 
 }

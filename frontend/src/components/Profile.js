@@ -10,12 +10,13 @@ import { useNavigate } from 'react-router-dom'
 
 import styles from '../styles/Username.module.scss';
 import extend from '../styles/Profile.module.scss';
+import Header from './Header';
 
 export default function Profile() {
 
   const [file, setFile] = useState();
   const [{ isLoading, apiData, serverError }] = useFetch();
-  const navigate = useNavigate()
+  const navigate = useNavigate('/')
  
   const formik = useFormik({
     initialValues : {
@@ -58,6 +59,8 @@ export default function Profile() {
   // if(serverError) return <h1 className='text-xl text-red-500'>{serverError.message}</h1>
 
   return (
+    <>
+    <Header/>
     <div className="container mx-auto">
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
@@ -108,5 +111,7 @@ export default function Profile() {
         </div>
       </div>
     </div>
+    </>
+    
   )
 }
