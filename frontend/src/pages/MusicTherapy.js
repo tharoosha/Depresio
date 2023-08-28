@@ -4,11 +4,11 @@ import Footer from '../components/Footer';
 import MusicCarousel from '../components/MusicCarousel';
 import '../styles/MusicTherapy.scss';
 import '../styles/Base.scss';
-import depLogo from '../images/depresio-logo-bg-removed.jpeg';
+// import depLogo from '../images/depresio-logo-bg-removed.jpeg';
 import mtHome from '../images/mt-home.svg';
 import mtSearch from '../images/mt-search.svg';
 import mtLibrary from '../images/mt-library.svg';
-import mtLogo from '../images/mt-logo.svg';
+// import mtLogo from '../images/mt-logo.svg';
 import preSong from '../images/pre-song.png';
 import nextSong from '../images/next-song.png';
 import playBtn from '../images/play-pause.png';
@@ -191,8 +191,8 @@ const MusicTherapy = () => {
                               <div className="first-row">
                                  <div className="col">
                                     <div className="thumbnail">
-                                       <img class="thumb-img" src={mood1}></img>
-                                       <img class="blueBtn" src={bluePlayBtn}></img>
+                                       <img className="thumb-img" src={mood1}></img>
+                                       <img className="blueBtn" src={bluePlayBtn}></img>
                                     </div>
                                     <div className="details">
                                        <p>Experimental Music</p>
@@ -200,8 +200,8 @@ const MusicTherapy = () => {
                                  </div>
                                  <div className="col">
                                     <div className="thumbnail">
-                                       <img class="thumb-img" src={mood2}></img>
-                                       <img class="blueBtn" src={bluePlayBtn}></img>
+                                       <img className="thumb-img" src={mood2}></img>
+                                       <img className="blueBtn" src={bluePlayBtn}></img>
                                     </div>
                                     <div className="details">
                                        <p>
@@ -211,8 +211,8 @@ const MusicTherapy = () => {
                                  </div>
                                  <div className="col">
                                     <div className="thumbnail">
-                                       <img class="thumb-img" src={mood3}></img>
-                                       <img class="blueBtn" src={bluePlayBtn}></img>
+                                       <img className="thumb-img" src={mood3}></img>
+                                       <img className="blueBtn" src={bluePlayBtn}></img>
                                     </div>
                                     <div className="details">
                                        <p>
@@ -224,8 +224,8 @@ const MusicTherapy = () => {
                               <div className="second-row">
                                  <div className="col">
                                     <div className="thumbnail">
-                                       <img class="thumb-img" src={mood4}></img>
-                                       <img class="blueBtn" src={bluePlayBtn}></img>
+                                       <img className="thumb-img" src={mood4}></img>
+                                       <img className="blueBtn" src={bluePlayBtn}></img>
                                     </div>
                                     <div className="details">
                                        <p>
@@ -235,8 +235,8 @@ const MusicTherapy = () => {
                                  </div>
                                  <div className="col">
                                     <div className="thumbnail">
-                                       <img class="thumb-img" src={mood5}></img>
-                                       <img class="blueBtn" src={bluePlayBtn}></img>
+                                       <img className="thumb-img" src={mood5}></img>
+                                       <img className="blueBtn" src={bluePlayBtn}></img>
                                     </div>
                                     <div className="details">
                                        <p>
@@ -246,8 +246,8 @@ const MusicTherapy = () => {
                                  </div>
                                  <div className="col">
                                     <div className="thumbnail">
-                                       <img class="thumb-img" src={mood6}></img>
-                                       <img class="blueBtn" src={bluePlayBtn}></img>
+                                       <img className="thumb-img" src={mood6}></img>
+                                       <img className="blueBtn" src={bluePlayBtn}></img>
                                     </div>
                                     <div className="details">
                                        <p>

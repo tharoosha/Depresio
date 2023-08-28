@@ -15,15 +15,15 @@ const Header = () => {
                   <li>
                      <Link to="/assistant">Access Our AI Assistant</Link>
                      <Link to="/music-therapy">Music Therapy</Link>
-                     <Link to="/treatment-plan">Treatment Plan</Link>
-                     <Link to="/yt-recommendation">YT Recommendation</Link>
+                     {/* <Link to="/treatment-plan">Treatment Plan</Link> */}
+                     <Link to="/yt-recommendation">Recommendations</Link>
                   </li>
                </ul>
             </div>
-            <div className="header__right">
+            {/* <div className="header__right">
                <button>Sign In</button>
                <button>Sign Up</button>
-            </div>
+            </div> */}
          </div>
       </header>
    );

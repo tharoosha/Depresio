@@ -23,7 +23,7 @@ router.route('/generateOTP').get(controller.verifyUser,localVariables, controlle
 router.route('/verifyOTP').get(controller.verifyOTP);
 router.route('/createResetSession').get(controller.createResetSession);
 router.route('/youtube_videos').get(mlcontroller.video_predict);
-router.route('/break_time').get(mlcontroller.break_time);
+// router.route('/break_time').get(mlcontroller.break_time);
 
 
 

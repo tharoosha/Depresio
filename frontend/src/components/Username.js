@@ -8,6 +8,7 @@ import { usernameValidate } from '../helper/validate'
 import { useAuthStore } from '../store/store'
 
 import styles from '../styles/Username.module.scss';
+import bg from "../images/hero-bg.webp"
 
 const Username = () =>{
 
@@ -30,9 +31,13 @@ const Username = () =>{
   })
 
   return (
-    <div className='container mx-auto'>
+    
+    <div className='container-username'>
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
+      <div className='flex justify-center items-center h-screen'>
+        {/* <img src={bg} alt="bg" /> */}
+      </div>
 
       <div className='flex justify-center items-center h-screen'>
         <div /*className={styles.glass}*/>
