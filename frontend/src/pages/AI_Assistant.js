@@ -33,14 +33,15 @@ const AI_Assistant = () => {
 
    const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(message)
-      setChatLog([...chatLog, { user: "User", message: message}])
+      const updatedChatLog = [...chatLog, { user: "User", message: message }];
+      setChatLog(updatedChatLog)
 
       // Make an HTTP request to the backend API to analyze user input using axios
       axios
          .post('http://localhost:3000/api/analyze', { message: message })
          .then((response) => {
-            setChatLog([...chatLog, {user: "AI_Consultant", message: response.data.result}])
+            const updatedChatLogWithAI = [...updatedChatLog, { user: "AI_Consultant", message: response.data.result }];
+            setChatLog(updatedChatLogWithAI)
             setResponse(response.data.result)
          })
          .catch((error) => console.error(error));
@@ -64,33 +65,6 @@ const AI_Assistant = () => {
                         <p>I'm here to help you. Please let me know what you need assistance with, and I'll do my best to provide the information or guidance you're looking for!</p>
                      </div>
                      <div className="AI__wrapper__inner__2__body mt--24 chat-container" ref={chatContainerRef}>
-                        {/* <div className="AI__wrapper__inner__2__body__chat chat--wrapper">
-                           <div className="flex">
-                              <div className="disp--block">
-                                 <div className="flex">
-                                    <img src={profileImg} alt="profileImg" />
-                                    <div className="chat--item--meta">
-                                       <label>You</label>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <p>{message}</p>
-                        </div>
-                        <div className="AI__wrapper__inner__2__body__chat chat--wrapper">
-                           <div className="flex">
-                              <div className="disp--block">
-                                 <div className="flex">
-                                    <img src={logo} alt="logo" />
-                                    <div className="chat--item--meta">
-                                       <label>Depresio Assistant</label>
-                                    </div>
-                                 </div>
-                              </div>
-                              
-                           </div>
-                           <p className="chat--para">{response}</p>
-                        </div> */}
                         {chatLog.map((chat, index) => (
                            <div
                               key={index}
@@ -98,7 +72,7 @@ const AI_Assistant = () => {
                               <div className="flex">
                                  <div className="disp--block">
                                     <div className="flex">
-                                       <img src={chat.user === "AI-Consultant" ? logo : profileImg} alt={chat.user} />
+                                       <img src={chat.user === "AI_Consultant" ? logo : profileImg} alt={chat.user} />
                                        <div className="chat--item--meta">
                                           <label>{chat.user === "AI_Consultant" ? "Depresio Assistant" : "You"}</label>
                                           {/* <label>Timestamp logic here</label> */}
