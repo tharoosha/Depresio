@@ -5,6 +5,10 @@ import nlp
 import random
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+import pickle
+from collections import deque
+import openai
+import backoff
 
 def get_tweet(data):
     texts = [x['text'] for x in data]
@@ -35,12 +39,21 @@ def decodeLabels(label):
 
 def initialize():
 
-    # dataset = nlp.load_dataset('json', data_files='D:\Projects\Depressio 1.2\Data\data.jsonl')
+    #################################################################################################################################################################################
+    ''' Train the model from scratch and save it as emotion_model '''
+    
+    # # Loading the basic dataset
 
-    test = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\test.jsonl')
-    train = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\train.jsonl')
-    val = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\validation.jsonl')
+    # # test = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\test.jsonl')
+    # # train = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\train.jsonl')
+    # # val = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\validation.jsonl')
 
+    # # train=train['train']
+    # # test=test['train']
+    # # val=val['train']
+
+
+    # # Loading the extended dataset
     # dataset = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\data.jsonl')
     # dataset =  dataset['train']
 
@@ -51,65 +64,74 @@ def initialize():
     # test = test_val['train']
     # val = test_val['test']
 
-    # print(train, test, val)
+    # # print(train, test, val)
 
-    train=train['train']
-    test=test['train']
-    val=val['train']
+    # tweets, labels = get_tweet(train)
 
-    tweets, labels = get_tweet(train)
+    # tokenizer = Tokenizer(num_words=1000,oov_token='<UNK>')
+    # tokenizer.fit_on_texts(tweets)
 
-    tokenizer = Tokenizer(num_words=1000,oov_token='<UNK>')
-    tokenizer.fit_on_texts(tweets)
+    # maxlen= 50
 
-    maxlen= 50
+    # padded_train_seq = get_sequences(tokenizer,tweets)
 
-    padded_train_seq = get_sequences(tokenizer,tweets)
+    # classes = set((labels))
+    # classes = [decodeLabels(x) for x in classes]
 
-    classes = set((labels))
-    classes = [decodeLabels(x) for x in classes]
+    # names_to_ids=lambda labels:np.array([x for x in labels])
 
-    # class_to_index = {'sadness': 0, 'joy': 1, 'love': 2, 'anger': 3, 'fear': 4, 'surprise': 5}
-    # index_to_class = dict((v,k) for k,v in class_to_index.items())
+    # train_labels=names_to_ids(labels)
 
-    names_to_ids=lambda labels:np.array([x for x in labels])
+    # # Creating the model
+    # model = tf.keras.models.Sequential([
+    #     tf.keras.layers.Embedding(1000,16,input_length=maxlen),
+    #     tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(20,return_sequences=True)),
+    #     tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(20)),
+    #     tf.keras.layers.Dense(6,activation='softmax')
+    # ])
 
-    train_labels=names_to_ids(labels)
+    # model.compile(
+    #     loss='sparse_categorical_crossentropy',
+    #     optimizer='adam',
+    #     metrics=['accuracy']
+    # )
 
-    # Creating the model
-    model = tf.keras.models.Sequential([
-        tf.keras.layers.Embedding(1000,16,input_length=maxlen),
-        tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(20,return_sequences=True)),
-        tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(20)),
-        tf.keras.layers.Dense(6,activation='softmax')
-    ])
+    # model.summary()
 
-    model.compile(
-        loss='sparse_categorical_crossentropy',
-        optimizer='adam',
-        metrics=['accuracy']
-    )
+    # val_tweets, val_labels = get_tweet(val)
+    # val_seq = get_sequences(tokenizer,val_tweets)
+    # val_labels = names_to_ids(val_labels)
 
-    model.summary()
+    # h = model.fit(
+    #     padded_train_seq, train_labels,
+    #     validation_data=(val_seq, val_labels),
+    #     epochs=20,
+    #     callbacks=tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=2)
+    # )
 
-    val_tweets, val_labels = get_tweet(val)
-    val_seq = get_sequences(tokenizer,val_tweets)
-    val_labels = names_to_ids(val_labels)
+    # # Save the tokenizer
+    # with open('tokenizer.pkl', 'wb') as f:
+    #     pickle.dump(tokenizer, f)
 
-    h = model.fit(
-        padded_train_seq, train_labels,
-        validation_data=(val_seq, val_labels),
-        epochs=20,
-        callbacks=tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=2)
-    )
+    # # Save the model
+    # model.save('emotion_model')
 
-    # test_tweets, test_labels= get_tweet(test)
-    # test_seq=get_sequences(tokenizer, test_tweets)
-    # test_labels=names_to_ids(test_labels)
+    #################################################################################################################################################################################
+   
+    #################################################################################################################################################################################
+    ''' Load the model and tokenizer from the saved files '''
 
-    # model.evaluate(test_seq, test_labels)
 
-    return model,tokenizer
+    with open('tokenizer.pkl', 'rb') as f:
+        tokenizer = pickle.load(f)
+
+    model = tf.keras.models.load_model('emotion_model')
+
+    #################################################################################################################################################################################   
+    
+    emotionQueue = deque(maxlen=10)
+
+    return model,tokenizer, emotionQueue
 
 def makePrediction(tweet, model, tokenizer):
     test_seq=get_sequences(tokenizer, tweet)
@@ -117,8 +139,6 @@ def makePrediction(tweet, model, tokenizer):
     p = model.predict(x)[0]
     pred_class = index_to_class[np.argmax(p).astype('uint8')]
     return pred_class
-
-import openai
 
 # Set up your OpenAI API credentials
 # openai.api_key = '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'
@@ -135,8 +155,6 @@ def get_completion(prompt, model="gpt-3.5-turbo"):
 
     return response.choices[0].message["content"]
 
-import backoff
-
 @backoff.on_exception(backoff.expo, openai.error.RateLimitError)
 def completion_with_backoff(prompt):
     return get_completion(prompt)
@@ -148,7 +166,7 @@ def newMakeGPTprediction(tweet):
     return response
 
 # ensemble two prediction using a weighted method
-def finalAnswer(tweet, model, tokenizer):
+def getInstantEmotion(tweet, model, tokenizer):
     pred1 = makePrediction(tweet, model, tokenizer)
     # print(pred1)
     pred2 = newMakeGPTprediction(tweet)
@@ -160,9 +178,14 @@ def finalAnswer(tweet, model, tokenizer):
     else:
         return pred1
 
+def getEmotion(tweet, model, tokenizer, emotionQueue):
+    emotionQueue.append(getInstantEmotion(tweet, model, tokenizer))
+    print(emotionQueue)
+    return max(set(emotionQueue), key = emotionQueue.count)
+     
 # newMakeGPTprediction(["I am very happy today"])
 def answer(tweet):
-    print(finalAnswer(tweet, model, tokenizer))
+    print(getInstantEmotion(tweet, model, tokenizer))
 
 # answer(['I have got lower marks than I expected in my exam.'])
 
@@ -170,7 +193,7 @@ if __name__ == "__main__":
     print("I'm going to initialize")
     model, tokenizer = initialize()
     print("Initialized")
-    # finalAnswer(['I am feeling sad'], model, tokenizer)
+    # getInstantEmotion(['I am feeling sad'], model, tokenizer)
 
-# print(finalAnswer(['I am feeling sad'], model, tokenizer))
+# print(getInstantEmotion(['I am feeling sad'], model, tokenizer))
 
