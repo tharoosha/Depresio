@@ -71,7 +71,7 @@ def get_max_index(row):
 
 def initialize():
     
-    df=pd.read_csv('dataset.csv')
+    df=pd.read_csv(r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\Spotify_Recommendation\dataset.csv')
 
     df['Mood'] = df['Mood'].apply(class_to_index)
 
