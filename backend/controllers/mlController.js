@@ -137,6 +137,12 @@ export async function video_predict(req, res) {
     Make sure this code segment work. Coudn't test as the backend and frontend are not working properly
 */
 
+/** POST: http://localhost:3000/api/spotify_recommend */
+/** 
+ * @param : {
+  "mood" : "Happiness",
+} 
+*/
 // Define the controller function to execute the Python script
 export async function spotify_recommend(req, res) {
   try {
