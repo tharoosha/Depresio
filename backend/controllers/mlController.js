@@ -1,5 +1,5 @@
-import { spawn } from 'child_process';
-import { error } from 'console';
+import { spawn } from "child_process";
+import { error } from "console";
 
 /** POST: http://localhost:3000/api/analyze */
 /** 
@@ -10,39 +10,41 @@ import { error } from 'console';
 export async function analyzer(req, res) {
   const { message } = req.body;
   try {
-    const process = spawn('python3', ['../ml_models/Chatbot/chatbotkb.py', message]);
+    const process = spawn("python3", [
+      "../ml_models/Chatbot/chatbotkb.py",
+      message,
+    ]);
 
-    let result = '';
+    let result = "";
 
     // Listen for data events from stdout
-    process.stdout.on('data', (data) => {
+    process.stdout.on("data", (data) => {
       result += data.toString();
     });
 
     // Listen for the 'close' event to handle the completion of the Python script
-    process.on('close', (code) => {
+    process.on("close", (code) => {
       if (code === 0) {
         try {
           // const jsonString = {"result": result}
           // const response = JSON.parse(result);
           res.status(200).send(result);
         } catch (error) {
-          res.status(500).json({ error: 'Failed to parse JSON response' });
+          res.status(500).json({ error: "Failed to parse JSON response" });
         }
       } else {
-        res.status(500).json({ error: 'Python script exited with an error' });
+        res.status(500).json({ error: "Python script exited with an error" });
       }
     });
 
     // Handle any errors during the execution of the Python script
-    process.on('error', (error) => {
+    process.on("error", (error) => {
       res.status(500).json({ error: error.message });
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
-
 
 /** POST: http://localhost:3000/api/youtube_videos */
 /** 
@@ -56,39 +58,40 @@ export async function video_predict(req, res) {
     const { mood } = req.body;
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn('python3', ['/Volumes/Transcend/Development/Depresio/backend/ml_models/recommanded_system/combinedScript.py', mood]);
+    const pythonProcess = spawn("python3", [
+      "/Volumes/Transcend/Development/Depresio/backend/ml_models/recommanded_system/combinedScript.py",
+      mood,
+    ]);
 
-    let output = '';
+    let output = "";
 
     // Listen for data events from the Python script's stdout
-    pythonProcess.stdout.on('data', (data) => {
+    pythonProcess.stdout.on("data", (data) => {
       output += data.toString();
     });
 
     // Listen for the 'close' event to handle the completion of the Python script
-    pythonProcess.on('close', (code) => {
+    pythonProcess.on("close", (code) => {
       if (code === 0) {
         try {
           const result = JSON.parse(output);
           res.status(200).json(result);
         } catch (error) {
-          res.status(500).json({ error: 'Failed to parse JSON response' });
+          res.status(500).json({ error: "Failed to parse JSON response" });
         }
       } else {
-        res.status(500).json({ error: 'Python script exited with an error' });
+        res.status(500).json({ error: "Python script exited with an error" });
       }
     });
 
     // Handle any errors during the execution of the Python script
-    pythonProcess.on('error', (error) => {
+    pythonProcess.on("error", (error) => {
       res.status(500).json({ error: error.message });
     });
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
-
+}
 
 // // Define the controller function to execute the Python script
 // export async function break_time(req, res) {
@@ -129,4 +132,48 @@ export async function video_predict(req, res) {
 //   }
 // };
 
+/*
+    @vihidun
+    Make sure this code segment work. Coudn't test as the backend and frontend are not working properly
+*/
 
+// Define the controller function to execute the Python script
+export async function spotify_recommend(req, res) {
+  try {
+    const { mood } = req.body;
+
+    // Spawn the Python script as a child process
+    const pythonProcess = spawn("python3", [
+      "/Volumes/Transcend/Development/Depresio/backend/ml_models/recommanded_system/spotifyRecommendExecution.py",
+      mood,
+    ]);
+
+    let output = "";
+
+    // Listen for data events from the Python script's stdout
+    pythonProcess.stdout.on("data", (data) => {
+      output += data.toString();
+    });
+
+    // Listen for the 'close' event to handle the completion of the Python script
+    pythonProcess.on("close", (code) => {
+      if (code === 0) {
+        try {
+          const result = JSON.parse(output);
+          res.status(200).json(result);
+        } catch (error) {
+          res.status(500).json({ error: "Failed to parse JSON response" });
+        }
+      } else {
+        res.status(500).json({ error: "Python script exited with an error" });
+      }
+    });
+
+    // Handle any errors during the execution of the Python script
+    pythonProcess.on("error", (error) => {
+      res.status(500).json({ error: error.message });
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}

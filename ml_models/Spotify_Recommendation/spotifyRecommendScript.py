@@ -75,63 +75,50 @@ def initialize():
     #######################################################################################################################################
     '''Train model from scratch and save it along with the scaler'''
 
-    # df=pd.read_csv(r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\Spotify_Recommendation\dataset.csv')
+    df=pd.read_csv(r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\Spotify_Recommendation\dataset.csv')
 
-    # df['Mood'] = df['Mood'].apply(class_to_index)
+    df['Mood'] = df['Mood'].apply(class_to_index)
 
-    # df.drop(['Song_ID','Song','Artist'],axis=1,inplace=True)
+    df.drop(['Song_ID','Song','Artist'],axis=1,inplace=True)
 
-    # train, test = train_test_split(df, test_size=0.2, random_state=42)
+    train, test = train_test_split(df, test_size=0.2, random_state=42)
 
-    # y_train = train['Mood']
-    # y_test = test['Mood']
-    # x_train = train.drop(['Mood'], axis=1)
-    # x_test = test.drop(['Mood'], axis=1)
+    y_train = train['Mood']
+    y_test = test['Mood']
+    x_train = train.drop(['Mood'], axis=1)
+    x_test = test.drop(['Mood'], axis=1)
 
-    # scaler = StandardScaler()
-    # X_train_scaled = scaler.fit_transform(x_train)
-    # X_test_scaled = scaler.transform(x_test)
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(x_train)
+    X_test_scaled = scaler.transform(x_test)
 
-    # model = models.Sequential([
-    #     layers.Dense(256, activation='sigmoid', input_shape=(x_train.shape[1],)),
-    #     layers.Dense(128, activation='tanh'),
-    #     layers.Dense(64, activation='tanh'),
-    #     layers.Dense(32, activation='tanh'),
-    #     layers.Dense(6, activation='softmax')
-    # ])
+    model = models.Sequential([
+        layers.Dense(256, activation='sigmoid', input_shape=(x_train.shape[1],)),
+        layers.Dense(128, activation='tanh'),
+        layers.Dense(64, activation='tanh'),
+        layers.Dense(32, activation='tanh'),
+        layers.Dense(6, activation='softmax')
+    ])
 
-    # model.compile(optimizer=Adam(learning_rate=0.001),
-    #             loss='sparse_categorical_crossentropy',
-    #             metrics=['accuracy'])
+    model.compile(optimizer=Adam(learning_rate=0.001),
+                loss='sparse_categorical_crossentropy',
+                metrics=['accuracy'])
 
-    # epochs = 100
-    # batch_size = 128
-    # model.fit(X_train_scaled, y_train, epochs=epochs, batch_size=batch_size, verbose=1)
+    epochs = 100
+    batch_size = 128
+    model.fit(X_train_scaled, y_train, epochs=epochs, batch_size=batch_size, verbose=1)
 
-    # loss, accuracy = model.evaluate(X_test_scaled, y_test, verbose=0)
-    # print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
+    loss, accuracy = model.evaluate(X_test_scaled, y_test, verbose=0)
+    print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
 
-    # # Save the tokenizer
-    # with open('tokenizer.pkl', 'wb') as f:
-    #     pickle.dump(scaler, f)
+    # Save the tokenizer
+    with open('tokenizer.pkl', 'wb') as f:
+        pickle.dump(scaler, f)
 
-    # model.save('spotify_model')
+    model.save('spotify_model')
 
     #######################################################################################################################################
     
-    
-    #######################################################################################################################################
-    '''Load saved model and scaler'''
-
-    with open('tokenizer.pkl', 'rb') as f:
-        scaler = pickle.load(f)
-
-    model = tf.keras.models.load_model('spotify_model')
-
-    #######################################################################################################################################
-
-    return model, scaler
-
 def getRecommendation(mood, model, scaler):
 
     df_recentSongs = getRecentlyPlayed()
