@@ -6,6 +6,7 @@ import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras import layers, models
 from tensorflow.keras.optimizers import Adam
+import pickle
 
 # Replace these with your actual Spotify API credentials
 CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
@@ -71,41 +72,63 @@ def get_max_index(row):
 
 def initialize():
     
-    df=pd.read_csv(r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\Spotify_Recommendation\dataset.csv')
+    #######################################################################################################################################
+    '''Train model from scratch and save it along with the scaler'''
 
-    df['Mood'] = df['Mood'].apply(class_to_index)
+    # df=pd.read_csv(r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\Spotify_Recommendation\dataset.csv')
 
-    df.drop(['Song_ID','Song','Artist'],axis=1,inplace=True)
+    # df['Mood'] = df['Mood'].apply(class_to_index)
 
-    train, test = train_test_split(df, test_size=0.2, random_state=42)
+    # df.drop(['Song_ID','Song','Artist'],axis=1,inplace=True)
 
-    y_train = train['Mood']
-    y_test = test['Mood']
-    x_train = train.drop(['Mood'], axis=1)
-    x_test = test.drop(['Mood'], axis=1)
+    # train, test = train_test_split(df, test_size=0.2, random_state=42)
 
-    scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(x_train)
-    X_test_scaled = scaler.transform(x_test)
+    # y_train = train['Mood']
+    # y_test = test['Mood']
+    # x_train = train.drop(['Mood'], axis=1)
+    # x_test = test.drop(['Mood'], axis=1)
 
-    model = models.Sequential([
-        layers.Dense(256, activation='sigmoid', input_shape=(x_train.shape[1],)),
-        layers.Dense(128, activation='tanh'),
-        layers.Dense(64, activation='tanh'),
-        layers.Dense(32, activation='tanh'),
-        layers.Dense(6, activation='softmax')
-    ])
+    # scaler = StandardScaler()
+    # X_train_scaled = scaler.fit_transform(x_train)
+    # X_test_scaled = scaler.transform(x_test)
 
-    model.compile(optimizer=Adam(learning_rate=0.001),
-                loss='sparse_categorical_crossentropy',
-                metrics=['accuracy'])
+    # model = models.Sequential([
+    #     layers.Dense(256, activation='sigmoid', input_shape=(x_train.shape[1],)),
+    #     layers.Dense(128, activation='tanh'),
+    #     layers.Dense(64, activation='tanh'),
+    #     layers.Dense(32, activation='tanh'),
+    #     layers.Dense(6, activation='softmax')
+    # ])
 
-    epochs = 100
-    batch_size = 128
-    model.fit(X_train_scaled, y_train, epochs=epochs, batch_size=batch_size, verbose=1)
+    # model.compile(optimizer=Adam(learning_rate=0.001),
+    #             loss='sparse_categorical_crossentropy',
+    #             metrics=['accuracy'])
 
-    loss, accuracy = model.evaluate(X_test_scaled, y_test, verbose=0)
-    print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
+    # epochs = 100
+    # batch_size = 128
+    # model.fit(X_train_scaled, y_train, epochs=epochs, batch_size=batch_size, verbose=1)
+
+    # loss, accuracy = model.evaluate(X_test_scaled, y_test, verbose=0)
+    # print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
+
+    # # Save the tokenizer
+    # with open('tokenizer.pkl', 'wb') as f:
+    #     pickle.dump(scaler, f)
+
+    # model.save('spotify_model')
+
+    #######################################################################################################################################
+    
+    
+    #######################################################################################################################################
+    '''Load saved model and scaler'''
+
+    with open('tokenizer.pkl', 'rb') as f:
+        scaler = pickle.load(f)
+
+    model = tf.keras.models.load_model('spotify_model')
+
+    #######################################################################################################################################
 
     return model, scaler
 
@@ -116,7 +139,7 @@ def getRecommendation(mood, model, scaler):
     df2['Mood']=df2.apply(get_max_index, axis=1)
     df_recentSongs['Mood'] = df2['Mood'].apply(decodeLabels)
     filtered_df = df_recentSongs[df_recentSongs['Mood']==mood]
-    return filtered_df.iloc[-1][0]
+    return filtered_df.tail(10)[0].tolist()[::-1]
 
 if __name__ == "__main__":
     model, scaler = initialize()
