@@ -6,9 +6,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.metrics import classification_report
 import numpy as np
 
-# Load the dataset with user feedback as NaN initially
-df = pd.read_csv('youtube_data.csv')
-
 
 def update_user_feedback(mood, video_type, user_feedback):
     """
@@ -19,13 +16,17 @@ def update_user_feedback(mood, video_type, user_feedback):
         video_type (str): The type of the video.
         user_feedback (int): The user feedback score (0-5).
     """
-    # Locate the row to update based on mood and video_type
-    mask = (df['mood'] == mood) & (df['video_type'] == video_type)
-    df.loc[mask, 'user_feedback'] = user_feedback
-    df.to_csv('youtube_data.csv', index=False)
+    # Create the text to be added
+    text = mood + "," + video_type + "," + str(user_feedback)
+
+    # Open the CSV file in 'a' (append) mode and write the text
+    with open('youtube_data.csv', 'a') as file:
+        file.write('\n' + text)
 
 
 def train_and_predict_video_types(input_mood):
+    # Load the dataset with user feedback as NaN initially
+    df = pd.read_csv('youtube_data.csv')
     # Fill missing user_feedback values with 0
     df['user_feedback'].fillna(0, inplace=True)
 
