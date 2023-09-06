@@ -39,7 +39,7 @@ def decodeLabels(label):
 
 def initialize():
 
-    #################################################################################################################################################################################
+    # #################################################################################################################################################################################
     ''' Train the model from scratch and save it as emotion_model '''
     
     # # Loading the basic dataset
@@ -54,7 +54,7 @@ def initialize():
 
 
     # # Loading the extended dataset
-    # dataset = nlp.load_dataset('json', data_files=r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\emotion_detection\Data\data.jsonl')
+    # dataset = nlp.load_dataset('json', data_files='ml_models/emotion_detection/Data/data.jsonl')
     # dataset =  dataset['train']
 
     # train_testval = dataset.train_test_split(test_size=0.01)
@@ -110,11 +110,11 @@ def initialize():
     # )
 
     # # Save the tokenizer
-    # with open('tokenizer.pkl', 'wb') as f:
+    # with open('ml_models/emotion_detection/tokenizer.pkl', 'wb') as f:
     #     pickle.dump(tokenizer, f)
 
     # # Save the model
-    # model.save('emotion_model')
+    # model.save('ml_models/emotion_detection/emotion_model')
 
     #################################################################################################################################################################################
    
@@ -190,10 +190,16 @@ def answer(tweet):
 # answer(['I have got lower marks than I expected in my exam.'])
 
 if __name__ == "__main__":
-    print("I'm going to initialize")
-    model, tokenizer = initialize()
-    print("Initialized")
+    # print("I'm going to initialize")
+    # model, tokenizer = initialize()
+    # print("Initialized")
+
+    with open('ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
+        tokenizer = pickle.load(f)
+
+    model = tf.keras.models.load_model('ml_models/emotion_detection/emotion_model')
+
     # getInstantEmotion(['I am feeling sad'], model, tokenizer)
 
-# print(getInstantEmotion(['I am feeling sad'], model, tokenizer))
+    print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
 
