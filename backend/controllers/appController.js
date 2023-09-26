@@ -1,5 +1,5 @@
 import UserModel from "../models/User.model.js";
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
 import otpGenerator from "otp-generator";
@@ -67,7 +67,7 @@ export async function register(req, res){
         Promise.all([existEmail,existUsername])
             .then(() => {
                 if(password){
-                    bcrypt.hash(password, 10)
+                    bcryptjs.hash(password, 10)
                         .then( hashedPassword => {
                             
                             const user = new UserModel({
@@ -107,7 +107,7 @@ export async function login(req, res){
     try{
         UserModel.findOne({username: username}).exec().then(
                     user => {
-                        bcrypt.compare(password, user.password)
+                        bcryptjs.compare(password, user.password)
                         .then(passwordCheck =>{
                             if(!passwordCheck) return res.status(400).send({error: "Password does not Match"})
                             // create jwt token
@@ -296,7 +296,7 @@ export async function resetPassword(req,res){
                 return res.status(404).send({ error: "Username not Found" });
             }
 
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const hashedPassword = await bcryptjs.hash(password, 10);
 
             await UserModel.updateOne(
                 { username: user.username },
