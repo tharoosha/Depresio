@@ -1,37 +1,41 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getUsername } from '../helper/helper'
+import { getUsername } from "../helper/helper";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
-
 /** custom hook */
-export default function useFetch(query){
-    const [getData, setData] = useState({ isLoading : false, apiData: undefined, status: null, serverError: null })
+export default function useFetch(query) {
+  const [getData, setData] = useState({
+    isLoading: false,
+    apiData: undefined,
+    status: null,
+    serverError: null,
+  });
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setData((prev) => ({ ...prev, isLoading: true }));
 
-        const fetchData = async () => {
-            try {
-                setData(prev => ({ ...prev, isLoading: true}));
+        const { username } = !query ? await getUsername() : "";
 
-                const { username } = !query ? await getUsername() : '';
-                
-                const { data, status } = !query ? await axios.get(`http://localhost:3000/api/user/${username}`) : await axios.get(`http://localhost:3000/api/${query}`);
+        const { data, status } = !query
+          ? await axios.get(`http://localhost:5000/api/user/${username}`)
+          : await axios.get(`http://localhost:5000/api/${query}`);
 
-                if(status === 201){
-                    setData(prev => ({ ...prev, isLoading: false}));
-                    setData(prev => ({ ...prev, apiData : data, status: status }));
-                }
+        if (status === 201) {
+          setData((prev) => ({ ...prev, isLoading: false }));
+          setData((prev) => ({ ...prev, apiData: data, status: status }));
+        }
 
-                setData(prev => ({ ...prev, isLoading: false}));
-            } catch (error) {
-                setData(prev => ({ ...prev, isLoading: false, serverError: error }))
-            }
-        };
-        fetchData()
+        setData((prev) => ({ ...prev, isLoading: false }));
+      } catch (error) {
+        setData((prev) => ({ ...prev, isLoading: false, serverError: error }));
+      }
+    };
+    fetchData();
+  }, [query]);
 
-    }, [query]);
-
-    return [getData, setData];
+  return [getData, setData];
 }
