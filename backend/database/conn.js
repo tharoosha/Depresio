@@ -5,7 +5,7 @@ async function connect(){
 
     try {
         config();
-        const mongoString = 'mongodb+srv://tharooshavihidun:qgCrEdwkFZaYUPwv@cluster0.xaybn5f.mongodb.net/?retryWrites=true&w=majority';
+        const mongoString = process.env.DATABASE_URL;
         const database = await mongoose.connect(mongoString);
         console.log('Database Connected');
         return database;

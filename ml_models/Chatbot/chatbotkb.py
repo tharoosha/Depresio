@@ -6,10 +6,10 @@ import os
 import openai
 from llama_index import ServiceContext
 import backoff
+import config as cf
 
 
-openai.api_key = "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"
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = cf.OPENAI_API_KEY
 
 
 def create_Index(path):
