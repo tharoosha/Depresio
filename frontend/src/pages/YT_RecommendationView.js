@@ -1,45 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/YT_RecommendationView.scss";
 import { Link } from "react-router-dom";
+import keys from "./Keys";
+
+
 
 const YT_RecommendationView = () => {
-  const videoIds = [];
+  const [videoIds, setVideoIds] = useState([]);
+  const apiKey = keys.YOUTUBE_API_KEY;
 
-  const storedData = localStorage.getItem("selectedCategories");
+  const storedData2 = [
+    "Travel & Events",
+    "Gaming",
+    "Comedy",
+    "Horror",
+    "Drama",
+  ];
 
-  console.log(storedData);
+ 
 
   return (
     <>
       <Header />
       <div className="container">
         <div className="yt-container">
-          {videoIds.map((videoId, index) => (
-            <div className="yt-recommendation-item" key={index}>
+          {videoIds.map((videoId) => (
+            <div className="yt-recommendation-item" key={videoId}>
               <iframe
                 width="560"
                 height="315"
                 src={`https://www.youtube.com/embed/${videoId}`}
-                title={`YouTube video player ${index}`}
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
+                title={`YouTube video player for ${videoId}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               ></iframe>
             </div>
           ))}
         </div>
+        <div className="button-container">
+          <Link to="/preferences">Preferences</Link>
+        </div>
       </div>
-      <div
-        style={{
-          margin: "30px",
-        }}
-        className="button-container"
-      >
-        <Link to="/preferences">Preferences</Link>
-      </div>
-
       <Footer />
     </>
   );

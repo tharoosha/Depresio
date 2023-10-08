@@ -9,3 +9,6 @@ The codebase is written in Python and uses popular ML and NLP libraries such as 
 The documentation includes detailed instructions on how to set up and run the system, as well as explanations of the underlying algorithms and methodologies used in the AI models. Additionally, the repository includes a list of potential future improvements and directions for research.
 
 Contributions to this project are welcome, and we encourage collaboration from researchers, developers, and mental health professionals to continue advancing the field of virtual mental consulting using AI.
+
+const storedData =
+JSON.parse(localStorage.getItem("selectedCategories")) || [];

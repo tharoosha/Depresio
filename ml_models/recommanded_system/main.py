@@ -105,9 +105,3 @@ def update_user_feedback(feedback: UserFeedbackUpdate):
         feedback.mood, feedback.video_type, feedback.user_feedback
     )
     return {"message": "User feedback updated successfully"}
-
-
-@app.get("/get_youtube_videos_from_preferences", response_class=JSONResponse)
-def get_youtube_videos_from_preferences(mood: str):
-    result = mood_TO_video.get_youtube_videos_from_preferences(mood)
-    return {"result": result}

@@ -34,13 +34,11 @@
 import requests
 from urllib.parse import quote_plus
 import random
-API_KEY = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"  
-
-
+API_KEY = "AIzaSyC9SwCqNCpLxlQot1NE9ktEL-8lBMIyKNg"
 
 
 def search_youtube_videos(video_types_probabilities):
-    api_key = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
+    api_key = "AIzaSyC9SwCqNCpLxlQot1NE9ktEL-8lBMIyKNg"
     max_videos = sum(video_types_probabilities.values())
     videos_info = []
 
@@ -67,8 +65,6 @@ def search_youtube_videos(video_types_probabilities):
     random.shuffle(videos_info)
 
     return videos_info[:max_videos]
-
-
 
 
 def get_youtube_videos_from_preferences(api_key, categories, max_results=5):
@@ -98,7 +94,8 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=5):
 
     return video_links
 
-categories = ["Music", "Sports", "Travel & Events", "People & Blogs"]
+
+categories = ["Travel & Events", "Gaming", "Comedy", "Horror", "Drama"]
 videos = get_youtube_videos_from_preferences(API_KEY, categories)
 for video in videos:
     print(video)
