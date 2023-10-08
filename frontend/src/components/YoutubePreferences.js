@@ -48,46 +48,68 @@ function YoutubePreferences() {
   };
 
   return (
-    <div>
-      <h2>YouTube Video Preferences</h2>
-      <div>
-        {categoriesName.map((category) => (
-          <div key={category.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={selectedCategories.includes(category.snippet.title)}
-                onChange={() => handleCategoryChange(category.snippet.title)}
-              />
-              {category.snippet.title}
-            </label>
-          </div>
-        ))}
-      </div>
+    <div className="AI mt--24 mb--48">
+      <div className="container">
+        <div className="AI__wrapper">
+          <div className=" AI__wrapper__inner__2">
+            <div className="AI__wrapper__inner__2__header">
+              <p>
+                I'm here to help you. Please let me know what you need
+                assistance with, and I'll do my best to provide the information
+                or guidance you're looking for!
+              </p>
+            </div>
 
-      <div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-        <button
-          type="submit"
-          className="btn btn-secondary"
-          onClick={handlegetData}
-        >
-          Get Saved Data
-        </button>
-        <div
-          style={{
-            borderBottom: 50,
-            marginTop: "30px",
-            marginLeft: "30px",
-          }}
-        >
-          <Link to="/yt-recommendation">Recommendations</Link>
+            <div className="preference__wrapper__inner__2__footer">
+              <div className="preference-suggestions">
+                <h2>YouTube Video Preferences</h2>
+                {categoriesName.map((category) => (
+                  <div key={category.id}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={selectedCategories.includes(
+                          category.snippet.title
+                        )}
+                        onChange={() =>
+                          handleCategoryChange(category.snippet.title)
+                        }
+                      />
+                      {category.snippet.title}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              
+              <div>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-secondary"
+                  onClick={handlegetData}
+                >
+                  Get Saved Data
+                </button>
+                <div
+                  style={{
+                    borderBottom: 50,
+                    marginTop: "30px",
+                    marginLeft: "30px",
+                  }}
+                >
+                  <Link to="/yt-recommendation">Recommendations</Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

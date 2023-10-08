@@ -48,11 +48,11 @@ const YT_RecommendationView = () => {
   const apiKey = keys.YOUTUBE_API_KEY;
   const storedData = localStorage.getItem("selectedCategories");
 
-  useEffect(() => {
-    get_youtube_videos_from_preferences(apiKey, storedData).then((data) => {
-      setVideoIds(data);
-    });
-  }, [storedData, apiKey]); 
+  // useEffect(() => {
+  //   get_youtube_videos_from_preferences(apiKey, storedData).then((data) => {
+  //     setVideoIds(data);
+  //   });
+  // }, [storedData, apiKey]);
 
   return (
     <>
