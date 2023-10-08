@@ -34,11 +34,11 @@
 import requests
 from urllib.parse import quote_plus
 import random
-API_KEY = "AIzaSyC9SwCqNCpLxlQot1NE9ktEL-8lBMIyKNg"
+API_KEY = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
 
 
 def search_youtube_videos(video_types_probabilities):
-    api_key = "AIzaSyC9SwCqNCpLxlQot1NE9ktEL-8lBMIyKNg"
+    api_key = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
     max_videos = sum(video_types_probabilities.values())
     videos_info = []
 

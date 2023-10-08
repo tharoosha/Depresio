@@ -5,21 +5,54 @@ import "../styles/YT_RecommendationView.scss";
 import { Link } from "react-router-dom";
 import keys from "./Keys";
 
+async function get_youtube_videos_from_preferences(
+  api_key,
+  categories,
+  max_results = 5
+) {
+  const base_url = "https://www.googleapis.com/youtube/v3/search";
+  const video_ids = [];
 
+  for (const category of categories) {
+    const params = new URLSearchParams({
+      part: "snippet",
+      q: category,
+      type: "video",
+      maxResults: max_results,
+      key: api_key,
+    });
+
+    const response = await fetch(`${base_url}?${params.toString()}`);
+    const data = await response.json();
+
+    if (!("items" in data)) {
+      console.log(
+        `Error fetching videos for category '${category}': ${
+          data.error ? data.error.message : "Unknown error"
+        }`
+      );
+      continue;
+    }
+
+    for (const item of data["items"]) {
+      const video_id = item["id"]["videoId"];
+      video_ids.push(video_id);
+    }
+  }
+
+  return video_ids;
+}
 
 const YT_RecommendationView = () => {
   const [videoIds, setVideoIds] = useState([]);
   const apiKey = keys.YOUTUBE_API_KEY;
+  const storedData = localStorage.getItem("selectedCategories");
 
-  const storedData2 = [
-    "Travel & Events",
-    "Gaming",
-    "Comedy",
-    "Horror",
-    "Drama",
-  ];
-
- 
+  useEffect(() => {
+    get_youtube_videos_from_preferences(apiKey, storedData).then((data) => {
+      setVideoIds(data);
+    });
+  }, [storedData, apiKey]); 
 
   return (
     <>
