@@ -39,11 +39,14 @@ if __name__ == '__main__':
     # Check if there is at least one command-line argument (excluding the script name)
     if len(sys.argv) > 1:
         # The first command-line argument (sys.argv[1]) will be the input_mood
-        input_mood = sys.argv[1]
+        # input_mood = sys.argv[1]
 
         # Call the function with the received input_mood
-        combined_script(input_mood)
+        # combined_script(input_mood)
+        combined_script("Happiness")
+        
     else:
         # If no input_mood is provided, handle the case accordingly
         print(json.dumps({"error": "No mood provided"}))
         sys.stdout.flush()
+    # combined_script('Happiness')

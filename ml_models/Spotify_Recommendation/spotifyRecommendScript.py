@@ -1,17 +1,24 @@
 import spotipy
+
+# oauth_object = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras import layers, models
-from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.optimizers.legacy import Adam
 import pickle
+import os
 
 # Replace these with your actual Spotify API credentials
 CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
-CLIENT_SECRET = "d45466167e4149b59cb91717b0ef6e3d"
-REDIRECT_URI = "http://localhost:8000/callback"
+CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
+REDIRECT_URI = "http://localhost:8081/callback"
+
+os.environ["CLIENT_ID"] = CLIENT_ID
+os.environ["CLIENT_SECRET"] = CLIENT_SECRET
+os.environ["REDIRECT_URI"] = REDIRECT_URI
 
 client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
@@ -75,7 +82,7 @@ def initialize():
     #######################################################################################################################################
     '''Train model from scratch and save it along with the scaler'''
 
-    df=pd.read_csv(r'C:\Users\nadil\OneDrive\Documents\Vihidun_SLIIT_Project\Depresio\ml_models\Spotify_Recommendation\dataset.csv')
+    df=pd.read_csv("ml_models/spotify_recommendation/dataset.csv")
 
     df['Mood'] = df['Mood'].apply(class_to_index)
 
@@ -112,10 +119,10 @@ def initialize():
     print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
 
     # Save the tokenizer
-    with open('tokenizer.pkl', 'wb') as f:
+    with open('ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('spotify_model')
+    model.save('ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
     
@@ -129,5 +136,11 @@ def getRecommendation(mood, model, scaler):
     return filtered_df.tail(10)[0].tolist()[::-1]
 
 if __name__ == "__main__":
-    model, scaler = initialize()
-    # print(getRecommendation('surprise', model, scaler))
+    # model, scaler = initialize()
+    print(f"Client ID: {os.environ.get('CLIENT_ID')}")
+    print(f"Client Secret: {os.environ.get('CLIENT_SECRET')}")
+    print(f"Redirect URI: {os.environ.get('REDIRECT_URI')}")
+    
+    initialize()
+    # print(getRecommendation('surprise', models, scaler))
+

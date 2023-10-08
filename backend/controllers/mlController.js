@@ -10,10 +10,7 @@ import { error } from "console";
 export async function analyzer(req, res) {
   const { message } = req.body;
   try {
-    const process = spawn("python3", [
-      "../ml_models/Chatbot/chatbotkb.py",
-      message,
-    ]);
+    const process = spawn("python3", ["../ml_models/Chatbot/chatbotkb.py", message,]);
 
     let result = "";
 
@@ -46,7 +43,7 @@ export async function analyzer(req, res) {
   }
 }
 
-/** POST: http://localhost:3000/api/youtube_videos */
+/** GET: http://localhost:3000/api/youtube_videos */
 /** 
  * @param : {
   "mood" : "Happiness",
@@ -58,10 +55,7 @@ export async function video_predict(req, res) {
     const { mood } = req.body;
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [
-      "/Volumes/Transcend/Development/Depresio/backend/ml_models/recommanded_system/combinedScript.py",
-      mood,
-    ]);
+    const pythonProcess = spawn("python3", ["../ml_models/recommanded_system/combinedScript.py",mood,]);
 
     let output = "";
 
@@ -137,10 +131,10 @@ export async function video_predict(req, res) {
     Make sure this code segment work. Coudn't test as the backend and frontend are not working properly
 */
 
-/** POST: http://localhost:3000/api/spotify_recommend */
+/** GET: http://localhost:3000/api/spotify_recommend */
 /** 
  * @param : {
-  "mood" : "Happiness",
+  "mood" : "joy",
 } 
 */
 // Define the controller function to execute the Python script
@@ -149,24 +143,26 @@ export async function spotify_recommend(req, res) {
     const { mood } = req.body;
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [
-      "/Volumes/Transcend/Development/Depresio/backend/ml_models/recommanded_system/spotifyRecommendExecution.py",
-      mood,
-    ]);
+    const pythonProcess = spawn("python3", [ "../ml_models/Spotify_Recommendation/spotifyRecommendExecution.py", mood,]);
 
     let output = "";
+    // let output = [];
 
     // Listen for data events from the Python script's stdout
     pythonProcess.stdout.on("data", (data) => {
       output += data.toString();
+      // output += data;
     });
 
     // Listen for the 'close' event to handle the completion of the Python script
     pythonProcess.on("close", (code) => {
       if (code === 0) {
         try {
-          const result = JSON.parse(output);
-          res.status(200).json(result);
+          // const result = JSON.parse(output);
+          // res.status(200).json(result);
+          const result = JSON.parse(output);  // Parse the output string to JSON
+          res.status(200).json({"result": result});
+          // res.status(200).json({"result":output});
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
         }
