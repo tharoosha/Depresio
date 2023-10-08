@@ -43,6 +43,34 @@ export async function analyzer(req, res) {
   }
 }
 
+export async function emotion_analyzer(req, res) {
+  const { message } = req.body;
+  try {
+    const process = spawn("python3", ["../ml_models/emotion_detection/emotionScript.py", message,]);
+    process.stdout.on("data", (data) => {
+      let emotion = data.toString();
+    });
+    process.on("close", (code) => {
+      if (code === 0) {
+        try {
+          res.status(200).send(emotion);
+        } catch (error) {
+          res.status(500).json({ error: "Failed to parse JSON response" });
+        }
+      } else {
+        res.status(500).json({ error: "Python script exited with an error" });
+      }
+    });
+    process.on("error", (error) => {
+      res.status(500).json({ error: error.message });
+    });
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 /** GET: http://localhost:3000/api/youtube_videos */
 /** 
  * @param : {
