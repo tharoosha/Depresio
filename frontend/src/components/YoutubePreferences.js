@@ -47,6 +47,10 @@ function YoutubePreferences() {
     console.log(storedData);
   };
 
+  
+
+  
+
   return (
     <div className="AI mt--24 mb--48">
       <div className="container">
@@ -109,7 +113,9 @@ function YoutubePreferences() {
                     marginLeft: "30px",
                   }}
                 >
-                  <Link to="/yt-recommendation">Recommendations</Link>
+                  <Link to="/yt-recommendation">
+                    Watch Recommendation Videos
+                  </Link>
                 </div>
               </div>
             </div>

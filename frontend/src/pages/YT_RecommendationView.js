@@ -204,6 +204,11 @@ const YT_RecommendationView = () => {
     };
   }, [isReviewDialogVisible]);
 
+  // Save selected rating to local storage
+  useEffect(() => {
+    localStorage.setItem("rating", rating);
+  }, [rating]);
+
   return (
     <>
       <Header />
@@ -230,8 +235,23 @@ const YT_RecommendationView = () => {
                     </div>
                   ))}
                 </div>
+                <div className="popup-inner__button"></div>
                 <div className="button-container">
-                  <Link to="/preferences">Preferences</Link>
+                  <Link to="/preferences">Select Your New Preferences</Link>
+                </div>
+                <div className="button-container">
+                  <button
+                    style={{
+                      backgroundColor: "transparent",
+                      color: "white",
+                      border: "none",
+                      cursor: "pointer",
+                      fontSize: "20px",
+                    }}
+                    onClick={() => setIsReviewDialogVisible(true)}
+                  >
+                    Rate Videos
+                  </button>
                 </div>
               </div>
 
@@ -271,12 +291,6 @@ const YT_RecommendationView = () => {
                   </div>
                 </div>
               )}
-
-              <div className="popup-inner__button">
-                <button onClick={() => setIsReviewDialogVisible(true)}>
-                  Rate Videos
-                </button>
-              </div>
             </div>
           </div>
         </div>
