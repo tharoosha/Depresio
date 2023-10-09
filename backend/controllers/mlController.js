@@ -174,12 +174,10 @@ export async function spotify_recommend(req, res) {
     const pythonProcess = spawn("python3", [ "../ml_models/Spotify_Recommendation/spotifyRecommendExecution.py", mood,]);
 
     let output = "";
-    // let output = [];
 
     // Listen for data events from the Python script's stdout
     pythonProcess.stdout.on("data", (data) => {
       output += data.toString();
-      // output += data;
     });
 
     // Listen for the 'close' event to handle the completion of the Python script

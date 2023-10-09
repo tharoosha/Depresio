@@ -39,9 +39,14 @@ def script_run(input_mood):
 
         # return(output)
         # print(output)
-    
 
 if __name__ == "__main__":
+
+    input_mood = sys.argv[1]
+
+    script_run(input_mood)
+
+# if __name__ == "__main__":
     # spotifyRecommendScript.initialize()
 
     # Print current working directory
@@ -77,7 +82,7 @@ if __name__ == "__main__":
     #     # If no input_mood is provided, handle the case accordingly
     #     print(json.dumps({"error": "No mood provided"}))
     #     sys.stdout.flush()
-    script_run('joy')
+    # script_run('joy')
 
     # file_path = 'ml_models/spotify_recommendation/tokenizer.pkl'
     # if os.path.exists(file_path):
