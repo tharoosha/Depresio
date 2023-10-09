@@ -204,7 +204,6 @@ const YT_RecommendationView = () => {
     };
   }, [isReviewDialogVisible]);
 
-  // Save selected rating to local storage
   useEffect(() => {
     localStorage.setItem("rating", rating);
   }, [rating]);
