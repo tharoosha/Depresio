@@ -382,71 +382,19 @@
             }
           }
 
-          .flex {
-            display: flex;
-            // justify-content: space-between;
-            // background-color: rgba(118, 198, 134, 0.0509803922);
-            // border: 1px solid rgba(238, 238, 238, 0.1411764706);
-            // padding: 1px;
-            // border-radius: 2px;
-            width: 94.5%;
-            gap: 12px;
-          }
-
-          svg {
+          .star {
+            font-size: 24px;
             cursor: pointer;
-            font-size: 20px;
-          }
-          form {
-            display: flex;
-            flex-grow: 2;
-            gap: 12px;
-          }
-          .AI__wrapper__inner__2__footer__left {
-            flex-grow: 2;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-
-            // form{
-            //    width: 100%;
-            // }
-
-            textarea {
-              // display: flex;
-              // text-align:justify;
-
-              // justify-content: space-between;
-              font-size: 14px;
-              background-color: rgba(118, 198, 134, 0.0509803922);
-              border: 1px solid rgba(238, 238, 238, 0.1411764706);
-              padding: 8px;
-              border-radius: 2px;
-              width: 100%;
-              color: #fff;
-              // resize: vertical;
-            }
-
-            .textarea-placehodler {
-              position: absolute;
-            }
+            transition: color 0.2s;
           }
 
-          .AI__wrapper__inner__2__footer__right {
-            display: flex;
-            align-items: center;
+          .star:hover,
+          .star:hover ~ .star {
+            color: gold;
+          }
 
-            .submit-button {
-              background-color: rgba(118, 198, 134, 0.0509803922);
-              border: none;
-              cursor: pointer;
-            }
-            .submit-button > svg {
-              fill: white; /* Set the icon color to white */
-              width: 16px; /* Optional: Set the icon width */
-              height: 16px; /* Optional: Set the icon height */
-              margin-right: 8px; /* Optional: Add some spacing between the icon and text */
-            }
+          .star.active {
+            color: gold;
           }
         }
       }
