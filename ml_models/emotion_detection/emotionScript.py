@@ -9,6 +9,8 @@ import pickle
 from collections import deque
 import openai
 import backoff
+import json
+import sys
 
 def get_tweet(data):
     texts = [x['text'] for x in data]
@@ -190,16 +192,24 @@ def answer(tweet):
 # answer(['I have got lower marks than I expected in my exam.'])
 
 if __name__ == "__main__":
+    # Read the input from command line arguments
+    input = sys.argv[1]
+
     # print("I'm going to initialize")
     # model, tokenizer = initialize()
     # print("Initialized")
 
-    with open('ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
-        tokenizer = pickle.load(f)
-
-    model = tf.keras.models.load_model('ml_models/emotion_detection/emotion_model')
+    model, tokenizer, emotionQueue = initialize()
 
     # getInstantEmotion(['I am feeling sad'], model, tokenizer)
 
-    print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+    # print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+    
+    # Call the main function with the input
+    response = getEmotion(list(input), model, tokenizer, emotionQueue)
+    output = {"emotion": response}
+    output_json = json.dumps(output)
+    print(output_json)
+    sys.stdout.flush()
+
 

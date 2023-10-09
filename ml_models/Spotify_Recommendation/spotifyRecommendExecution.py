@@ -3,16 +3,12 @@ import pickle
 import tensorflow as tf
 import json
 import sys
-
+import config as cf
 import os
 
-CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
-CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
-REDIRECT_URI = "http://localhost:8081/callback"
-
-os.environ["CLIENT_ID"] = CLIENT_ID
-os.environ["CLIENT_SECRET"] = CLIENT_SECRET
-os.environ["REDIRECT_URI"] = REDIRECT_URI
+CLIENT_ID = cf.SPOTIFY_CLIENT_ID
+CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
+REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
 
 def script_run(input_mood):
     try:
@@ -43,9 +39,14 @@ def script_run(input_mood):
 
         # return(output)
         # print(output)
-    
 
 if __name__ == "__main__":
+
+    input_mood = sys.argv[1]
+
+    script_run(input_mood)
+
+# if __name__ == "__main__":
     # spotifyRecommendScript.initialize()
 
     # Print current working directory
@@ -81,7 +82,7 @@ if __name__ == "__main__":
     #     # If no input_mood is provided, handle the case accordingly
     #     print(json.dumps({"error": "No mood provided"}))
     #     sys.stdout.flush()
-    script_run('joy')
+    # script_run('joy')
 
     # file_path = 'ml_models/spotify_recommendation/tokenizer.pkl'
     # if os.path.exists(file_path):

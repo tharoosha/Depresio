@@ -12,6 +12,7 @@ import { registerMail } from "../controllers/mailer.js";
 /** POST Methods */
 router.route("/register").post(controller.register);
 router.route("/analyze").post(mlcontroller.analyzer);
+router.route("/emotion_analyze").post(mlcontroller.emotion_analyzer);
 router.route("/registerMail").post(registerMail);
 router.route("/authenticate").post(controller.verifyUser, (req, res) => res.end());
 router.route("/login").post(controller.verifyUser, controller.login);

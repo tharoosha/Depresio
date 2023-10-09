@@ -19,6 +19,7 @@ const AI_Assistant = () => {
 
 
    const [message, setMessage] = useState('');
+   const [emotion, setEmotion] = useState('');
    const [response, setResponse] = useState('');
    const [chatLog, setChatLog] = useState([]);
 
@@ -46,6 +47,13 @@ const AI_Assistant = () => {
          })
          .catch((error) => console.error(error));
 
+      axios
+         .post('http://localhost:3000/api/emotion_analyze', { message: message })
+         .then((response) => {
+            setEmotion(response.data.result)
+         })
+         .catch((error) => console.error(error));
+   
       // Clear the input field after submitting
       setMessage('');
       console.log(chatLog)
