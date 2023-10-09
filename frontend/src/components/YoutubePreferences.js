@@ -44,12 +44,10 @@ function YoutubePreferences() {
 
   const handlegetData = () => {
     const storedData = localStorage.getItem("selectedCategories");
+    const rating = localStorage.getItem("rating");
     console.log(storedData);
+    console.log(rating);
   };
-
-  
-
-  
 
   return (
     <div className="AI mt--24 mb--48">
