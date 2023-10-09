@@ -45,6 +45,7 @@ async function get_youtube_videos_from_preferences(
 
 const YT_RecommendationView = () => {
   const [videoIds, setVideoIds] = useState([]);
+
   const apiKey = keys.YOUTUBE_API_KEY;
   const storedData = localStorage.getItem("selectedCategories");
 

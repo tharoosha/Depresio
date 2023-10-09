@@ -54,9 +54,8 @@ function YoutubePreferences() {
           <div className=" AI__wrapper__inner__2">
             <div className="AI__wrapper__inner__2__header">
               <p>
-                I'm here to help you. Please let me know what you need
-                assistance with, and I'll do my best to provide the information
-                or guidance you're looking for!
+                Please select your preferences and I will recommend you videos
+                based on your preferences.
               </p>
             </div>
 
@@ -82,17 +81,22 @@ function YoutubePreferences() {
               </div>
             </div>
             <div>
-              
               <div>
                 <button
                   type="submit"
                   className="btn btn-primary"
+                  style={{
+                    margin: "30px",
+                  }}
                   onClick={handleSubmit}
                 >
                   Submit
                 </button>
                 <button
                   type="submit"
+                  style={{
+                    margin: "30px",
+                  }}
                   className="btn btn-secondary"
                   onClick={handlegetData}
                 >
