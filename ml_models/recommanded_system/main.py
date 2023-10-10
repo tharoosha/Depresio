@@ -50,7 +50,3 @@ def update_user_feedback(feedback: UserFeedbackUpdate):
     return {"message": "User feedback updated successfully"}
 
 
-# Entry point to run the app
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)

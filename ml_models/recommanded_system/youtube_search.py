@@ -67,7 +67,7 @@ def search_youtube_videos(video_types_probabilities):
     return videos_info[:max_videos]
 
 
-def get_youtube_videos_from_preferences(api_key, categories, max_results=5):
+def get_youtube_videos_from_preferences(api_key, categories, max_results=3):
     base_url = "https://www.googleapis.com/youtube/v3/search"
     video_links = []
 
@@ -95,7 +95,7 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=5):
     return video_links
 
 
-categories = ["Travel & Events", "Gaming", "Comedy", "Horror", "Drama"]
+categories = ["Gaming"]
 videos = get_youtube_videos_from_preferences(API_KEY, categories)
 for video in videos:
     print(video)
