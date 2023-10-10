@@ -12,7 +12,7 @@ const app = express();
 // listen the changes of this file on port 3000
 app.use(express.json());
 
-const port = 5000;
+const port = 5001;
 
 // Enable CORS for all routes
 app.use(cors());

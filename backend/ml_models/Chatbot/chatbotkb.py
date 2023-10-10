@@ -13,7 +13,7 @@ import backoff
 
 
 # os.environ['OPENAI_API_KEY'] = "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"
-openai.api_key = "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"
+openai.api_key = "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"
 
 def create_Index(path):
     max_input = 4096
@@ -48,7 +48,7 @@ def answerMe(question):
         # create_Index("/Volumes/Transcend/Development/Depresio/ml_models/Chatbot/Knowledge")
 
         # get query
-        storage_context = StorageContext.from_defaults(persist_dir = '/Volumes/Transcend/Development/Depresio/backend/ml_models/Chatbot/Store')
+        storage_context = StorageContext.from_defaults(persist_dir = '/usr/src/app/ml_models/Chatbot/Store')
         index = load_index_from_storage(storage_context)
 
         query_engine = index.as_query_engine()
@@ -85,6 +85,7 @@ if __name__ == '__main__':
     # Call the main function with the input
     answerMe(input)
     # print(answerMe("i'm sleepy right now"))
+
     
 
 

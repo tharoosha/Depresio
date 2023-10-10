@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import { error } from "console";
 
-/** POST: http://localhost:3000/api/analyze */
+/** POST: http://localhost:5001/api/analyze */
 /** 
  * @param : {
   "message" : "Hello",
@@ -10,7 +10,7 @@ import { error } from "console";
 export async function analyzer(req, res) {
   const { message } = req.body;
   try {
-    const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
+    const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/chatbotkb.py", message,]);
 
     let result = "";
 
@@ -18,7 +18,6 @@ export async function analyzer(req, res) {
     process.stdout.on("data", (data) => {
       result += data.toString();
     });
-
     // Listen for the 'close' event to handle the completion of the Python script
     process.on("close", (code) => {
       if (code === 0) {
@@ -30,6 +29,7 @@ export async function analyzer(req, res) {
           res.status(500).json({ error: "Failed to parse JSON response" });
         }
       } else {
+        
         res.status(500).json({ error: "Python script exited with an error" });
       }
     });
@@ -43,7 +43,7 @@ export async function analyzer(req, res) {
   }
 }
 
-/** GET: http://localhost:3000/api/youtube_videos */
+/** GET: http://localhost:5001/api/youtube_videos */
 /** 
  * @param : {
   "mood" : "Happiness",
@@ -131,7 +131,7 @@ export async function video_predict(req, res) {
     Make sure this code segment work. Coudn't test as the backend and frontend are not working properly
 */
 
-/** GET: http://localhost:3000/api/spotify_recommend */
+/** GET: http://localhost:5001/api/spotify_recommend */
 /** 
  * @param : {
   "mood" : "joy",
