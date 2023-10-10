@@ -10,7 +10,7 @@ import { error } from "console";
 export async function analyzer(req, res) {
   const { message } = req.body;
   try {
-    const process = spawn("python3", ["../ml_models/Chatbot/chatbotkb.py", message,]);
+    const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
 
     let result = "";
 
@@ -55,7 +55,7 @@ export async function video_predict(req, res) {
     const { mood } = req.body;
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", ["../ml_models/recommanded_system/combinedScript.py",mood,]);
+    const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["../ml_models/recommanded_system/combinedScript.py",mood,]);
 
     let output = "";
 
@@ -143,7 +143,7 @@ export async function spotify_recommend(req, res) {
     const { mood } = req.body;
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [ "../ml_models/Spotify_Recommendation/spotifyRecommendExecution.py", mood,]);
+    const pythonProcess = spawn("python3", [ "../backend/ml_models/spotify_recommendation/spotifyRecommendExecution.py", mood,]);
 
     let output = "";
     // let output = [];

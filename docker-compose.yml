@@ -1,20 +1,27 @@
 version: '3'
 
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
-
   frontend:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: frontend
+      dockerfile: Dockerfile.frontend
     ports:
-      - "80:80"
-    environment:
-      - NODE_ENV=development
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-networks
+
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile.backend
+    ports:
+      - "5000:5000"
+    networks:
+      - app-networks
+
+
+networks:
+  app-networks:
+

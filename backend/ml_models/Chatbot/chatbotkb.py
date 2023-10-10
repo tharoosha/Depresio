@@ -6,11 +6,14 @@ import os
 import openai
 from llama_index import ServiceContext
 import backoff
-import config as cf
+
+# from dotenv import load_dotenv
+
+# load_dotenv()
 
 
-os.environ['OPENAI_API_KEY'] = cf.OPENAI_API_KEY
-
+# os.environ['OPENAI_API_KEY'] = "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"
+openai.api_key = "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"
 
 def create_Index(path):
     max_input = 4096
@@ -45,7 +48,7 @@ def answerMe(question):
         # create_Index("/Volumes/Transcend/Development/Depresio/ml_models/Chatbot/Knowledge")
 
         # get query
-        storage_context = StorageContext.from_defaults(persist_dir = 'Store')
+        storage_context = StorageContext.from_defaults(persist_dir = '/Volumes/Transcend/Development/Depresio/backend/ml_models/Chatbot/Store')
         index = load_index_from_storage(storage_context)
 
         query_engine = index.as_query_engine()
@@ -63,6 +66,8 @@ def answerMe(question):
         # print(response)
         sys.stdout.flush()
         return response
+    except openai.error.OpenAIError as oe:
+        print(f"OpenAI error: {oe}")
     except Exception as e:
         error_message = str(e)
         output = {"error2011": error_message}
