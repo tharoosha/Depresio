@@ -38,7 +38,7 @@ const AI_Assistant = () => {
 
       // Make an HTTP request to the backend API to analyze user input using axios
       axios
-         .post('http://localhost:3000/api/analyze', { message: message })
+         .post('http://localhost:5001/api/analyze', { message: message })
          .then((response) => {
             const updatedChatLogWithAI = [...updatedChatLog, { user: "AI_Consultant", message: response.data.result }];
             setChatLog(updatedChatLogWithAI)
