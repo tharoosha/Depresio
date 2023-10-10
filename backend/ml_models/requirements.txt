@@ -20,3 +20,6 @@ python-dotenv
 chainlit
 unstructured
 sentence_transformers
+
+gTTS
+flac
