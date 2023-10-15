@@ -10,7 +10,7 @@ import backoff
 # from dotenv import load_dotenv
 
 # load_dotenv()
-
+# load
 
 # os.environ['OPENAI_API_KEY'] = "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"
 openai.api_key = "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"
