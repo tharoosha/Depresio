@@ -23,6 +23,10 @@ const AI_Assistant = () => {
    const [chatLog, setChatLog] = useState([]);
 
    const chatContainerRef = useRef(null);
+
+   const [isRecording, setIsRecording] = useState(false);
+   const [mediaRecorder, setMediaRecorder] = useState(null);
+
    //Scroll to the bottom of the chat container whenever a new message is added
    useEffect(()=>{
       if (chatContainerRef.current){
@@ -30,6 +34,46 @@ const AI_Assistant = () => {
       }
    }, [response]);
 
+   const startRecording = async () => {
+      if (isRecording) {
+        mediaRecorder.stop();
+        setIsRecording(false);
+        return;
+      }
+
+      try {
+         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+         const recorder = new MediaRecorder(stream);
+         const audioChunks = [];
+     
+         recorder.ondataavailable = event => {
+           audioChunks.push(event.data);
+         };
+     
+         recorder.onstop = async () => {
+           const audioBlob = new Blob(audioChunks);
+           const formData = new FormData();
+           formData.append('audio', audioBlob, 'userVoice.wav');
+     
+           // Send the audio data to the Node.js backend
+           axios.post('http://localhost:5001/api/voice-input', formData)
+             .then((response) => {
+                 const updatedChatLogWithAI = [...chatLog, { user: "AI_Consultant", message: response.data.result }];
+                 setChatLog(updatedChatLogWithAI);
+                 setResponse(response.data.result);
+             })
+             .catch(error => console.error(error));
+         };
+     
+         setIsRecording(true);
+         recorder.start();
+         setMediaRecorder(recorder);
+      }
+      catch (error){
+         console.error('Error accessing the microphone:', error);
+      }
+
+   };
 
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -96,7 +140,10 @@ const AI_Assistant = () => {
                         <div className="flex">
                            <form onSubmit={handleSubmit}>
                               <div className="AI__wrapper__inner__2__footer__left">
-                                 <BsFillMicFill />
+
+                                 <button type='button' className='record_button' onClick={startRecording}>
+                                    <BsFillMicFill />
+                                 </button>
                                  <textarea 
                                     placeholder='You can ask me anything! I am here to help 🙂'
                                     value={message}

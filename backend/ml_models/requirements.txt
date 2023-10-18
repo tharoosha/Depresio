@@ -21,5 +21,11 @@ chainlit
 unstructured
 sentence_transformers
 
-gTTS
-flac
+
+transformers==4.25.1
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==1.13.1+cpu
+gradio==3.14.0
+SpeechRecognition==3.9.0
+mtranslate==1.8
+gTTS==2.3.0
