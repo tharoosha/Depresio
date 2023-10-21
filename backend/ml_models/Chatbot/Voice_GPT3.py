@@ -1,74 +1,47 @@
-import openai
-import pyttsx3
-import speech_recognition as sr
-import time 
+from speech_recognition import AudioFile, Recognizer
+import sys
+import json
 
-# Set you OpenAI API Key 
-openai.api_key = "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"
+def stt(audio: object):
+    """Converts speech to text.
+    Args:
+        audio: record of user speech
+    Returns:
+        text (str): recognized speech of user
+    """
+    
+    # Create a Recognizer object
+    r = Recognizer()
+    # Open the audio file
+    with AudioFile(audio) as source:
+        # Listen for the data (load audio to memory)
+        audio_data = r.record(source)
+        # Transcribe the audio using Google's speech-to-text API
+    
+        text = r.recognize_google(audio_data)
+    
+    # desired_output = 
+    # print(desired_output)
 
-#Initialize the text-to-speech engine
-engine = pyttsx3.init('dummy') 
 
-def transcribe_audio_to_text(filename):
-    recognizer  = sr.Recognizer()
-    with sr.AudioFile(filename) as source:
-        audio = recognizer.record(source)
-    try:
-        return recognizer.recognize_google(audio)
-    except:
-        print("Skipping unknown error")
 
-# def generate_response(prompt):
-#     response = openai.Completion.create(
-#         engine='text-davinci-003',
-#         prompt=prompt,
-#         max_tokens = 4000,
-#         n = 1,
-#         stop= None,
-#         temperature= 0.5,
-#     )
-#     return response["choices"][0]['text']
+    response = str(text)
 
-def speak_text(text):
-    engine.say(text)
-    engine.runAndWait()
+    output = {"result": response}
 
-def main():
-    while True:
-        # wait for user to say "genius"
-        print("say Genius to start recording your question...")
-        with sr.Microphone() as source:
-            recognizer = sr.Recognizer()
-        #     audio = recognizer.listen(source)
-        #     try:
-        #         transcription = recognizer.recognize_google(audio)
-        #         if transcription.lower() == "genius":
-        #             # Record audio
-        #             # filename = "Input.wav"
-        #             print("Say you question...")
-        #             with sr.Microphone() as source:
-        #                 recognizer = sr.Recognizer()
-        #                 source.pause_threshold = 1
-        #                 audio = recognizer.listen(source, phrase_time_limit=None, timeout=None)
-        #                 # with open(filename, 'wb') as f:
-        #                     # f.write(audio.get_wav_data())
-                    
-        #             # Transcribe audio to text
-        #             # text = transcribe_audio_to_text(filename)
-        #             text = recognizer.recognize_google(audio)
-        #             if text:
-        #                 print(f"You said: {text}")
+    # output_json = json.dumps(output)
+    print(output)
+    # sys.stdout.flush()
+    # return response
 
-        #                 # generate response using GPT_3
-        #                 response = generate_response(text)
-        #                 print(f"GPT-3 say: {response}")
 
-        #                 # Read response using text-to-speech
-        #                 # speak_text(response)
-        #                 engine.say(response)
-        #                 engine.runAndWait()
-        #     except Exception as e:
-        #         print("An error occurred: {}".format(e))
 
 if __name__ == "__main__":
-    main()
+    # audio_data = sys.stdin.buffer.read()
+    # stt("backend/ml_models/temp_audio.wav")
+    # print(result)
+    # print(audio_data)
+    
+    # audio_data = sys.stdin.read()  # Get audio file path from command line
+    audio_data = sys.argv[1]
+    stt(audio_data)
