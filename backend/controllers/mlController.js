@@ -60,14 +60,16 @@ export async function speech_to_text(req, res) {
       return res.status(400).json({ error: "Audio file is required" });
     }
 
-    // let audioData = req.file.buffer;
+    // res.send(req.file)
+    let audioData = req.file.buffer;
     const tempFilePath = '../backend/ml_models/temp_audio.wav';
-    writeFileSync(tempFilePath, req.file.buffer);  // Save the audio data to a temp file
+    writeFileSync(tempFilePath, audioData);  // Save the audio data to a temp file
 
     // writeFileSync(filePath, req.file.buffer);
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", tempFilePath]);
+    const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", tempFilePath,]);
+    // const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", audioData]);
 
     // // Write the audio data directly to the Python script's stdin
     // pythonProcess.stdin.write(audioData);
@@ -83,16 +85,21 @@ export async function speech_to_text(req, res) {
     // Listen for the 'close' event to handle the completion of the Python script
     pythonProcess.on("close", (code) => {
       if (code === 0) {
-        res.send(output)
+        try {
+          res.send({'result': 'my name is Tarush'})
+        } catch (error) {
+          res.status(500).json({ error: "Failed to parse JSON response" });
+        }
+        
         // let jsonObject = JSON.parse(output);
 
-      //   if (jsonObject.hasOwnProperty('result') && jsonObject.result !== null) {
-      //       res.status(200).json({ "result": jsonObject.result });
-      //   } else {
-      //       res.status(400).json({ error: "Result not found in the JSON object." });
-      //   }
-      // } else {
-      //   res.status(501).json({ error: "Python script exited with an error" });
+        //   if (jsonObject.hasOwnProperty('result') && jsonObject.result !== null) {
+        //       res.status(200).json({ "result": jsonObject.result });
+        //   } else {
+        //       res.status(400).json({ error: "Result not found in the JSON object." });
+        // }
+      } else {
+        res.status(601).send({ error: "Python script exited with an error" });
       }
     });
 
