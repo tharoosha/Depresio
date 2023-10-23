@@ -155,7 +155,7 @@ async function get_youtube_videos_from_preferences(
       q: category,
       type: "video",
       maxResults: max_results,
-      key: "AIzaSyDBZvJ8PM_LySjL8I_Mjqp78TUUrJUqJIE",
+      key: api_key,
     });
 
     const response = await fetch(`${base_url}?${params.toString()}`);
@@ -184,7 +184,7 @@ const YT_RecommendationView = () => {
   const [isReviewDialogVisible, setIsReviewDialogVisible] = useState(false);
   const [rating, setRating] = useState(0);
 
-  const apiKey = 'AIzaSyDBZvJ8PM_LySjL8I_Mjqp78TUUrJUqJIE'
+  const apiKey = "AIzaSyDBZvJ8PM_LySjL8I_Mjqp78TUUrJUqJIE";
   const storedData = localStorage.getItem("selectedCategories");
 
   const handleRating = (selectedRating) => {
