@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import keys from "../pages/Keys";
 
 function YoutubePreferences() {
   const [categoriesName, setCategoriesName] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const YOUTUBE_API_KEY = keys.YOUTUBE_API_KEY;
+  const YOUTUBE_API_KEY = "AIzaSyDBZvJ8PM_LySjL8I_Mjqp78TUUrJUqJIE";
   const YOUTUBE_CATEGORIES_URL = `https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key=${YOUTUBE_API_KEY}`;
 
   useEffect(() => {

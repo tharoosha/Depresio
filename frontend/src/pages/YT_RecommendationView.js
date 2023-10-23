@@ -140,7 +140,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/YT_RecommendationView.scss";
 import { Link } from "react-router-dom";
-import keys from "./Keys";
 
 async function get_youtube_videos_from_preferences(
   api_key,
@@ -156,7 +155,7 @@ async function get_youtube_videos_from_preferences(
       q: category,
       type: "video",
       maxResults: max_results,
-      key: api_key,
+      key: "AIzaSyDBZvJ8PM_LySjL8I_Mjqp78TUUrJUqJIE",
     });
 
     const response = await fetch(`${base_url}?${params.toString()}`);
@@ -185,7 +184,7 @@ const YT_RecommendationView = () => {
   const [isReviewDialogVisible, setIsReviewDialogVisible] = useState(false);
   const [rating, setRating] = useState(0);
 
-  const apiKey = keys.YOUTUBE_API_KEY;
+  const apiKey = 'AIzaSyDBZvJ8PM_LySjL8I_Mjqp78TUUrJUqJIE'
   const storedData = localStorage.getItem("selectedCategories");
 
   const handleRating = (selectedRating) => {
