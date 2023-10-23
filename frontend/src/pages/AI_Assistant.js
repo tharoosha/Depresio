@@ -7,7 +7,8 @@ import logo from '../images/depresio-logo-bg-removed.jpeg';
 import { BsFillMicFill, BsSendCheck } from 'react-icons/bs';
 import useFetch from '../hooks/fetch.hook';
 import { useAuthStore } from '../store/store'
-
+import { MediaRecorder, register } from 'extendable-media-recorder';
+import { connect } from 'extendable-media-recorder-wav-encoder';
 
 import axios from 'axios';
 
@@ -15,7 +16,7 @@ const AI_Assistant = () => {
 
    const { username } = useAuthStore(state => state.auth)
    const [{ isLoading, apiData, serverError }] = useFetch(`/user/${username}`)
-
+   let voice_message
 
    const [message, setMessage] = useState('');
    const [response, setResponse] = useState('');
@@ -41,10 +42,6 @@ const AI_Assistant = () => {
    const startRecording = async () => {
 
       if (isRecording) {
-      //    mediaRecorder.stop();
-      // //    console.log(mediaRecorder.state);
-      //    setIsRecording(false);
-      //    return;
          if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
             setIsRecording(false);
@@ -52,56 +49,61 @@ const AI_Assistant = () => {
          return;
       }
 
-      // if (!isRecording){
-      //    mediaRecorder.start();
-      //    console.log(mediaRecorder.state);
-      //    setMediaRecorder(recorder);
-      // }
       
       try {
-         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-         // const recorder = new MediaRecorder(stream);
-         // setMediaRecorder(recorder);
-         mediaRecorderRef.current = new MediaRecorder(stream);
+         
+
+         if (mediaRecorderRef.current === null) {
+            await register(await connect());
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'audio/wav' });
+
+         }
          const audioChunks = [];
      
-         // mediaRecorder.ondataavailable = function(ev) {
-         //   audioChunks.push(ev.data);
-         // };
+
          mediaRecorderRef.current.ondataavailable = function(ev) {
             audioChunks.push(ev.data)
          }
-         // console.log(recorder.onstop)
+
          mediaRecorderRef.current.onstop = async () => {
             console.log("data available after MediaRecorder.stop() called.");
             const audioBlob = new Blob(audioChunks);
             const formData = new FormData();
             const audioFile = new File([audioBlob], 'userVoice.wav', { type: 'audio/wav' });
             formData.append('audio', audioFile);
+
             
+            
+
             console.log(formData.get('audio'));
             // Send the audio data to the Node.js backend
             axios.post('http://localhost:5001/api/voice-input', formData)
                .then((response) => {
-                  console.log(response.data)
-               //   const updatedChatLogWithVoice = [...chatLog, { user: "User", message: response.data.result }];
-               //   setChatLog(updatedChatLogWithVoice);
-               //   setMessage(response.data.result);
+                  console.log(response.data.result)
+                  const updatedChatLogWithVoice = [...chatLog, { user: "User", message: response.data.result }];
+                  setChatLog(updatedChatLogWithVoice);
+                  // setMessage(response.data.result);
+                  
+                  const voice_message = response.data.result;
+
+                  // console.log(chatLog)
+                  // Make an HTTP request to the backend API to analyze user input using axios
+                  axios.post('http://localhost:5001/api/analyze', { message: voice_message })
+                     .then((response) => {
+                        const updatedChatLogWithAI = [...chatLog, { user: "AI_Consultant", message: response.data.result }];
+                        setChatLog(updatedChatLogWithAI)
+                        setResponse(response.data.result)
+                     })
+                     .catch((error) => console.error(error));
+      
+                  console.log('chatLog')
+
+
                })
             .catch(error => console.error(error));
-             
-            // // Make an HTTP request to the backend API to analyze user input using axios
-            // axios.post('http://localhost:5001/api/analyze', { message: message })
-            // .then((response) => {
-            //    const updatedChatLogWithAI = [...chatLog, { user: "AI_Consultant", message: response.data.result }];
-            //    setChatLog(updatedChatLogWithAI)
-            //    setResponse(response.data.result)
-            // })
-            // .catch((error) => console.error(error));
-
-            // // Clear the input field after submitting
-            // setMessage('');
-            console.log('chatLog')
+            
+            
          };
      
          setIsRecording(true);
@@ -114,73 +116,7 @@ const AI_Assistant = () => {
       }
 
    };
-//    const startRecording = (e) => {
-//       e.preventDefault();
-  
-//       // No need to get the user's microphone every time.
-//       // Just check if we already have the MediaRecorder instance.
-//       if (mediaRecorder) {
-//           if (isRecording) {
-//               mediaRecorder.stop();
-//               setIsRecording(false);
-//               console.log("Recording stopped.");
-//           } else {
-//               mediaRecorder.start();
-//               setIsRecording(true);
-//               console.log("Recording started.");
-//           }
-//       } else {
-//           if (navigator.mediaDevices) {
-//               console.log("getUserMedia supported.");
-//               const constraints = { audio: true };
-//               let chunks = [];
-  
-//               navigator.mediaDevices
-//                   .getUserMedia(constraints)
-//                   .then((stream) => {
-//                         const newMediaRecorder = new MediaRecorder(stream);
-  
-//                         newMediaRecorder.ondataavailable = (e) => {
-//                           chunks.push(e.data);
-//                         };
-  
-//                         newMediaRecorder.onstop = (e) => {
-//                            console.log("data available after MediaRecorder.stop() called.");
 
-//                            const audioBlob = new Blob(chunks);
-//                            const formData = new FormData();
-//                            formData.append('audio', audioBlob, 'userVoice.wav');
-
-//                            for (let pair of formData.entries()) {
-//                               console.log(pair[0] + ': ' + pair[1]);
-//                            }
-                           
-//                            console.log(formData)
-//                            // Send the audio data to the Node.js backend
-//                            axios.post('http://localhost:5001/api/voice-input', formData)
-//                            .then((response) => {
-//                               // const updatedChatLogWithVoice = [...chatLog, { user: "User", message: response.data.result }];
-//                               // setChatLog(updatedChatLogWithVoice);
-//                               // setMessage(response.data.result);
-//                               console.log(response.data.result)
-//                            })
-//                            .catch(error => console.error(error));
-                          
-//                         };
-  
-//                       // Set the mediaRecorder state so we can use it next time
-//                       setMediaRecorder(newMediaRecorder);
-//                       newMediaRecorder.start();
-//                       setIsRecording(true);
-//                       console.log("Recording started.");
-//                   })
-//                   .catch((err) => {
-//                       console.error(`The following error occurred: ${err}`);
-//                   });
-//           }
-//       }
-//   };
-  
 
    const handleSubmit = (e) => {
       e.preventDefault();

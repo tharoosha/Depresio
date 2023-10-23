@@ -17,6 +17,7 @@ import { registerMail } from "../controllers/mailer.js";
 router.route("/register").post(controller.register);
 router.route("/analyze").post(ml_controller.analyzer);
 router.route("/voice-input").post(upload.single('audio'), ml_controller.speech_to_text);
+// router.route("/voice-input").post(ml_controller.speech_to_text);
 router.route("/registerMail").post(registerMail);
 router.route("/authenticate").post(controller.verifyUser, (req, res) => res.end());
 router.route("/login").post(controller.verifyUser, controller.login);

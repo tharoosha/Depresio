@@ -60,15 +60,18 @@ export async function speech_to_text(req, res) {
       return res.status(400).json({ error: "Audio file is required" });
     }
 
+    // req.formData().then((data) => {
+    //   console.log("data is came...")
+    // })
     // res.send(req.file)
     let audioData = req.file.buffer;
     const tempFilePath = '../backend/ml_models/temp_audio.wav';
     writeFileSync(tempFilePath, audioData);  // Save the audio data to a temp file
-
+    // console.log("file is created..")
     // writeFileSync(filePath, req.file.buffer);
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", tempFilePath,]);
+    const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", tempFilePath]);
     // const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", audioData]);
 
     // // Write the audio data directly to the Python script's stdin
@@ -82,11 +85,12 @@ export async function speech_to_text(req, res) {
       output += data.toString();
     });
 
+
     // Listen for the 'close' event to handle the completion of the Python script
-    pythonProcess.on("close", (code) => {
+    pythonProcess.on("close", (code, signal) => {
       if (code === 0) {
         try {
-          res.send({'result': 'my name is Tarush'})
+          res.send({'result': output})
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
         }
@@ -99,6 +103,7 @@ export async function speech_to_text(req, res) {
         //       res.status(400).json({ error: "Result not found in the JSON object." });
         // }
       } else {
+        console.log(code)
         res.status(601).send({ error: "Python script exited with an error" });
       }
     });
