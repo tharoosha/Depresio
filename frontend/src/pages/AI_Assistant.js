@@ -7,8 +7,8 @@ import logo from '../images/depresio-logo-bg-removed.jpeg';
 import { BsFillMicFill, BsSendCheck } from 'react-icons/bs';
 import useFetch from '../hooks/fetch.hook';
 import { useAuthStore } from '../store/store'
-
-
+import { MediaRecorder, register } from 'extendable-media-recorder';
+import { connect } from 'extendable-media-recorder-wav-encoder';
 
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ const AI_Assistant = () => {
 
    const { username } = useAuthStore(state => state.auth)
    const [{ isLoading, apiData, serverError }] = useFetch(`/user/${username}`)
-
+   let voice_message
 
    const [message, setMessage] = useState('');
    const [response, setResponse] = useState('');
@@ -25,7 +25,11 @@ const AI_Assistant = () => {
    const chatContainerRef = useRef(null);
 
    const [isRecording, setIsRecording] = useState(false);
-   const [mediaRecorder, setMediaRecorder] = useState(null);
+   // const [mediaRecorder, setMediaRecorder] = useState(null);
+   const mediaRecorderRef = useRef(null);
+
+   // const stream = navigator.mediaDevices.getUserMedia({ audio: true });
+
 
    //Scroll to the bottom of the chat container whenever a new message is added
    useEffect(()=>{
@@ -34,46 +38,85 @@ const AI_Assistant = () => {
       }
    }, [response]);
 
+
    const startRecording = async () => {
+
       if (isRecording) {
-        mediaRecorder.stop();
-        setIsRecording(false);
-        return;
+         if (mediaRecorderRef.current) {
+            mediaRecorderRef.current.stop();
+            setIsRecording(false);
+         }
+         return;
       }
 
+      
       try {
-         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-         const recorder = new MediaRecorder(stream);
+         
+
+         if (mediaRecorderRef.current === null) {
+            await register(await connect());
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'audio/wav' });
+
+         }
          const audioChunks = [];
      
-         recorder.ondataavailable = event => {
-           audioChunks.push(event.data);
-         };
-     
-         recorder.onstop = async () => {
-           const audioBlob = new Blob(audioChunks);
-           const formData = new FormData();
-           formData.append('audio', audioBlob, 'userVoice.wav');
-     
-           // Send the audio data to the Node.js backend
-           axios.post('http://localhost:5001/api/voice-input', formData)
-             .then((response) => {
-                 const updatedChatLogWithAI = [...chatLog, { user: "AI_Consultant", message: response.data.result }];
-                 setChatLog(updatedChatLogWithAI);
-                 setResponse(response.data.result);
-             })
-             .catch(error => console.error(error));
+
+         mediaRecorderRef.current.ondataavailable = function(ev) {
+            audioChunks.push(ev.data)
+         }
+
+         mediaRecorderRef.current.onstop = async () => {
+            console.log("data available after MediaRecorder.stop() called.");
+            const audioBlob = new Blob(audioChunks);
+            const formData = new FormData();
+            const audioFile = new File([audioBlob], 'userVoice.wav', { type: 'audio/wav' });
+            formData.append('audio', audioFile);
+
+            
+            
+
+            console.log(formData.get('audio'));
+            // Send the audio data to the Node.js backend
+            axios.post('http://localhost:5001/api/voice-input', formData)
+               .then((response) => {
+                  console.log(response.data.result)
+                  const updatedChatLogWithVoice = [...chatLog, { user: "User", message: response.data.result }];
+                  setChatLog(updatedChatLogWithVoice);
+                  // setMessage(response.data.result);
+                  
+                  const voice_message = response.data.result;
+
+                  // console.log(chatLog)
+                  // Make an HTTP request to the backend API to analyze user input using axios
+                  axios.post('http://localhost:5001/api/analyze', { message: voice_message })
+                     .then((response) => {
+                        const updatedChatLogWithAI = [...chatLog, { user: "AI_Consultant", message: response.data.result }];
+                        setChatLog(updatedChatLogWithAI)
+                        setResponse(response.data.result)
+                     })
+                     .catch((error) => console.error(error));
+      
+                  console.log('chatLog')
+
+
+               })
+            .catch(error => console.error(error));
+            
+            
          };
      
          setIsRecording(true);
-         recorder.start();
-         setMediaRecorder(recorder);
+         mediaRecorderRef.current.start();
+         // console.log(mediaRecorder.state);
+         // setMediaRecorder(recorder);
       }
       catch (error){
          console.error('Error accessing the microphone:', error);
       }
 
    };
+
 
    const handleSubmit = (e) => {
       e.preventDefault();
