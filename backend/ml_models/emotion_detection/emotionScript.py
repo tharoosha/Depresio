@@ -9,6 +9,8 @@ import pickle
 from collections import deque
 import openai
 import backoff
+import sys
+import json
 
 def get_tweet(data):
     texts = [x['text'] for x in data]
@@ -142,7 +144,7 @@ def makePrediction(tweet, model, tokenizer):
 
 # Set up your OpenAI API credentials
 # openai.api_key = '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'
-openai.api_key = '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'
+openai.api_key = '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'
 
 def get_completion(prompt, model="gpt-3.5-turbo"):
 # def get_completion(prompt, model="text-davinci-002"):
@@ -194,12 +196,33 @@ if __name__ == "__main__":
     # model, tokenizer = initialize()
     # print("Initialized")
 
-    with open('ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
+    with open('backend/ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
         tokenizer = pickle.load(f)
 
-    model = tf.keras.models.load_model('ml_models/emotion_detection/emotion_model')
+    model = tf.keras.models.load_model('backend/ml_models/emotion_detection/emotion_model')
 
     # getInstantEmotion(['I am feeling sad'], model, tokenizer)
 
-    print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+    # print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+
+    #     # Read the input from command line arguments
+    input = sys.argv[1]
+
+    # print("I'm going to initialize")
+    # model, tokenizer = initialize()
+    # print("Initialized")
+
+    # model, tokenizer, emotionQueue = initialize()
+
+    # # getInstantEmotion(['I am feeling sad'], model, tokenizer)
+
+    # # print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+    
+    # # Call the main function with the input
+    response = getInstantEmotion(list(input), model, tokenizer)
+    # response = getEmotion(list(input), model, tokenizer, emotionQueue)
+    output = {"emotion": response}
+    output_json = json.dumps(output)
+    print(output_json)
+    sys.stdout.flush()
 
