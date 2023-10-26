@@ -21,7 +21,7 @@ const Hero = () => {
                            <Link to="/assistant">Access Our AI Assistant</Link>
                            <Link to="/music-therapy">Music Therapy</Link>
                            <Link to="/yt-recommendation">Recommendations</Link>
-                           <Link to='/profile'>Profile</Link>
+                           <Link to="/profile">Profile</Link>
                         </li>
                      </ul>
                   </div>
@@ -35,11 +35,11 @@ const Hero = () => {
                <div className="flex">
                   <div className="flex">
                      <div className="hero__heading">
-                        <h1>Let's build from here!</h1>
-                        <p className="para--24 mt--16">Harnessed for productivity. Designed for collaboration. Celebrated for built-in security. Welcome to the platform developers love.</p>
+                        <h1>Your Mental Wellness Starts Here!</h1>
+                        <p className="para--24 mt--16">AI Guidance for a Stress-Free Work-Life Balance</p>
                         <button className="btn mt--24">Get Started</button>
                      </div>
-                     <img src={Assistant} alt="Assistant" />
+                     <img src={logo} alt="Assistant" />
                   </div>
                </div>
             </div>

@@ -1,8 +1,21 @@
 @import 'variables';
 
 footer {
-   background: #060b2785;
+   background: #0a0a0a;
    padding: 20px 0;
    border-top: 1px solid rgba(238, 238, 238, 0.1411764706);
-   margin-top: 35px;
+   border-bottom: 1px solid rgba(238, 238, 238, 0.1411764706);
+   // margin-top: 35px;
+
+   p {
+      font-size: 14px;
+   }
+}
+
+@media (max-width: 980px) {
+   footer {
+      p {
+         font-size: 12px;
+      }
+   }
 }
