@@ -67,6 +67,8 @@
 import requests
 from urllib.parse import quote_plus
 import random
+import sys
+import json
 API_KEY = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
 
 
@@ -127,8 +129,34 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=3):
 
     return video_links
 
+def youtube_lists(input):
+    try:
+        # Parse the JSON data
+        normal_list = json.loads(input)
 
-categories = ["Gaming"]
-videos = get_youtube_videos_from_preferences(API_KEY, categories)
-for video in videos:
-    print(video)
+        categories = ["Gaming"]
+        videos = get_youtube_videos_from_preferences(API_KEY, normal_list)
+        # for video in videos:
+        #     print(video)
+
+        json_string = json.dumps(videos)
+
+        print(json_string)
+        return json_string
+    
+    except:
+        error_message = str(e)
+        output = {"error2011": error_message}
+
+        output_json = json.dumps(output)
+        print(output_json)
+        sys.stdout.flush()
+
+if __name__ == '__main__':
+    # json list looks like '["Gaming"]'
+    input = sys.argv[1]
+
+    youtube_lists(input)
+
+    
+    

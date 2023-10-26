@@ -212,6 +212,56 @@ export async function emotion_analyzer(req, res) {
 }
 
 
+/** POST: http://localhost:5001/api/youtube_list */
+/** 
+ * @param : {
+  "categories" : ["Gaming"],
+}
+*/
+
+export async function youtube_lists(req, res) {
+  const { categories } = req.body;
+  try {
+    // console.log(tweet)
+    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", categories,]);
+
+    let youtube_list = ""
+    process.stdout.on("data", (data) => {
+      youtube_list = data.toString();
+    });
+
+    process.on("close", (code) => {
+      if (code === 0) {
+        try {
+          // const jsonStart = response.lastIndexOf('{');
+          // const jsonStr = response.slice(jsonStart);
+
+          // // # Parse the JSON
+          // const jsonData = JSON.parse(jsonStr);
+
+          // // # Extract the "emotion" field
+          // const emotion = jsonData.emotion;
+          const jsonData = JSON.parse(youtube_list);
+          // const joy = jsonData.youtube_list;
+          // console.log(joy);
+          res.status(200).send(jsonData);
+        } catch (error) {
+          res.status(500).json({ error: "Failed to parse JSON response" });
+        }
+      } else {
+        res.status(500).json({ error: "Python script exited with an error" });
+      }
+    });
+    process.on("error", (error) => {
+      res.status(500).json({ error: error.message });
+    });
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 
 /** GET: http://localhost:5001/api/spotify_recommend */
 /** 
