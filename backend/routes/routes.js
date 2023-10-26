@@ -17,7 +17,7 @@ import { registerMail } from "../controllers/mailer.js";
 router.route("/register").post(controller.register);
 router.route("/analyze").post(ml_controller.analyzer);
 router.route("/voice-input").post(upload.single('audio'), ml_controller.speech_to_text);
-// router.route("/voice-input").post(ml_controller.speech_to_text);
+router.route("/emotion_analyze").post(ml_controller.emotion_analyzer);
 router.route("/registerMail").post(registerMail);
 router.route("/authenticate").post(controller.verifyUser, (req, res) => res.end());
 router.route("/login").post(controller.verifyUser, controller.login);
@@ -28,9 +28,8 @@ router.route("/user/:username").get(controller.getUser);
 router.route("/generateOTP").get(controller.verifyUser, localVariables, controller.generateOTP);
 router.route("/verifyOTP").get(controller.verifyOTP);
 router.route("/createResetSession").get(controller.createResetSession);
-router.route("/youtube_videos").get(ml_controller.video_predict);
+// router.route("/youtube_videos").get(ml_controller.video_predict);
 router.route("/spotify_recommend").get(ml_controller.spotify_recommend);
-// router.route('/break_time').get(mlcontroller.break_time);
 
 /** PUT Methods */
 router.route("/updateuser").put(Auth, controller.updateUser);
