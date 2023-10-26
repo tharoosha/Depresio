@@ -25,6 +25,8 @@ import Reset from './components/Reset';
 import Recovery from './components/Recovery';
 import PageNotFound from './components/PageNotFound';
 import { AuthorizeUser, ProtectRoute } from './middleware/auth';
+import YoutubePreferences from "./components/YoutubePreferences";
+
 
 /* root routes */
 const router = createBrowserRouter(
@@ -36,6 +38,7 @@ const router = createBrowserRouter(
          <Route path="/music-therapy" element={<MusicTherapy />} />
          <Route path="/treatment-plan" element={<TreatmentPlan />} />
          <Route path="/yt-recommendation" element={<YT_RecommendationView />} />
+         <Route path="/preferences" element={<YoutubePreferences />} />
 
          <Route path="/register" element={<Register />} />
          {/* <Route path="/username" element={<Username />} /> */}
