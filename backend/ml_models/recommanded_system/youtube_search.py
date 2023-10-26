@@ -2,7 +2,7 @@
 
 
 # def search_youtube_videos(video_types_probabilities):
-#     api_key = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
+#     api_key = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc"
 #     max_videos = sum(video_types_probabilities.values())
 #     videos_info = []
 
@@ -35,7 +35,7 @@
 
 
 # def search_youtube_videos(video_types_probabilities):
-#     api_key = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
+#     api_key = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc"
 #     max_videos = sum(video_types_probabilities.values())
 #     videos_info = []
 
@@ -69,11 +69,11 @@ from urllib.parse import quote_plus
 import random
 import sys
 import json
-API_KEY = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
+API_KEY = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc"
 
 
 def search_youtube_videos(video_types_probabilities):
-    api_key = "AIzaSyAFx7r4060tZZ-wDfbKgWyZDyaV-ACw0yc"
+    api_key = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc"
     max_videos = sum(video_types_probabilities.values())
     videos_info = []
 
