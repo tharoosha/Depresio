@@ -9,6 +9,8 @@ import pickle
 from collections import deque
 import openai
 import backoff
+import sys
+import json
 
 def get_tweet(data):
     texts = [x['text'] for x in data]
@@ -122,10 +124,10 @@ def initialize():
     ''' Load the model and tokenizer from the saved files '''
 
 
-    with open('tokenizer.pkl', 'rb') as f:
+    with open('../backend/ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
         tokenizer = pickle.load(f)
 
-    model = tf.keras.models.load_model('emotion_model')
+    model = tf.keras.models.load_model('../backend/ml_models/emotion_detection/emotion_model')
 
     #################################################################################################################################################################################   
     
@@ -142,7 +144,7 @@ def makePrediction(tweet, model, tokenizer):
 
 # Set up your OpenAI API credentials
 # openai.api_key = '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'
-openai.api_key = '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'
+openai.api_key = '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'
 
 def get_completion(prompt, model="gpt-3.5-turbo"):
 # def get_completion(prompt, model="text-davinci-002"):
@@ -180,12 +182,26 @@ def getInstantEmotion(tweet, model, tokenizer):
 
 def getEmotion(tweet, model, tokenizer, emotionQueue):
     emotionQueue.append(getInstantEmotion(tweet, model, tokenizer))
-    print(emotionQueue)
+    # print(emotionQueue)
     return max(set(emotionQueue), key = emotionQueue.count)
      
 # newMakeGPTprediction(["I am very happy today"])
 def answer(tweet):
-    print(getInstantEmotion(tweet, model, tokenizer))
+    try:
+        model, tokenizer, emotionQueue = initialize()
+        response = getEmotion(list(input), model, tokenizer, emotionQueue)
+        output = {"emotion": response}
+        output_json = json.dumps(output)
+        print(output_json)
+        sys.stdout.flush()
+        return response
+    except Exception as e:
+        error_message = str(e)
+        output = {"error2011": error_message}
+
+        output_json = json.dumps(output)
+        print(output_json)
+        sys.stdout.flush()
 
 # answer(['I have got lower marks than I expected in my exam.'])
 
@@ -194,12 +210,31 @@ if __name__ == "__main__":
     # model, tokenizer = initialize()
     # print("Initialized")
 
-    with open('ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
-        tokenizer = pickle.load(f)
+    # with open('backend/ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
+        # tokenizer = pickle.load(f)
 
-    model = tf.keras.models.load_model('ml_models/emotion_detection/emotion_model')
+    # model = tf.keras.models.load_model('backend/ml_models/emotion_detection/emotion_model')
 
     # getInstantEmotion(['I am feeling sad'], model, tokenizer)
 
-    print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+    # print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+
+    #     # Read the input from command line arguments
+    input = sys.argv[1]
+
+    # print("I'm going to initialize")
+    # model, tokenizer = initialize()
+    # print("Initialized")
+
+
+    # # getInstantEmotion(['I am feeling sad'], model, tokenizer)
+
+    # # print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
+    # answer(input)
+    answer('he has brought flowers to see me')
+
+    # # Call the main function with the input
+    # response = getInstantEmotion(list(input), model, tokenizer)
+    
+
 

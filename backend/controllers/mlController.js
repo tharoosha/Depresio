@@ -24,8 +24,6 @@ export async function analyzer(req, res) {
     process.on("close", (code) => {
       if (code === 0) {
         try {
-          // const jsonString = {"result": result}
-          // const response = JSON.parse(result);
           res.status(200).send(result);
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
@@ -120,33 +118,83 @@ export async function speech_to_text(req, res) {
   }
 }
 
-/** GET: http://localhost:5001/api/youtube_videos */
+// /** GET: http://localhost:5001/api/youtube_videos */
+// /** 
+//  * @param : {
+//   "mood" : "Happiness",
+// } 
+// */
+// // Define the controller function to execute the Python script
+// export async function video_predict(req, res) {
+//   try {
+//     const { mood } = req.body;
+
+//     // Spawn the Python script as a child process
+//     const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["../ml_models/recommanded_system/combinedScript.py",mood,]);
+
+//     let output = "";
+
+//     // Listen for data events from the Python script's stdout
+//     pythonProcess.stdout.on("data", (data) => {
+//       output += data.toString();
+//     });
+
+//     // Listen for the 'close' event to handle the completion of the Python script
+//     pythonProcess.on("close", (code) => {
+//       if (code === 0) {
+//         try {
+//           const result = JSON.parse(output);
+//           res.status(200).json(result);
+//         } catch (error) {
+//           res.status(500).json({ error: "Failed to parse JSON response" });
+//         }
+//       } else {
+//         res.status(500).json({ error: "Python script exited with an error" });
+//       }
+//     });
+
+//     // Handle any errors during the execution of the Python script
+//     pythonProcess.on("error", (error) => {
+//       res.status(500).json({ error: error.message });
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// }
+
+/** POST: http://localhost:5001/api/emotion_analyzer */
 /** 
  * @param : {
-  "mood" : "Happiness",
-} 
+  "tweet" : "he has brought flowers to see me",
+}
 */
-// Define the controller function to execute the Python script
-export async function video_predict(req, res) {
+
+export async function emotion_analyzer(req, res) {
+  const { tweet } = req.body;
   try {
-    const { mood } = req.body;
+    // console.log(tweet)
+    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", tweet,]);
 
-    // Spawn the Python script as a child process
-    const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["../ml_models/recommanded_system/combinedScript.py",mood,]);
-
-    let output = "";
-
-    // Listen for data events from the Python script's stdout
-    pythonProcess.stdout.on("data", (data) => {
-      output += data.toString();
+    let emotion = ""
+    process.stdout.on("data", (data) => {
+      emotion = data.toString();
     });
 
-    // Listen for the 'close' event to handle the completion of the Python script
-    pythonProcess.on("close", (code) => {
+    process.on("close", (code) => {
       if (code === 0) {
         try {
-          const result = JSON.parse(output);
-          res.status(200).json(result);
+          // const jsonStart = response.lastIndexOf('{');
+          // const jsonStr = response.slice(jsonStart);
+
+          // // # Parse the JSON
+          // const jsonData = JSON.parse(jsonStr);
+
+          // // # Extract the "emotion" field
+          // const emotion = jsonData.emotion;
+          const jsonData = JSON.parse(emotion);
+          const joy = jsonData.emotion;
+          // console.log(joy);
+          res.status(200).send(jsonData);
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
         }
@@ -154,59 +202,66 @@ export async function video_predict(req, res) {
         res.status(500).json({ error: "Python script exited with an error" });
       }
     });
-
-    // Handle any errors during the execution of the Python script
-    pythonProcess.on("error", (error) => {
+    process.on("error", (error) => {
       res.status(500).json({ error: error.message });
     });
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
-// // Define the controller function to execute the Python script
-// export async function break_time(req, res) {
-//   try {
-//     const { mood } = req.body;
 
-//     // Spawn the Python script as a child process
-//     const pythonProcess = spawn('python3', ['/Volumes/Transcend/Development/Depresio/backend/ml_models/recommanded_system/combinedScript.py', mood]);
-
-//     let output = '';
-
-//     // Listen for data events from the Python script's stdout
-//     pythonProcess.stdout.on('data', (data) => {
-//       output += data.toString();
-//     });
-
-//     // Listen for the 'close' event to handle the completion of the Python script
-//     pythonProcess.on('close', (code) => {
-//       if (code === 0) {
-//         try {
-//           const result = JSON.parse(output);
-//           res.status(200).json(result);
-//         } catch (error) {
-//           res.status(500).json({ error: 'Failed to parse JSON response' });
-//         }
-//       } else {
-//         res.status(500).json({ error: 'Python script exited with an error' });
-//       }
-//     });
-
-//     // Handle any errors during the execution of the Python script
-//     pythonProcess.on('error', (error) => {
-//       res.status(500).json({ error: error.message });
-//     });
-
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-/*
-    @vihidun
-    Make sure this code segment work. Coudn't test as the backend and frontend are not working properly
+/** POST: http://localhost:5001/api/youtube_list */
+/** 
+ * @param : {
+  "categories" : ["Gaming"],
+}
 */
+
+export async function youtube_lists(req, res) {
+  const { categories } = req.body;
+  try {
+    // console.log(tweet)
+    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", categories,]);
+
+    let youtube_list = ""
+    process.stdout.on("data", (data) => {
+      youtube_list = data.toString();
+    });
+
+    process.on("close", (code) => {
+      if (code === 0) {
+        try {
+          // const jsonStart = response.lastIndexOf('{');
+          // const jsonStr = response.slice(jsonStart);
+
+          // // # Parse the JSON
+          // const jsonData = JSON.parse(jsonStr);
+
+          // // # Extract the "emotion" field
+          // const emotion = jsonData.emotion;
+          const jsonData = JSON.parse(youtube_list);
+          // const joy = jsonData.youtube_list;
+          // console.log(joy);
+          res.status(200).send(jsonData);
+        } catch (error) {
+          res.status(500).json({ error: "Failed to parse JSON response" });
+        }
+      } else {
+        res.status(500).json({ error: "Python script exited with an error" });
+      }
+    });
+    process.on("error", (error) => {
+      res.status(500).json({ error: error.message });
+    });
+  }
+  catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 
 /** GET: http://localhost:5001/api/spotify_recommend */
 /** 

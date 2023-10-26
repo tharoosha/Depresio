@@ -10,11 +10,16 @@ from tensorflow.keras import layers, models
 from tensorflow.keras.optimizers.legacy import Adam
 import pickle
 import os
+import config as cf
+
 
 # Replace these with your actual Spotify API credentials
-CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
-CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
-REDIRECT_URI = "http://localhost:8081/callback"
+# CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
+# CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
+# REDIRECT_URI = "http://localhost:8081/callback"
+CLIENT_ID = cf.SPOTIFY_CLIENT_ID
+CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
+REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
 
 os.environ["CLIENT_ID"] = CLIENT_ID
 os.environ["CLIENT_SECRET"] = CLIENT_SECRET
