@@ -2,6 +2,7 @@ import spotipy
 
 # oauth_object = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
 from spotipy.oauth2 import SpotifyClientCredentials
+from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
@@ -13,6 +14,7 @@ import os
 import config as cf
 
 
+
 # Replace these with your actual Spotify API credentials
 # CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
 # CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
@@ -21,12 +23,12 @@ CLIENT_ID = cf.SPOTIFY_CLIENT_ID
 CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
 REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
 
-os.environ["CLIENT_ID"] = CLIENT_ID
-os.environ["CLIENT_SECRET"] = CLIENT_SECRET
-os.environ["REDIRECT_URI"] = REDIRECT_URI
+os.environ["SPOTIPY_CLIENT_ID"] = CLIENT_ID
+os.environ["SPOTIPY_CLIENT_SECRET"] = CLIENT_SECRET
+os.environ["SPOTIPY_REDIRECT_URI"] = REDIRECT_URI
 
-client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+# client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
 
 def decodeLabels(label):
         if label == 0: 
@@ -56,9 +58,10 @@ def getAudioFeatures(track_id):
 def getRecentlyPlayed():
     SCOPE = 'user-library-read', 'playlist-read-private', 'user-top-read', 'user-read-recently-played'
     
-    oauth_object = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
-    access_token = oauth_object.get_access_token(as_dict=False)
-    spotifyObject = spotipy.Spotify(auth=access_token)
+    # oauth_object = spotipy.oauth2.SpotifyOAuth(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, scope=SCOPE)
+    # access_token = oauth_object.get_access_token(as_dict=False)
+    # spotifyObject = spotipy.Spotify(auth=access_token)
+    spotifyObject = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=SCOPE))
 
     offset = 0
     recentSongs = []
@@ -127,7 +130,7 @@ def initialize():
     with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('backend/ml_models/spotify_recommendation')
+    model.save('backend/ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
     
@@ -142,12 +145,14 @@ def getRecommendation(mood, model, scaler):
 
 if __name__ == "__main__":
     # model, scaler = initialize()
-    print(f"Client ID: {os.environ.get('CLIENT_ID')}")
-    print(f"Client Secret: {os.environ.get('CLIENT_SECRET')}")
-    print(f"Redirect URI: {os.environ.get('REDIRECT_URI')}")
+    print(f"Client ID: {os.environ.get('SPOTIPY_CLIENT_ID')}")
+    print(f"Client Secret: {os.environ.get('SPOTIPY_CLIENT_SECRET')}")
+    print(f"Redirect URI: {os.environ.get('SPOTIPY_REDIRECT_URI')}")
     
+    models = tf.keras.models.load_model("spotify_model")
+
     # initialize()
-    with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+    with open('tokenizer.pkl', 'rb') as f:
         scaler = pickle.load(f)
     print(getRecommendation('surprise', models, scaler))
 
