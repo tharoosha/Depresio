@@ -170,10 +170,10 @@ export async function speech_to_text(req, res) {
 */
 
 export async function emotion_analyzer(req, res) {
-  const { tweet } = req.body;
+  const { message } = req.body;
   try {
-    // console.log(tweet)
-    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", tweet,]);
+    console.log(message)
+    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", message,]);
 
     let emotion = ""
     process.stdout.on("data", (data) => {
@@ -223,11 +223,11 @@ export async function youtube_lists(req, res) {
   const { categories } = req.body;
   try {
     // console.log(tweet)
-    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", categories,]);
+    const process = spawn("python3", ["../backend/ml_models/recommanded_system/youtube_search.py", categories,]);
 
     let youtube_list = ""
     process.stdout.on("data", (data) => {
-      youtube_list = data.toString();
+      youtube_list = data;
     });
 
     process.on("close", (code) => {
@@ -241,10 +241,13 @@ export async function youtube_lists(req, res) {
 
           // // # Extract the "emotion" field
           // const emotion = jsonData.emotion;
-          const jsonData = JSON.parse(youtube_list);
+          // const jsonData = JSON.parse(youtube_list);
           // const joy = jsonData.youtube_list;
           // console.log(joy);
-          res.status(200).send(jsonData);
+          // res.status(200).send(jsonData)
+          // Convert the list to a JSON array
+          // json_array = json.loads(youtube_list)
+          res.status(200).send(youtube_list);
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
         }

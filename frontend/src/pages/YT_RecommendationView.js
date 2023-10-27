@@ -4,7 +4,6 @@ import Footer from '../components/Footer';
 import '../styles/YT_RecommendationView.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
 // get_youtube_videos_from_preferences
 
 /** POST: http://localhost:5001/api/youtube_list */
@@ -59,6 +58,10 @@ const YT_RecommendationView = () => {
    }, [storedData]);
 
    console.log('Loaded Ids ', videoIds);
+   // Convert the list to a JSON array
+   // json_array = json.dumps(videoIds)
+   // const videoUrls = JSON.parse(videoIds);
+   console.log('Loaded Ids ', typeof videoIds);
 
    return (
       <>
