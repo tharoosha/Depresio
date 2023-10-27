@@ -15,9 +15,10 @@ body {
    color: $txt-light;
    font-size: $default-size;
    // background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
-   background-image: linear-gradient(315deg, #6639ba26 0%, #000000 74%);
-   background-size: 400% 400%;
-   animation: gradient 15s ease infinite;
+   // background-image: linear-gradient(315deg, #6639ba26 0%, #000000 74%);
+   // background-size: 400% 400%;
+   // animation: gradient 15s ease infinite;
+   background: #0a0a0a;
    overflow-x: hidden;
 
    @keyframes gradient {
@@ -74,6 +75,11 @@ body {
    max-width: 1280px;
    margin: 0 auto;
    padding: 0 16px;
+   width: 95%;
+}
+
+p {
+   font-family: inherit;
 }
 
 // paddings
@@ -331,4 +337,13 @@ h5 {
 ::-webkit-scrollbar-thumb {
    // background: #74bc86c2;
    background: linear-gradient(187deg, #7ee787 0%, #543c82 100%);
+}
+
+// ************ Hiding Sections ****************
+.depFeatures,
+.essential,
+.testimonials,
+.community,
+.news {
+   display: none;
 }

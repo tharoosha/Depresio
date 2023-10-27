@@ -1,5 +1,12 @@
 @import 'variables';
 
+header {
+   position: sticky;
+   top: 0;
+   z-index: 9999999999;
+   background-color: #0a0a0a;
+}
+
 .header {
    display: flex;
    justify-content: space-between;
@@ -38,7 +45,8 @@
 
    .header__right {
       display: flex;
-      gap: 16px;
+      flex-direction: column;
+      cursor: pointer;
 
       button {
          background: none;
@@ -55,6 +63,116 @@
          &:first-of-type {
             border: none;
             padding: 0;
+         }
+      }
+   }
+}
+
+// ***************** New Hamburger styles *********************
+
+/* Style for the hamburger icon */
+.header__right {
+   cursor: pointer;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   width: 30px;
+   height: 20px;
+}
+
+.hamburger-line {
+   background-color: #ffffff;
+   height: 3px;
+   width: 100%;
+   transition: 0.4s;
+   z-index: 99;
+   display: block;
+}
+
+/* Style for the "X" icon */
+.hamburger-active {
+   &:nth-child(2) {
+      opacity: 0;
+   }
+   &:first-child {
+      transform: rotate(-45deg) translate(-6px, 6px) !important;
+   }
+   &:last-child {
+      transform: rotate(45deg) translate(-5px, -6px) !important;
+   }
+}
+
+/* Style for the menu */
+.menu {
+   position: fixed;
+   top: 0;
+   right: 0;
+   transition: opacity 0.3s ease-in;
+   background: linear-gradient(187deg, #000000 0%, #1b1b1b 100%);
+   height: 100%;
+   width: 350px;
+   z-index: 1;
+   opacity: 0;
+   box-shadow: 2px -1px 3px 0px;
+}
+
+.menu ul {
+   list-style-type: none;
+   padding: 0;
+   margin: 10vh 2em 0 0;
+}
+
+.menu li {
+   padding: 10px 0;
+   text-align: center;
+}
+
+.menu a {
+   text-decoration: none;
+   color: #fff;
+   font-size: 18px;
+   display: block;
+   transition: 0.3s;
+   text-align: end;
+   margin-bottom: 16px;
+}
+
+.menu a:hover {
+   color: #bfbfbf;
+   &::before {
+      content: none;
+   }
+
+   &:hover::before {
+      content: none;
+   }
+}
+
+.menu-active {
+   right: 0;
+   opacity: 1;
+   transition: all 0.5s ease-in;
+}
+
+.header--line {
+   .header {
+      .header {
+         display: none !important;
+      }
+   }
+}
+
+@media (max-width: 980px) {
+   .header__left {
+      ul {
+         display: none !important;
+      }
+   }
+
+   .header--line {
+      .header {
+         .header {
+            display: block !important;
          }
       }
    }
