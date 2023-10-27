@@ -13,7 +13,7 @@ import backoff
 # load
 
 # os.environ['OPENAI_API_KEY'] = "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"
-openai.api_key = "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"
+openai.api_key = "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"
 
 def create_Index(path):
     max_input = 4096
