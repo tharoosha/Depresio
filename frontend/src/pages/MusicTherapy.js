@@ -25,8 +25,68 @@ import mood5 from '../images/mood5.png';
 import mood6 from '../images/mood6.png';
 import profileImg from '../images/chat-user.svg';
 import chevronDown from '../images/chevron-down.svg';
+import { useEffect, useState } from 'react';
+import { Buffer } from 'buffer';
+
+
+import axios from 'axios';
+const qs = require('qs');
+const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
+const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
+
 
 const MusicTherapy = () => {
+
+   const [songs, setSongs] = useState([]);
+
+   const [accessToken, setAccessToken] = useState(null);
+   const [trackData, setTrackData] = useState(null);
+ 
+   useEffect(() => {
+     // Function to extract the access token from the URL hash
+     const getAccessTokenFromHash = () => {
+       const hash = window.location.hash;
+       const tokenMatch = hash.match(/access_token=([^&]*)/);
+       if (tokenMatch) {
+         return tokenMatch[1];
+       }
+       return null;
+     };
+ 
+     // Check if we have an access token in the URL hash
+     const tokenFromHash = getAccessTokenFromHash();
+ 
+     if (tokenFromHash) {
+       // We have an access token; set it in state
+       setAccessToken(tokenFromHash);
+     } else {
+       // Redirect the user to Spotify for authentication
+       window.location = `https://accounts.spotify.com/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=token`;
+     }
+   }, []);
+ 
+   useEffect(() => {
+     // If we have an access token, make an API request to retrieve a track
+     if (accessToken) {
+       const trackId = '1HNkqx9Ahdgi1Ixy2xkKkL'; // Replace with the actual track ID
+ 
+       axios
+         .get(`https://api.spotify.com/v1/tracks/${trackId}`, {
+           headers: {
+             Authorization: `Bearer ${accessToken}`,
+           },
+         })
+         .then((response) => {
+           setTrackData(response.data);
+         })
+         .catch((error) => {
+           console.error('Error fetching track data:', error);
+         });
+     }
+   }, [accessToken]);
+  
    return (
       <>
          <Header />
@@ -149,6 +209,26 @@ const MusicTherapy = () => {
                      </div>
                   </div>
                   <div className="mt-second-col">
+                     <div>
+                        <h1>
+                           To Be Styled...
+                        </h1>
+{/*
+                        {getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL') ? (
+                           <div>
+                              <p>content available</p>
+                              <p>JSON.stringify({getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL')}, null, 2)</p>
+                           </div>
+                           ) : (
+                           <p>Loading audio features...</p>
+                           )}
+
+
+                        */}
+                        <h5>
+                           End
+                        </h5>
+                     </div>
                      <div className="mt-music-player">
                         <div className="mt-player-options">
                            <div className="mt-player-buttons">
