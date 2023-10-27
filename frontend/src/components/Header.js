@@ -36,6 +36,7 @@ const Header = () => {
             <div className={`menu ${menuActive ? 'menu-active' : ''}`} id="menu">
                <ul>
                   <li>
+                     <Link to="/home">Home</Link>
                      <Link to="/assistant">Access Our AI Assistant</Link>
                      <Link to="/music-therapy">Music Therapy</Link>
                      {/* <Link to="/treatment-plan">Treatment Plan</Link> */}
