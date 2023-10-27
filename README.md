@@ -2,6 +2,8 @@
 
 This Git repository contains the source code and documentation for an AI-powered virtual mental consulting system. The system is designed to provide personalized mental health support to individuals through virtual counseling sessions, using natural language processing (NLP) and machine learning (ML) techniques.
 
+![alt text](http://url/to/img.png)
+
 The system includes various modules such as emotion recognition and analysis, personalized therapy recommendations, chatbot-based counseling, virtual reality therapy, mental health prediction, virtual peer support groups, personalized mood tracking, cognitive-behavioral therapy, stress management, and mental health chatbot for employees.
 
 The codebase is written in Python and uses popular ML and NLP libraries such as TensorFlow, Keras, Scikit-learn, NLTK, and SpaCy. The repository also includes pre-trained models, datasets, and scripts for training and testing the models.
