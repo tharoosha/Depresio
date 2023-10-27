@@ -5,12 +5,13 @@ import logo from '../images/depresio-logo-bg-removed.jpeg';
 import { Link } from 'react-router-dom';
 import Assistant from '../images/Virtual-Assistant.png';
 import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn, SignIn, SignUp } from '@clerk/clerk-react';
+import Header from './Header';
 
 const Hero = () => {
    return (
       <>
          <section className="hero">
-            <header className="header--line">
+            {/* <header className="header--line">
                <div className="container header pt--24 pb--16">
                   <div className="header__left">
                      <Link className="logo-link" to="/home">
@@ -25,19 +26,20 @@ const Hero = () => {
                         </li>
                      </ul>
                   </div>
-                  {/* <div className="header__right">
-                     <button>Sign In</button>
-                     <button>Sign Up</button>
-                  </div> */}
                </div>
-            </header>
+            </header> */}
+            <Header />
             <div className="container hero__content">
                <div className="flex">
                   <div className="flex">
                      <div className="hero__heading">
                         <h1>Your Mental Wellness Starts Here!</h1>
-                        <p className="para--24 mt--16">AI Guidance for a Stress-Free Work-Life Balance</p>
-                        <button className="btn mt--24">Get Started</button>
+                        <p className="para--24 mt--16 mb--24">AI Guidance for a Stress-Free Work-Life Balance</p>
+                        {/* <button className="btn mt--24"> */}
+                        <Link className="btn" to="/assistant">
+                           Get Started
+                        </Link>
+                        {/* </button> */}
                      </div>
                      <img src={logo} alt="Assistant" />
                   </div>
