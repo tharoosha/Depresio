@@ -22,12 +22,12 @@ os.environ["REDIRECT_URI"] = REDIRECT_URI
 def script_run(input_mood):
     try:
 
-        file_path = 'backend/ml_models/spotify_recommendation/tokenizer.pkl'
+        file_path = '../backend/ml_models/spotify_recommendation/tokenizer.pkl'
         if os.path.exists(file_path):
-            with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+            with open('../backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
                 scaler = pickle.load(f)
 
-        model = tf.keras.models.load_model('backend/ml_models/spotify_recommendation/spotify_model')
+        model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
 
         result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
         # result = json.dumps(result)
@@ -74,11 +74,11 @@ if __name__ == "__main__":
 
     # if len(sys.argv) > 1:
     #     # The first command-line argument (sys.argv[1]) will be the input_mood
-    #     input_mood = sys.argv[1]
+    input_mood = sys.argv[1]
     #     # input_mood = 'joy'
 
-    #     # Call the function with the received input_mood
-    #     script_run(input_mood)
+    # Call the function with the received input_mood
+    script_run(input_mood)
 
     #     # script_run("happiness")
         
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     #     # If no input_mood is provided, handle the case accordingly
     #     print(json.dumps({"error": "No mood provided"}))
     #     sys.stdout.flush()
-    script_run('joy')
+    # script_run('joy')
 
     # file_path = 'ml_models/spotify_recommendation/tokenizer.pkl'
     # if os.path.exists(file_path):
