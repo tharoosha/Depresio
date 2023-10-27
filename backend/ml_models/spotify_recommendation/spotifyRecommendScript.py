@@ -87,7 +87,7 @@ def initialize():
     #######################################################################################################################################
     '''Train model from scratch and save it along with the scaler'''
 
-    df=pd.read_csv("ml_models/spotify_recommendation/dataset.csv")
+    df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
 
     df['Mood'] = df['Mood'].apply(class_to_index)
 
@@ -124,10 +124,10 @@ def initialize():
     print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
 
     # Save the tokenizer
-    with open('ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('ml_models/spotify_recommendation/spotify_model')
+    model.save('backend/ml_models/spotify_recommendation')
 
     #######################################################################################################################################
     
@@ -146,6 +146,8 @@ if __name__ == "__main__":
     print(f"Client Secret: {os.environ.get('CLIENT_SECRET')}")
     print(f"Redirect URI: {os.environ.get('REDIRECT_URI')}")
     
-    initialize()
-    # print(getRecommendation('surprise', models, scaler))
+    # initialize()
+    with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+        scaler = pickle.load(f)
+    print(getRecommendation('surprise', models, scaler))
 

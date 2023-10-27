@@ -117,6 +117,7 @@ const AI_Assistant = () => {
          })
          .catch((error) => console.error(error));
 
+      console.log(message)
       axios
          .post('http://localhost:5001/api/emotion_analyze', { message: message })
          .then((response) => {

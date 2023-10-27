@@ -69,11 +69,11 @@ from urllib.parse import quote_plus
 import random
 import sys
 import json
-API_KEY = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc"
+API_KEY = "AIzaSyDKFRkk0HQWBIXQqQjaDW9-Fz9opaFkZys"
 
 
 def search_youtube_videos(video_types_probabilities):
-    api_key = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc"
+    api_key = "AIzaSyDKFRkk0HQWBIXQqQjaDW9-Fz9opaFkZys"
     max_videos = sum(video_types_probabilities.values())
     videos_info = []
 
@@ -129,22 +129,28 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=3):
 
     return video_links
 
+# def youtube_lists(input):
 def youtube_lists(input):
     try:
         # Parse the JSON data
-        normal_list = json.loads(input)
+        category_list = input["categories"]
+        # print(category_list)
+        # categories = ["Gaming"]
+        videos = get_youtube_videos_from_preferences(API_KEY, category_list)
+        # videos = get_youtube_videos_from_preferences(API_KEY, categories)
+        # print(videos)
+        # # for video in videos:
+        # #     print(video)
 
-        categories = ["Gaming"]
-        videos = get_youtube_videos_from_preferences(API_KEY, normal_list)
-        # for video in videos:
-        #     print(video)
+        # json_string = json.dumps(videos)
+        # json_string = json.dumps(videos)
+        # print(json_string)
 
-        json_string = json.dumps(videos)
-
-        print(json_string)
-        return json_string
+        videos = json.dumps(videos)
+        print(videos)
+        # return videos
     
-    except:
+    except Exception as e:
         error_message = str(e)
         output = {"error2011": error_message}
 
@@ -154,9 +160,14 @@ def youtube_lists(input):
 
 if __name__ == '__main__':
     # json list looks like '["Gaming"]'
-    input = sys.argv[1]
-
+    # input = sys.argv[1]
+    # data = json.loads(input)
+    # youtube_lists(input)
+    input = {"categories" : [input]}
     youtube_lists(input)
+    # print(input)
+
+
 
     
     

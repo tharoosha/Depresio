@@ -3,30 +3,31 @@ import pickle
 import tensorflow as tf
 import json
 import sys
-
-import config as cf
+sys.path.append("../backend/ml_models/config.py")
+from config import OPENAI_API_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI
 import os
 
-# CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
-# CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
-# REDIRECT_URI = "http://localhost:8081/callback"
+CLIENT_ID = "85828d1937e346c8a174c74766c1bb89"
+CLIENT_SECRET = "de99228ea35a4287bd2f1e25d35dec36"
+REDIRECT_URI = "http://localhost:8081/callback"
 
-# os.environ["CLIENT_ID"] = CLIENT_ID
-# os.environ["CLIENT_SECRET"] = CLIENT_SECRET
-# os.environ["REDIRECT_URI"] = REDIRECT_URI
-CLIENT_ID = cf.SPOTIFY_CLIENT_ID
-CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
-REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
+os.environ["CLIENT_ID"] = CLIENT_ID
+os.environ["CLIENT_SECRET"] = CLIENT_SECRET
+os.environ["REDIRECT_URI"] = REDIRECT_URI
+
+# CLIENT_ID = SPOTIFY_CLIENT_ID
+# CLIENT_SECRET = SPOTIFY_CLIENT_SECRET
+# REDIRECT_URI = SPOTIFY_REDIRECT_URI
 
 def script_run(input_mood):
     try:
 
-        file_path = '../backend/ml_models/spotify_recommendation/tokenizer.pkl'
+        file_path = 'backend/ml_models/spotify_recommendation/tokenizer.pkl'
         if os.path.exists(file_path):
-            with open('../backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+            with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
                 scaler = pickle.load(f)
 
-        model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
+        model = tf.keras.models.load_model('backend/ml_models/spotify_recommendation/spotify_model')
 
         result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
         # result = json.dumps(result)
