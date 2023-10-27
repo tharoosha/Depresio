@@ -18,7 +18,7 @@ export async function verifyUser(req, res, next){
     }
 }
 
-/** POST: http://localhost:3000/api/register 
+/** POST: http://localhost:5001/api/register 
  * @param : {
   "username" : "example123",
   "password" : "admin123",
@@ -96,7 +96,7 @@ export async function register(req, res){
     }
 }
 
-/** POST: http://localhost:3000/api/login 
+/** POST: http://localhost:5001/api/login 
  * @param: {
   "username" : "example123",
   "password" : "admin123"
@@ -137,7 +137,7 @@ export async function login(req, res){
 }
 
 
-// /** POST: http://localhost:3000/api/analyze */
+// /** POST: http://localhost:5001/api/analyze */
 // /** 
 //  * @param : {
 //   "message" : "Hello",
@@ -151,7 +151,7 @@ export async function login(req, res){
 // }
 
 
-/** GET: http://localhost:3000/api/user/example123 */
+/** GET: http://localhost:5001/api/user/example123 */
 export async function getUser(req, res){
     const {username} = req.params;
     try{
@@ -182,7 +182,7 @@ export async function getUser(req, res){
 
 }
 
-/** PUT: http://localhost:3000/api/updateuser 
+/** PUT: http://localhost:5001/api/updateuser 
  * @param: {
   "header" : "<token>"
 }
@@ -216,13 +216,13 @@ export async function updateUser(req,res){
     }
 }
 
-/** GET: http://localhost:3000/api/generateOTP */
+/** GET: http://localhost:5001/api/generateOTP */
 export async function generateOTP(req,res){
     req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
     res.status(201).send({ code: req.app.locals.OTP })
 }
 
-/** GET: http://localhost:3000/api/verifyOTP */
+/** GET: http://localhost:5001/api/verifyOTP */
 export async function verifyOTP(req,res){
     const { code } = req.query;
     if(parseInt(req.app.locals.OTP) === parseInt(code)){
@@ -235,7 +235,7 @@ export async function verifyOTP(req,res){
 
 
 // successfully redirect user when OTP is valid
-/** GET: http://localhost:3000/api/createResetSession */
+/** GET: http://localhost:5001/api/createResetSession */
 export async function createResetSession(req,res){
     if(req.app.locals.resetSession){
         return res.status(201).send({ flag : req.app.locals.resetSession})
@@ -244,7 +244,7 @@ export async function createResetSession(req,res){
 }
 
 // update the password when we have valid session
-/** PUT: http://localhost:3000/api/resetPassword */
+/** PUT: http://localhost:5001/api/resetPassword */
 export async function resetPassword(req,res){
     // try {
         
