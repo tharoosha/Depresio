@@ -11,6 +11,8 @@ import openai
 import backoff
 import sys
 import json
+from dotenv import load_dotenv
+import os
 
 def get_tweet(data):
     texts = [x['text'] for x in data]
@@ -144,7 +146,12 @@ def makePrediction(tweet, model, tokenizer):
 
 # Set up your OpenAI API credentials
 # openai.api_key = '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'
-openai.api_key = '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'
+# Set up your OpenAI API credentials
+
+
+load_dotenv()
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def get_completion(prompt, model="gpt-3.5-turbo"):
 # def get_completion(prompt, model="text-davinci-002"):
@@ -230,8 +237,8 @@ if __name__ == "__main__":
     # # getInstantEmotion(['I am feeling sad'], model, tokenizer)
 
     # # print(getInstantEmotion(['he has broufgt flowers to see me '], model, tokenizer))
-    # answer(input)
-    answer('he has brought flowers to see me')
+    answer(input)
+    # answer('he has brought flowers to see me')
 
     # # Call the main function with the input
     # response = getInstantEmotion(list(input), model, tokenizer)
