@@ -113,6 +113,14 @@
    }
 }
 
+@media screen and (min-width: 1300px) {
+   .select-new-pref {
+      max-width: 350px;
+      display: flex;
+      margin: auto;
+   }
+}
+
 @media screen and (max-width: 1200px) {
    .check-container {
       grid-template-columns: repeat(3, 1fr);

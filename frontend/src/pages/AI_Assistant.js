@@ -73,8 +73,8 @@ const AI_Assistant = () => {
                .post('http://localhost:5001/api/voice-input', formData)
                .then((response) => {
                   console.log(response.data.result);
-                  let data = response.data.result
-                  data = String(data)
+                  let data = response.data.result;
+                  data = String(data);
                   const updatedChatLogWithVoice = [...chatLog, { user: 'User', message: data }];
                   setChatLog(updatedChatLogWithVoice);
                   // setMessage(response.data.result);
@@ -101,7 +101,6 @@ const AI_Assistant = () => {
                      .catch((error) => console.error(error));
                   // console.log(chatLog);
                   console.log(emotion);
-
                })
                .catch((error) => console.error(error));
          };
@@ -131,7 +130,6 @@ const AI_Assistant = () => {
          })
          .catch((error) => console.error(error));
 
-      
       axios
          .post('http://localhost:5001/api/emotion_analyze', { message: message })
          .then((response) => {
@@ -175,14 +173,6 @@ const AI_Assistant = () => {
                         ))}
                      </div>
                      <div className="AI__wrapper__inner__2__footer">
-                        <div className="chat-suggestions">
-                           <p>Chat Suggestions</p>
-                           <div>
-                              <label>Regenerate Response</label>
-                              <label>Explain More</label>
-                              <label>Expand Answer</label>
-                           </div>
-                        </div>
                         <div className="flex">
                            <form onSubmit={handleSubmit}>
                               <div className="AI__wrapper__inner__2__footer__left">
