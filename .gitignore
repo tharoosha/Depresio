@@ -26,3 +26,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+backend/ml_models/dataset.py
+backend/ml_models/recommanded_system/myenv
