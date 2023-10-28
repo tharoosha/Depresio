@@ -20,7 +20,7 @@ jobs:
         pr-message: "Message that will be displayed on users' first pull request"
     - name: npm install
       run: |
-        num install
+        npm install
       env:
         CI: true
 
