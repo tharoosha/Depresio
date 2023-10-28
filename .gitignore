@@ -30,3 +30,5 @@ yarn-error.log*
 backend/ml_models/dataset.py
 backend/ml_models/recommanded_system/myenv
 backend/ml_models/recommanded_system/datset.py
+
+myenv
