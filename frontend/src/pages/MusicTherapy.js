@@ -25,256 +25,105 @@ import mood5 from '../images/mood5.png';
 import mood6 from '../images/mood6.png';
 import profileImg from '../images/chat-user.svg';
 import chevronDown from '../images/chevron-down.svg';
+import { useEffect, useState } from 'react';
+import { Buffer } from 'buffer';
+
+import axios from 'axios';
+const qs = require('qs');
+const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
+const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
+// const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+// const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
+const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
 const MusicTherapy = () => {
+   const [accessToken, setAccessToken] = useState('');
+   // const [trackData, setTrackData] = useState(null);
+   const [trackIds, setTrackIds] = useState(['1HNkqx9Ahdgi1Ixy2xkKkL', '1ei3hzQmrgealgRKFxIcWn', '7eJMfftS33KTjuF7lTsMCx']);
+   const [trackData, setTrackData] = useState([]);
+
+   const getTrackData = async (accessToken, trackIds) => {
+      try {
+         const promises = trackIds.map(async (trackId) => {
+            const response = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, {
+               headers: {
+                  Authorization: `Bearer ${accessToken}`,
+               },
+            });
+            return response.data;
+         });
+
+         const trackDetails = await Promise.all(promises);
+         return trackDetails;
+      } catch (error) {
+         console.error('Error fetching track data:', error);
+         return [];
+      }
+   };
+
+   useEffect(() => {
+      // Retrieve access token from Spotify
+      axios('https://accounts.spotify.com/api/token', {
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: 'Basic ' + btoa(client_id + ':' + client_secret),
+         },
+         data: 'grant_type=client_credentials',
+         method: 'POST',
+      })
+         .then((tokenResponse) => {
+            setAccessToken(tokenResponse.data.access_token);
+         })
+         .catch((error) => {
+            console.error('Error retrieving access token:', error);
+         });
+   }, []);
+
+   useEffect(() => {
+      // If we have an access token and track IDs, make API requests to retrieve track data
+      if (accessToken && trackIds.length > 0) {
+         getTrackData(accessToken, trackIds)
+            .then((trackDetails) => {
+               setTrackData(trackDetails);
+            })
+            .catch((error) => {
+               console.error('Error fetching track data:', error);
+            });
+      }
+   }, [accessToken, trackIds]);
+
    return (
       <>
          <Header />
          <div className="container">
             <div className="mt-main-container mt--24 mb--48">
-               <div className="mt-grid-inner">
-                  <div className="mt-first-col">
-                     <div className="mt-logo-container">
-                        <div className="AI__wrapper__inner__1__header flex">
-                           <div className="flex gap--16">
-                              <img src={profileImg} alt="profileImg" />
-                              <div className="AI__wrapper__inner__1__header__details">
-                                 <h4>John Doe</h4>
-                                 <label>Online</label>
+               <div className="mt-second-col">
+                  <div>
+                     <h2 className="mb--16">Music Recommendations for You!</h2>
+                     <div className="music-flex-cont">
+                        {trackData.length > 0 ? (
+                           trackData.map((track, index) => (
+                              <div key={index}>
+                                 <iframe src={`https://open.spotify.com/embed/track/${track.id}`} width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                               </div>
-                           </div>
-                           <img className="chevrown--icon" src={chevronDown} alt="chevronDown" />
-                        </div>
+                           ))
+                        ) : (
+                           <p>No recommended songs...</p>
+                        )}
                      </div>
-                     <div className="mt-navbar">
-                        <ul>
-                           <li>
-                              <a href="#">
-                                 <div className="mt-menu-item">
-                                    <div className="mt-menu-icon">
-                                       <img src={mtHome}></img>
-                                    </div>
-                                    <div className="mt-menu-name">
-                                       <p className="para--20">Home</p>
-                                    </div>
-                                 </div>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <div className="mt-menu-item">
-                                    <div className="mt-menu-icon">
-                                       <img src={mtSearch}></img>
-                                    </div>
-                                    <div className="mt-menu-name">
-                                       <p className="para--20">Search</p>
-                                    </div>
-                                 </div>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <div className="mt-menu-item">
-                                    <div className="mt-menu-icon">
-                                       <img src={mtLibrary}></img>
-                                    </div>
-                                    <div className="mt-menu-name">
-                                       <p className="para--20">Library</p>
-                                    </div>
-                                 </div>
-                              </a>
-                           </li>
-                        </ul>
-                     </div>
-                     <div className="mt-trending mt--48">
-                        <div className="title">
-                           <h4> Trending Songs</h4>
-                        </div>
-                        <div className="mt-trending-tracks-container  mt--32">
-                           <div className="mt-trending-track">
-                              <div className="mt-trending-track-name">
-                                 <p>As It Was</p>
-                              </div>
-                              <div className="mt-trending-track-artist">
-                                 <p>Harry Style</p>
-                                 <p>3:20</p>
-                              </div>
+                     {/*
+                        {getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL') ? (
+                           <div>
+                              <p>content available</p>
+                              <p>JSON.stringify({getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL')}, null, 2)</p>
                            </div>
-                           <div className="mt-trending-track">
-                              <div className="mt-trending-track-name">
-                                 <p>About Damn Time</p>
-                              </div>
-                              <div className="mt-trending-track-artist">
-                                 <p>Lizzo</p>
-                                 <p>2:20</p>
-                              </div>
-                           </div>
-                           <div className="mt-trending-track">
-                              <div className="mt-trending-track-name">
-                                 <p>Hold On </p>
-                              </div>
-                              <div className="mt-trending-track-artist">
-                                 <p>Justin Beiber</p>
-                                 <p>3:10</p>
-                              </div>
-                           </div>
-                           <div className="mt-trending-track">
-                              <div className="mt-trending-track-name">
-                                 <p>Unholy</p>
-                              </div>
-                              <div className="mt-trending-track-artist">
-                                 <p>Sam Smith</p>
-                                 <p>4:20</p>
-                              </div>
-                           </div>
-                           <div className="mt-trending-track">
-                              <div className="mt-trending-track-name">
-                                 <p>Until I Found In You</p>
-                              </div>
-                              <div className="mt-trending-track-artist">
-                                 <p>Stephen Sanchez</p>
-                                 <p>2:26</p>
-                              </div>
-                           </div>
-                           <div className="mt-trending-track">
-                              <div className="mt-trending-track-name">
-                                 <p>Flowers</p>
-                              </div>
-                              <div className="mt-trending-track-artist">
-                                 <p>Miley Cyrus</p>
-                                 <p>3:03</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div className="mt-second-col">
-                     <div className="mt-music-player">
-                        <div className="mt-player-options">
-                           <div className="mt-player-buttons">
-                              <img src={preSong}></img>
-                              <img src={playBtn}></img>
-                              <img src={nextSong}></img>
-                           </div>
-                           <div className="mt-plaer-song-name">
-                              <p className="song-name">Papah mama Senang</p>
-                              <p className="song-artist">Zee Mia</p>
-                           </div>
-                        </div>
-                        <div className="mt-player-timeline">
-                           <img src={playerTimeline}></img>
-                           <div className="details">
-                              <div className="duration">
-                                 <p>12:30</p>
-                              </div>
-                              <div className="volume">
-                                 <img src={soundHigh}></img>
-                                 <img src={mtShuffle}></img>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div className="mt-top-hits-sec mt--48">
-                        <div className="mt-top-music-title">
-                           <h2>Top Hits Today</h2>
-                        </div>
-                        <div className="mt-top-music-list-container">
-                           <MusicCarousel />
-                        </div>
-                     </div>
-                     <div className="mt-recommended-tracks mt--64">
-                        <div className="mt-recommended-music-title">
-                           <h2>Recommend Your Moods</h2>
-                        </div>
-                        <div className="mt-recommended-music-container mt--32">
-                           <div className="left-col">
-                              <div className="first-row">
-                                 <div className="col">
-                                    <div className="thumbnail">
-                                       <img className="thumb-img" src={mood1}></img>
-                                       <img className="blueBtn" src={bluePlayBtn}></img>
-                                    </div>
-                                    <div className="details">
-                                       <p>Experimental Music</p>
-                                    </div>
-                                 </div>
-                                 <div className="col">
-                                    <div className="thumbnail">
-                                       <img className="thumb-img" src={mood2}></img>
-                                       <img className="blueBtn" src={bluePlayBtn}></img>
-                                    </div>
-                                    <div className="details">
-                                       <p>
-                                          Trap <br /> Dance
-                                       </p>
-                                    </div>
-                                 </div>
-                                 <div className="col">
-                                    <div className="thumbnail">
-                                       <img className="thumb-img" src={mood3}></img>
-                                       <img className="blueBtn" src={bluePlayBtn}></img>
-                                    </div>
-                                    <div className="details">
-                                       <p>
-                                          Workout <br /> Cardio
-                                       </p>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div className="second-row">
-                                 <div className="col">
-                                    <div className="thumbnail">
-                                       <img className="thumb-img" src={mood4}></img>
-                                       <img className="blueBtn" src={bluePlayBtn}></img>
-                                    </div>
-                                    <div className="details">
-                                       <p>
-                                          Soft Floks <br /> Music
-                                       </p>
-                                    </div>
-                                 </div>
-                                 <div className="col">
-                                    <div className="thumbnail">
-                                       <img className="thumb-img" src={mood5}></img>
-                                       <img className="blueBtn" src={bluePlayBtn}></img>
-                                    </div>
-                                    <div className="details">
-                                       <p>
-                                          Indonesia <br /> Melow
-                                       </p>
-                                    </div>
-                                 </div>
-                                 <div className="col">
-                                    <div className="thumbnail">
-                                       <img className="thumb-img" src={mood6}></img>
-                                       <img className="blueBtn" src={bluePlayBtn}></img>
-                                    </div>
-                                    <div className="details">
-                                       <p>
-                                          Singing <br /> Country
-                                       </p>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div className="right-col">
-                              <div className="col-inner">
-                                 <div className="thumbnail">
-                                    <img src={hippop}></img>
-                                 </div>
-                                 <div className="details">
-                                    <h5>Pop Hitz 2023</h5>
-                                    <p>
-                                       All the songs that make <br /> you more hitz{' '}
-                                    </p>
-                                    <div className="btn">
-                                       <a href="">Buy Premium</a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                           ) : (
+                           <p>Loading audio features...</p>
+                           )}
+
+
+                        */}
                   </div>
                </div>
             </div>

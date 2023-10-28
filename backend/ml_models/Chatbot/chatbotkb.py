@@ -46,8 +46,8 @@ def answerMe(question):
         # create_Index("/Volumes/Transcend/Development/Depresio/ml_models/Chatbot/Knowledge")
 
         # get query
-        # storage_context = StorageContext.from_defaults(persist_dir = '/usr/src/app/ml_models/Chatbot/Store')
-        storage_context = StorageContext.from_defaults(persist_dir = '../backend/ml_models/Chatbot/Store')
+        storage_context = StorageContext.from_defaults(persist_dir = '/usr/src/app/ml_models/Chatbot/Store')
+        # storage_context = StorageContext.from_defaults(persist_dir = '../backend/ml_models/Chatbot/Store')
         index = load_index_from_storage(storage_context)
 
         query_engine = index.as_query_engine()

@@ -12,6 +12,7 @@ from tensorflow.keras.optimizers.legacy import Adam
 import pickle
 import os
 import config as cf
+import contextlib
 
 
 
@@ -90,7 +91,9 @@ def initialize():
     #######################################################################################################################################
     '''Train model from scratch and save it along with the scaler'''
 
-    df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
+    df=pd.read_csv("/usr/src/app/ml_models/spotify_recommendation/dataset.csv")
+    # df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
+
 
     df['Mood'] = df['Mood'].apply(class_to_index)
 
@@ -127,20 +130,28 @@ def initialize():
     print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
 
     # Save the tokenizer
-    with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    # with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('backend/ml_models/spotify_recommendation/spotify_model')
+    model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+    # model.save('backend/ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
     
 def getRecommendation(mood, model, scaler):
 
     df_recentSongs = getRecentlyPlayed()
-    df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+
+    # Use contextlib.redirect_stdout to suppress output
+    with contextlib.redirect_stdout(None):
+        df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+
+    # df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
     df2['Mood']=df2.apply(get_max_index, axis=1)
     df_recentSongs['Mood'] = df2['Mood'].apply(decodeLabels)
     filtered_df = df_recentSongs[df_recentSongs['Mood']==mood]
+    
     return filtered_df.tail(10)[0].tolist()[::-1]
 
 if __name__ == "__main__":

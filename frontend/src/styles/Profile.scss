@@ -1,0 +1,223 @@
+.Profile_Wrapper {
+    padding: 32px;
+    background-color: rgba(118, 198, 134, 0.0509803922);
+    border: 1px solid rgba(238, 238, 238, 0.1411764706);
+    grid-template-columns: 1fr 3fr;
+    gap: 24px;
+    min-height: 82vh;
+}
+.Profile_topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.wrapper_container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    h3 {
+        font-size: 24px;
+    }
+
+    button {
+        margin-top: 0px!important;
+    }
+}
+.profile_inner_wrapper {
+    display: flex;
+    gap: 20px;
+    
+    .profile_info_form {
+        flex: 1;
+    }
+    .profile_emotion_history{
+        flex:1;
+    }
+}
+
+.profile_info_form {
+
+    font-size: 14px;
+    background-color: rgba(118, 198, 134, 0.0509803922);
+    border: 1px solid rgba(238, 238, 238, 0.1411764706);
+    padding: 30px;
+    border-radius: 2px;
+    width: 100%;
+    color: #fff;
+    min-height: 250px;
+
+    .form_wrapper_container_title {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 40px;
+
+        h3 {
+            font-size: 18px!important;
+        }
+    }
+    
+    .profile_image{
+        display: flex;
+        justify-content: center;
+
+        label {
+            img {
+                width: 10rem;
+                cursor: pointer;
+                height: 10rem;
+            }
+        }
+    
+    }
+
+    .form_text_fields {
+        margin-top: 15px;
+        
+       .field_group {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+
+        button {
+            width: 75%;
+        }
+       }
+
+       .inputText {
+        background: none;
+        border-width: 0px!important;
+        border-bottom: 1px solid white!important;
+        width: 75%;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        color: white;
+        font-family: "Poppins", sans-serif!important;
+ 
+       }
+       .inputText:focus-visible {
+        outline: none!important;
+       }
+       .delete-btn {
+        background: radial-gradient(371px at 2.9% 14.3%, rgb(233 80 141) 0%, rgb(89 67 137) 100.7%) !important;
+        transition: all 0.8s ease-in-out;
+        background-size: 280% 30%;
+        margin-top: 0px!important;
+       }
+       .delete-btn:hover {
+        background: radial-gradient(371px at 2.9% 14.3%, rgb(255, 0, 102) 0%, rgb(80, 5, 35) 100.7%)!important;
+       }
+    }
+}
+
+.chart-container svg  {
+    text {
+        fill: #ffffff;
+        font-family: "Poppins", sans-serif!important;
+    }
+
+    rect {
+        fill: none!important;
+        stroke: none!important;
+    }
+
+
+} 
+
+.chart-container svg g {
+    text {
+        fill: #fff;
+        font-family: "Poppins", sans-serif!important;
+        background-color: red;
+    
+    }
+
+    rect {
+        fill: white!important;
+        stroke: white!important;
+    }
+
+
+
+} 
+
+@media only screen and (max-width: 821px) {
+    .profile_inner_wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .Profile_Wrapper {
+        padding:15px;
+        background-color: rgba(118, 198, 134, 0.0509803922);
+        border: 1px solid rgba(238, 238, 238, 0.1411764706);
+        grid-template-columns: 1fr 3fr;
+        gap: 24px;
+        min-height: 82vh;
+    }
+    .profile_info_form {
+
+        font-size: 14px;
+        background-color: rgba(118, 198, 134, 0.0509803922);
+        border: 1px solid rgba(238, 238, 238, 0.1411764706);
+        padding: 20px;
+        border-radius: 2px;
+        width: 100%;
+        color: #fff;
+        min-height: 250px;
+
+        .form_wrapper_container_title {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 20px!important;
+    
+            h3 {
+                font-size: 18px!important;
+            }
+        }
+    }
+    .form_text_fields {
+      
+       .inputText {
+
+        background: none;
+        border-width: 0px!important;
+        border-bottom: 1px solid white!important;
+        width: 100%!important;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        color: white;
+        font-family: "Poppins", sans-serif!important;
+ 
+       }
+        .field_group button {
+            width: 100%!important;
+         }
+    }
+  }
+  @media only screen and (max-width: 480px) {
+    .Profile_topbar {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        .btn {
+            width: 100%!important;
+        }
+    }
+
+  }
+ 
