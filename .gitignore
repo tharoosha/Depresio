@@ -6,6 +6,7 @@
 /backend/.env
 /frontend/.env
 backend/config.js
+ml_models/config.py
 /.pnp
 .pnp.js
 
