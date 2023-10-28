@@ -33,13 +33,14 @@ def script_run(input_mood):
         # model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
 
         result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
-        # result = json.dumps(result)
+        result = json.dumps(result)
         # response = str(result)
-        # output = {"result": result}
+        output = {"result": result}
 
         # output_json = json.dumps(output)
         # sys.stdout.flush()
-        print(result)
+        # print(result)
+        print(output)
 
     except Exception as e:
         error_message = str(e)

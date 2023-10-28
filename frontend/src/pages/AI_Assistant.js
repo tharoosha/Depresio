@@ -144,7 +144,7 @@ const AI_Assistant = () => {
          .post('http://localhost:5001/api/emotion_analyze', { message: message })
          .then((response) => {
             setEmotion(response.data.emotion);
-            // console.log(response.data.emotion)
+            console.log(response.data.emotion)
          })
          .catch((error) => console.error(error));
       // Clear the input field after submitting

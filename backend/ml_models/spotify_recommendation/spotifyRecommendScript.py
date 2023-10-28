@@ -12,6 +12,7 @@ from tensorflow.keras.optimizers.legacy import Adam
 import pickle
 import os
 import config as cf
+import contextlib
 
 
 
@@ -141,10 +142,16 @@ def initialize():
 def getRecommendation(mood, model, scaler):
 
     df_recentSongs = getRecentlyPlayed()
-    df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+
+    # Use contextlib.redirect_stdout to suppress output
+    with contextlib.redirect_stdout(None):
+        df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+
+    # df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
     df2['Mood']=df2.apply(get_max_index, axis=1)
     df_recentSongs['Mood'] = df2['Mood'].apply(decodeLabels)
     filtered_df = df_recentSongs[df_recentSongs['Mood']==mood]
+    
     return filtered_df.tail(10)[0].tolist()[::-1]
 
 if __name__ == "__main__":
