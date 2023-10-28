@@ -31,62 +31,70 @@ import { Buffer } from 'buffer';
 
 import axios from 'axios';
 const qs = require('qs');
-const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
+const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
+// const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+// const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
 
+
 const MusicTherapy = () => {
+   const [accessToken, setAccessToken] = useState('');
+   // const [trackData, setTrackData] = useState(null);
+   const [trackIds, setTrackIds] = useState(['1HNkqx9Ahdgi1Ixy2xkKkL', '1ei3hzQmrgealgRKFxIcWn', '7eJMfftS33KTjuF7lTsMCx']);
+   const [trackData, setTrackData] = useState([]);
 
-   const [songs, setSongs] = useState([]);
-
-   const [accessToken, setAccessToken] = useState(null);
-   const [trackData, setTrackData] = useState(null);
- 
+   const getTrackData = async (accessToken, trackIds) => {
+      try {
+        const promises = trackIds.map(async (trackId) => {
+          const response = await axios.get(`https://api.spotify.com/v1/tracks/${trackId}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          return response.data;
+        });
+    
+        const trackDetails = await Promise.all(promises);
+        return trackDetails;
+      } catch (error) {
+        console.error('Error fetching track data:', error);
+        return [];
+      }
+    };
+    
    useEffect(() => {
-     // Function to extract the access token from the URL hash
-     const getAccessTokenFromHash = () => {
-       const hash = window.location.hash;
-       const tokenMatch = hash.match(/access_token=([^&]*)/);
-       if (tokenMatch) {
-         return tokenMatch[1];
-       }
-       return null;
-     };
- 
-     // Check if we have an access token in the URL hash
-     const tokenFromHash = getAccessTokenFromHash();
- 
-     if (tokenFromHash) {
-       // We have an access token; set it in state
-       setAccessToken(tokenFromHash);
-     } else {
-       // Redirect the user to Spotify for authentication
-       window.location = `https://accounts.spotify.com/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=token`;
-     }
+      // Retrieve access token from Spotify
+      axios('https://accounts.spotify.com/api/token', {
+         headers: {
+         'Content-Type': 'application/x-www-form-urlencoded',
+         'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret)
+         },
+         data: 'grant_type=client_credentials',
+         method: 'POST'
+      }).then(tokenResponse => {
+         setAccessToken(tokenResponse.data.access_token);
+      }).catch(error => {
+         console.error('Error retrieving access token:', error);
+      });
    }, []);
- 
+
    useEffect(() => {
-     // If we have an access token, make an API request to retrieve a track
-     if (accessToken) {
-       const trackId = '1HNkqx9Ahdgi1Ixy2xkKkL'; // Replace with the actual track ID
- 
-       axios
-         .get(`https://api.spotify.com/v1/tracks/${trackId}`, {
-           headers: {
-             Authorization: `Bearer ${accessToken}`,
-           },
-         })
-         .then((response) => {
-           setTrackData(response.data);
-         })
-         .catch((error) => {
-           console.error('Error fetching track data:', error);
-         });
-     }
-   }, [accessToken]);
-  
+      // If we have an access token and track IDs, make API requests to retrieve track data
+      if (accessToken && trackIds.length > 0) {
+        getTrackData(accessToken, trackIds)
+          .then((trackDetails) => {
+            setTrackData(trackDetails);
+          })
+          .catch((error) => {
+            console.error('Error fetching track data:', error);
+          });
+      }
+    }, [accessToken, trackIds]);
+    
+
    return (
       <>
          <Header />
@@ -213,6 +221,25 @@ const MusicTherapy = () => {
                         <h1>
                            To Be Styled...
                         </h1>
+                        <div>
+                           <h2>Spotify Tracks</h2>
+                           {trackData.length > 0 ? (
+                              trackData.map((track, index) => (
+                              <div key={index}>
+                                 <iframe
+                                    src={`https://open.spotify.com/embed/track/${track.id}`}
+                                    width="300"
+                                    height="80"
+                                    frameBorder="0"
+                                    allowtransparency="true"
+                                    allow="encrypted-media"
+                                 ></iframe>
+                              </div>
+                              ))
+                           ) : (
+                              <p>No recommended songs...</p>
+                           )}
+                        </div>
 {/*
                         {getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL') ? (
                            <div>
