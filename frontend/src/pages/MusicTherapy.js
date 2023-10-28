@@ -100,7 +100,7 @@ const MusicTherapy = () => {
             <div className="mt-main-container mt--24 mb--48">
                <div className="mt-second-col">
                   <div>
-                     <h2 className="mb--16">Music Recommendations for You!</h2>
+                     <h2 className="mb--16">Music recommended for you based on your emotions.</h2>
                      <div className="music-flex-cont">
                         {trackData.length > 0 ? (
                            trackData.map((track, index) => (
