@@ -90,7 +90,9 @@ def initialize():
     #######################################################################################################################################
     '''Train model from scratch and save it along with the scaler'''
 
-    df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
+    df=pd.read_csv("/usr/src/app/ml_models/spotify_recommendation/dataset.csv")
+    # df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
+
 
     df['Mood'] = df['Mood'].apply(class_to_index)
 
@@ -127,10 +129,12 @@ def initialize():
     print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
 
     # Save the tokenizer
-    with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    # with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('backend/ml_models/spotify_recommendation/spotify_model')
+    model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+    # model.save('backend/ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
     

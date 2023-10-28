@@ -69,11 +69,14 @@ from urllib.parse import quote_plus
 import random
 import sys
 import json
-API_KEY = "AIzaSyDKFRkk0HQWBIXQqQjaDW9-Fz9opaFkZys"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def search_youtube_videos(video_types_probabilities):
-    api_key = "AIzaSyDKFRkk0HQWBIXQqQjaDW9-Fz9opaFkZys"
+    api_key = os.getenv("YOUTUBE_API_KEY")
     max_videos = sum(video_types_probabilities.values())
     videos_info = []
 
@@ -124,7 +127,8 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=3):
 
         for item in data['items']:
             video_id = item['id']['videoId']
-            link = f"https://www.youtube.com/watch?v={video_id}"
+            # link = f"https://www.youtube.com/watch?v={video_id}"
+            link = f"{video_id}"
             video_links.append(link)
 
     return video_links
@@ -136,7 +140,7 @@ def youtube_lists(input):
         category_list = input["categories"]
         # print(category_list)
         # categories = ["Gaming"]
-        videos = get_youtube_videos_from_preferences(API_KEY, category_list)
+        videos = get_youtube_videos_from_preferences(os.getenv("YOUTUBE_API_KEY"), category_list)
         # videos = get_youtube_videos_from_preferences(API_KEY, categories)
         # print(videos)
         # # for video in videos:

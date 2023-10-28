@@ -49,7 +49,7 @@ const YT_RecommendationView = () => {
       axios
          .post('http://localhost:5001/api/youtube_list', storedData)
          .then((response) => {
-            console.log(response.data);
+            console.log(typeof response.data);
             setVideoIds(response.data);
          })
          .catch((error) => {
@@ -59,7 +59,7 @@ const YT_RecommendationView = () => {
 
    console.log('Loaded Ids ', videoIds);
    // Convert the list to a JSON array
-   // json_array = json.dumps(videoIds)
+   // videoIds = JSON.parse(videoIds);
    // const videoUrls = JSON.parse(videoIds);
    console.log('Loaded Ids ', typeof videoIds);
 

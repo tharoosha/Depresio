@@ -11,8 +11,8 @@ import { writeFileSync, unlinkSync } from 'fs';
 export async function analyzer(req, res) {
   const { message } = req.body;
   try {
-    // const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/chatbotkb.py", message,]);
-    const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
+    const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/chatbotkb.py", message,]);
+    // const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
 
     let result = "";
 
@@ -24,6 +24,7 @@ export async function analyzer(req, res) {
     process.on("close", (code) => {
       if (code === 0) {
         try {
+          console.log(result);
           res.status(200).send(result);
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
@@ -63,13 +64,14 @@ export async function speech_to_text(req, res) {
     // })
     // res.send(req.file)
     let audioData = req.file.buffer;
-    const tempFilePath = '../backend/ml_models/temp_audio.wav';
+    const tempFilePath = '/usr/src/app/ml_models/temp_audio.wav';
     writeFileSync(tempFilePath, audioData);  // Save the audio data to a temp file
     // console.log("file is created..")
     // writeFileSync(filePath, req.file.buffer);
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", tempFilePath]);
+    const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/Voice_GPT3.py", tempFilePath,]);
+    // const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", tempFilePath]);
     // const pythonProcess = spawn("python3", [ "../backend/ml_models/Chatbot/Voice_GPT3.py", audioData]);
 
     // // Write the audio data directly to the Python script's stdin
@@ -118,49 +120,7 @@ export async function speech_to_text(req, res) {
   }
 }
 
-// /** GET: http://localhost:5001/api/youtube_videos */
-// /** 
-//  * @param : {
-//   "mood" : "Happiness",
-// } 
-// */
-// // Define the controller function to execute the Python script
-// export async function video_predict(req, res) {
-//   try {
-//     const { mood } = req.body;
 
-//     // Spawn the Python script as a child process
-//     const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["../ml_models/recommanded_system/combinedScript.py",mood,]);
-
-//     let output = "";
-
-//     // Listen for data events from the Python script's stdout
-//     pythonProcess.stdout.on("data", (data) => {
-//       output += data.toString();
-//     });
-
-//     // Listen for the 'close' event to handle the completion of the Python script
-//     pythonProcess.on("close", (code) => {
-//       if (code === 0) {
-//         try {
-//           const result = JSON.parse(output);
-//           res.status(200).json(result);
-//         } catch (error) {
-//           res.status(500).json({ error: "Failed to parse JSON response" });
-//         }
-//       } else {
-//         res.status(500).json({ error: "Python script exited with an error" });
-//       }
-//     });
-
-//     // Handle any errors during the execution of the Python script
-//     pythonProcess.on("error", (error) => {
-//       res.status(500).json({ error: error.message });
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// }
 
 /** POST: http://localhost:5001/api/emotion_analyzer */
 /** 
@@ -170,10 +130,11 @@ export async function speech_to_text(req, res) {
 */
 
 export async function emotion_analyzer(req, res) {
-  const { message } = req.body;
+  const { tweet } = req.body;
   try {
-    console.log(message)
-    const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", message,]);
+    console.log(tweet)
+    const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/emotion_detection/emotionScript.py", tweet,]);
+    // const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", tweet,]);
 
     let emotion = ""
     process.stdout.on("data", (data) => {
@@ -192,7 +153,7 @@ export async function emotion_analyzer(req, res) {
           // // # Extract the "emotion" field
           // const emotion = jsonData.emotion;
           const jsonData = JSON.parse(emotion);
-          const joy = jsonData.emotion;
+          // const joy = jsonData.emotion;
           // console.log(joy);
           res.status(200).send(jsonData);
         } catch (error) {
@@ -223,7 +184,8 @@ export async function youtube_lists(req, res) {
   const { categories } = req.body;
   try {
     // console.log(tweet)
-    const process = spawn("python3", ["../backend/ml_models/recommanded_system/youtube_search.py", categories,]);
+    const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/recommanded_system/youtube_search.py", categories,]);
+    // const process = spawn("python3", ["../backend/ml_models/recommanded_system/youtube_search.py", categories,]);
 
     let youtube_list = ""
     process.stdout.on("data", (data) => {
@@ -278,7 +240,8 @@ export async function spotify_recommend(req, res) {
     const { mood } = req.body;
 
     // Spawn the Python script as a child process
-    const pythonProcess = spawn("python3", [ "../backend/ml_models/spotify_recommendation/spotifyRecommendExecution.py", mood,]);
+    const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/spotify_recommendation/spotifyRecommendExecution.py", mood,]);
+    // const pythonProcess = spawn("python3", [ "../backend/ml_models/spotify_recommendation/spotifyRecommendExecution.py", mood,]);
 
     let output = "";
     // let output = [];

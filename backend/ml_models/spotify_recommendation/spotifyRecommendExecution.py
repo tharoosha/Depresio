@@ -22,12 +22,15 @@ os.environ["REDIRECT_URI"] = REDIRECT_URI
 def script_run(input_mood):
     try:
 
-        file_path = '../backend/ml_models/spotify_recommendation/tokenizer.pkl'
+        file_path = '/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl'
+        # file_path = '../backend/ml_models/spotify_recommendation/tokenizer.pkl'
         if os.path.exists(file_path):
-            with open('../backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+            with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+            # with open('../backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
                 scaler = pickle.load(f)
 
-        model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
+        model = tf.keras.models.load_model('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+        # model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
 
         result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
         # result = json.dumps(result)
