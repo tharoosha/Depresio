@@ -7,13 +7,11 @@ import openai
 from llama_index import ServiceContext
 import backoff
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
-# load_dotenv()
-# load
+load_dotenv()
 
-# os.environ['OPENAI_API_KEY'] = "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"
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def create_Index(path):
     max_input = 4096

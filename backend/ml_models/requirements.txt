@@ -29,3 +29,5 @@ sentence_transformers
 SpeechRecognition==3.8.1
 # mtranslate==1.8
 # gTTS==2.3.0
+
+python-dotenv
