@@ -11,6 +11,11 @@ import { useNavigate } from 'react-router-dom'
 import styles from '../styles/Username.module.scss';
 import extend from '../styles/Profile.module.scss';
 import Header from './Header';
+import BarChart from './chart';
+
+
+import '../styles/Base.scss';
+import '../styles/Profile.scss';
 
 export default function Profile() {
 
@@ -61,55 +66,70 @@ export default function Profile() {
   return (
     <>
     <Header/>
-    <div className="container mx-auto">
+    <div className="container">
 
       <Toaster position='top-center' reverseOrder={false}></Toaster>
 
-      <div className='flex justify-center items-center h-screen'>
-        <div className={`${styles.glass} ${extend.glass}`} style={{ width: "45%", paddingTop: '3em'}}>
-
-          <div className="title flex flex-col items-center">
-            <h4 className='text-5xl font-bold'>Profile</h4>
-            <span className='py-4 text-xl w-2/3 text-center text-gray-500'>
-                You can update the details.
-            </span>
+        <div className = "Profile_Wrapper" >
+          <div className = "Profile_topbar" >
+            <div className="wrapper_container">
+            <h3>Good Evening, {apiData?.firstName || apiData?.username}!🥳</h3>
+            </div>
+            <div className="wrapper_container">
+                   <button onClick={userLogout} className='btn' to="/">Logout</button>
+                
+            </div>
           </div>
+          <div className='profile_inner_wrapper'>
+              <form className='profile_info_form' onSubmit={formik.handleSubmit}>
 
-          <form className='py-1' onSubmit={formik.handleSubmit}>
-              <div className='profile flex justify-center py-4'>
-                  <label htmlFor="profile">
-                    <img src={apiData?.profile || file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
-                  </label>
-                  
-                  <input onChange={onUpload} type="file" id='profile' name='profile' />
-              </div>
-
-              <div className="textbox flex flex-col items-center gap-6">
-                <div className="name flex w-3/4 gap-10">
-                  <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='FirstName' />
-                  <input {...formik.getFieldProps('lastName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='LastName' />
+              <div className="form_wrapper_container_title">
+                <h3>Profile Details</h3>
+                  <span className='py-4 text-xl w-2/3 text-center text-gray-500 custom-class-2'>
+                      You can update the details.
+                  </span>
                 </div>
 
-                <div className="name flex w-3/4 gap-10">
-                  <input {...formik.getFieldProps('mobile')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Mobile No.' />
-                  <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Email*' />
+                <div className='form_wrapper'>
+                  <div className='profile_image'>
+                      <label htmlFor="profile">
+                        <img src={apiData?.profile || file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
+                      </label>
+                      
+                      <input onChange={onUpload} type="file" id='profile' name='profile' />
+                  </div>
+                </div>
+                  <div className="form_text_fields">
+                    <div className="field_group">
+                      <input {...formik.getFieldProps('firstName')} className='inputText' type="text" placeholder='First Name' />
+                      <input {...formik.getFieldProps('lastName')} className='inputText' type="text" placeholder='Last Name' />
+                    
+                      <input {...formik.getFieldProps('mobile')} className='inputText' type="tel" placeholder='Contact Number' />
+                      <input {...formik.getFieldProps('email')} className='inputText' type="email" placeholder='Email' />
+                    
+                      <textarea {...formik.getFieldProps('address')} className='inputText' row='5' type="Textarea" placeholder='Address' />
+                      <button className='btn' type='submit'>Update</button>
+                      <button className='btn delete-btn' type='delete'>Delete Account</button>
+                    </div>
+                  </div>
+                  
+              </form>
+              <div className='profile_info_form'>
+              <div className="form_wrapper_container_title">
+                <h3>Personal Reports</h3>
+                  <span className='py-4 text-xl w-2/3 text-center text-gray-500 custom-class-2'>
+                  Emotion Changing Frequency Over Months
+                  </span>
+                </div>
+                <div className="App">
+                  <BarChart />
                 </div>
 
-               
-                  <input {...formik.getFieldProps('address')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Address' />
-                  <button className={styles.btn} type='submit'>Update</button>
-               
-                  
               </div>
 
-              <div className="text-center py-4">
-                <span className='text-gray-500'>come back later? <button onClick={userLogout} className='text-red-500' to="/">Logout</button></span>
-              </div>
-
-          </form>
-
+            </div>
         </div>
-      </div>
+      
     </div>
     </>
     
