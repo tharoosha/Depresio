@@ -1,48 +1,56 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 
+
 function YoutubePreferences() {
-   const [categoriesName, setCategoriesName] = useState([]);
-   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [categoriesName, setCategoriesName] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-   const YOUTUBE_API_KEY = 'AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc';
-   const YOUTUBE_CATEGORIES_URL = `https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key=${YOUTUBE_API_KEY}`;
+  const YOUTUBE_API_KEY = "AIzaSyCoFVk0LXFuTN5Zs0OfL6-gzQVgpaSM6lc";
+  const YOUTUBE_CATEGORIES_URL = `https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key=${YOUTUBE_API_KEY}`;
 
-   useEffect(() => {
-      axios
-         .get(YOUTUBE_CATEGORIES_URL)
-         .then((response) => {
-            setCategoriesName(response.data.items);
-         })
-         .catch((error) => {
-            console.error('Error fetching YouTube categories:', error);
-         });
-   }, []);
+  useEffect(() => {
+    axios
+      .get(YOUTUBE_CATEGORIES_URL)
+      .then((response) => {
+        setCategoriesName(response.data.items);
+      })
+      .catch((error) => {
+        console.error("Error fetching YouTube categories:", error);
+      });
+  }, []);
 
-   const handleCategoryChange = (title) => {
-      if (selectedCategories.includes(title)) {
-         setSelectedCategories((prevTitles) => prevTitles.filter((categoryTitle) => categoryTitle !== title));
-      } else {
-         setSelectedCategories((prevTitles) => [...prevTitles, title]);
-      }
-   };
+  const handleCategoryChange = (title) => {
+    if (selectedCategories.includes(title)) {
+      setSelectedCategories((prevTitles) =>
+        prevTitles.filter((categoryTitle) => categoryTitle !== title)
+      );
+    } else {
+      setSelectedCategories((prevTitles) => [...prevTitles, title]);
+    }
+  };
 
-   const handleSubmit = () => {
-      try {
-         localStorage.setItem('selectedCategories', JSON.stringify(selectedCategories));
-      } catch (error) {
-         console.error('Error storing preferences:', error);
-      }
-   };
+  const handleSubmit = () => {
+    try {
+      localStorage.setItem(
+        "selectedCategories",
+        JSON.stringify(selectedCategories)
+      );
+    } catch (error) {
+      console.error("Error storing preferences:", error);
+    }
+  };
 
-   const handlegetData = () => {
-      const storedData = localStorage.getItem('selectedCategories');
-      const rating = localStorage.getItem('rating');
-      console.log(storedData);
-      console.log(rating);
-   };
+  const handlegetData = () => {
+    const storedData = localStorage.getItem("selectedCategories");
+    const rating = localStorage.getItem("rating");
+    console.log(storedData);
+    console.log(rating);
+  };
+
 
    return (
       <>
@@ -101,6 +109,7 @@ function YoutubePreferences() {
          </div>
       </>
    );
+
 }
 
 export default YoutubePreferences;
