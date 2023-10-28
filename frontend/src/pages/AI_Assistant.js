@@ -39,6 +39,7 @@ const AI_Assistant = () => {
       }
    }, [response]);
 
+<<<<<<< HEAD
 
    // useEffect(() =>  {
    //    axios.get('${process.env.SERVER_ENDPOINT}/api/spotify_recommend', { mood: emotion })
@@ -48,6 +49,17 @@ const AI_Assistant = () => {
    //    })
    //    .catch((error) => console.error(error))
    // }, [emotion]);
+=======
+   useEffect(() => {
+      axios
+         .get('http://localhost:5001/api/spotify_recommend', { mood: emotion })
+         .then((response) => {
+            setRecommendations(response.data);
+            console.log(response.data);
+         })
+         .catch((error) => console.error(error));
+   }, [emotion]);
+>>>>>>> 7da3c13 (styles updated plus AI assistant updates)
 
 
    const startRecording = async () => {
