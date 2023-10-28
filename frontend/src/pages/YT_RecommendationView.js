@@ -78,33 +78,33 @@ const YT_RecommendationView = () => {
                         <div className="yt-container">
                            {videoIds.map((videoId) => {
                               return (
-                                 <div className="yt-recommendation-item">
-                                    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoId}`} title={`YouTube video player for ${videoId}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                    <div className="button-container">
-                                       <button
-                                          style={{
-                                             backgroundColor: 'transparent',
-                                             color: 'white',
-                                             border: 'none',
-                                             cursor: 'pointer',
-                                             fontSize: '20px',
-                                          }}
-                                          onClick={() => setIsReviewDialogVisible(true)}
-                                       >
-                                          Rate Videos
-                                       </button>
+                                 <>
+                                    <div className="yt-recommendation-item">
+                                       <iframe width="560" height="315" src={`https://www.youtube.com/embed/${videoId}`} title={`YouTube video player for ${videoId}`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                       <div className="button-container">
+                                          <button
+                                             style={{
+                                                backgroundColor: 'transparent',
+                                                color: 'white',
+                                                border: 'none',
+                                                cursor: 'pointer',
+                                                fontSize: '20px',
+                                             }}
+                                             onClick={() => setIsReviewDialogVisible(true)}
+                                          >
+                                             Rate this Video
+                                          </button>
+                                       </div>
                                     </div>
-                                 </div>
+                                 </>
                               );
                            })}
                         </div>
                         <div className="popup-inner__button"></div>
-                        <div className="button-container">
-                           <Link className="btn select-new-pref" to="/preferences">
-                              Select Your New Preferences
-                           </Link>
-                        </div>
                      </div>
+                     <Link className="btn select-new-pref" to="/preferences">
+                        Select Your New Preferences
+                     </Link>
 
                      {isReviewDialogVisible && (
                         <div className="review-dialog">
@@ -120,20 +120,24 @@ const YT_RecommendationView = () => {
                               >
                                  Rate the Recommendations
                               </h2>
-                              {[...Array(5)].map((star, index) => {
-                                 return (
-                                    <span
-                                       key={index}
-                                       className={`star ${index < rating ? 'filled' : ''}`}
-                                       onClick={() => {
-                                          handleRating(index + 1);
-                                       }}
-                                    >
-                                       {index < rating ? '★' : '☆'}
-                                    </span>
-                                 );
-                              })}
-                              <button onClick={() => setIsReviewDialogVisible(false)}>Close</button>
+                              <div className="stars">
+                                 {[...Array(5)].map((star, index) => {
+                                    return (
+                                       <span
+                                          key={index}
+                                          className={`star ${index < rating ? 'filled' : ''}`}
+                                          onClick={() => {
+                                             handleRating(index + 1);
+                                          }}
+                                       >
+                                          {index < rating ? '★' : '☆'}
+                                       </span>
+                                    );
+                                 })}
+                              </div>
+                              <button className="review-submit btn" onClick={() => setIsReviewDialogVisible(false)}>
+                                 Submit
+                              </button>
                            </div>
                         </div>
                      )}

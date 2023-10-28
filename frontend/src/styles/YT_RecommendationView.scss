@@ -4,6 +4,13 @@
    grid-template-columns: repeat(3, 1fr);
    gap: 24px;
 
+   .yt-recommendation-item {
+      display: flex;
+      flex-direction: column;
+      min-height: 245px;
+      gap: 10px;
+   }
+
    iframe {
       width: 100%;
       height: 100%;
@@ -26,11 +33,28 @@
 .review-dialog-content {
    width: 80%;
    max-width: 500px;
-   background: #ffffff;
    padding: 20px;
    border-radius: 5px;
    text-align: center;
    position: relative; // added for the close button positioning
+   background-color: #4d4855;
+   background-image: linear-gradient(147deg, #4d4855 0%, #000000 74%);
+
+   .close-button {
+      color: #fff;
+      width: 30px;
+      height: 20px;
+      display: inline-block;
+   }
+
+   .review-submit {
+      width: 100%;
+      padding: 12px !important;
+   }
+
+   h2 {
+      color: #fff !important;
+   }
 }
 
 .star {
@@ -59,6 +83,16 @@
 }
 
 // *********************** Recommendations ********************** //
+.select-new-pref {
+   width: 100%;
+   display: inline-block;
+   font-size: 15px;
+   padding: 12px 20px;
+   text-align: center;
+   justify-content: center;
+   margin-top: 30px !important;
+}
+
 .check-container {
    display: grid;
    grid-template-columns: repeat(5, 1fr);
@@ -113,6 +147,7 @@
       padding: 12px 20px;
       text-align: center;
       justify-content: center;
+      margin-top: 50px !important;
    }
 
    .rem-margin-mob {
