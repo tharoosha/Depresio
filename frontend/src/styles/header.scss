@@ -111,7 +111,7 @@ header {
    background: linear-gradient(187deg, #000000 0%, #1b1b1b 100%);
    height: 100%;
    width: 350px;
-   z-index: 1;
+   z-index: -99;
    opacity: 0;
    box-shadow: 2px -1px 3px 0px;
 }
@@ -119,7 +119,7 @@ header {
 .menu ul {
    list-style-type: none;
    padding: 0;
-   margin: 10vh 2em 0 0;
+   margin: 15vh 2em 0 0;
 }
 
 .menu li {
@@ -175,5 +175,11 @@ header {
             display: block !important;
          }
       }
+   }
+}
+
+@media (max-width: 480px) {
+   .menu ul {
+      margin: 10vh 2em 0 0;
    }
 }
