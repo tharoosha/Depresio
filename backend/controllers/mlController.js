@@ -64,7 +64,7 @@ export async function speech_to_text(req, res) {
     // })
     // res.send(req.file)
     let audioData = req.file.buffer;
-    const tempFilePath = '../backend/ml_models/temp_audio.wav';
+    const tempFilePath = '/usr/src/app/ml_models/temp_audio.wav';
     writeFileSync(tempFilePath, audioData);  // Save the audio data to a temp file
     // console.log("file is created..")
     // writeFileSync(filePath, req.file.buffer);

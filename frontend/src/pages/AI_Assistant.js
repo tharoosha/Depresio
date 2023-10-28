@@ -21,6 +21,7 @@ const AI_Assistant = () => {
    const [response, setResponse] = useState('');
    const [chatLog, setChatLog] = useState([]);
    const [emotion, setEmotion] = useState('');
+   const [recommendations, setRecommendations] = useState('');
 
    const chatContainerRef = useRef(null);
 
@@ -36,6 +37,15 @@ const AI_Assistant = () => {
          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
    }, [response]);
+
+   useEffect(() =>  {
+      axios.get('http://localhost:5001/api/spotify_recommend', { mood: emotion })
+      .then((response) => {
+         setRecommendations(response.data);
+         console.log(response.data);
+      })
+      .catch((error) => console.error(error))
+   }, [emotion]);
 
    const startRecording = async () => {
       if (isRecording) {
