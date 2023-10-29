@@ -35,14 +35,14 @@ jobs:
       name: Build and push Backend image
       working-directory: backend 
       run: |
-        docker build -t vihidun/backend:latest .
-        docker push vihidun/backend:latest
+        docker build -t vihidun/depresio-backend:latest .
+        docker push vihidun/depresio-backend:latest
 
     - 
       name: Build and push Frontend image
       working-directory: frontend 
       run: |
-        docker build -t vihidun/frontend:latest .
-        docker push vihidun/frontend:latest
+        docker build -t vihidun/depresio-frontend:latest .
+        docker push vihidun/depresio-frontend:latest
     
 
