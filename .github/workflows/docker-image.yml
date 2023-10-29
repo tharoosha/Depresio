@@ -17,15 +17,6 @@ jobs:
       uses: actions/checkout@v3
     
     - 
-      name: Build and push Docker images using Docker Compose
-      run: |
-        docker-compose -f docker-compose.yml -p testing build
-        docker-compose -f docker-compose.yml -p testing push
-      env:
-        DOCKER_BUILDKIT: 1
-      working-directory: ${{ github.workspace }}
-    
-    - 
       name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     
@@ -39,6 +30,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - 
     
+      name: Build and push Backend image
+      working-directory: backend 
+      run: |
+        docker build -t vihidun/backend:latest .
+        docker push vihidun/backend:latest
+
+    - 
+      name: Build and push Frontend image
+      working-directory: frontend 
+      run: |
+        docker build -t vihidun/frontend:latest .
+        docker push vihidun/frontend:latest
     
 
