@@ -1,0 +1,28 @@
+name: AWS deploy CD
+
+on:
+  workflow_run:
+    workflows: [Docker Image CI]
+    types:
+      - completed
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - 
+      name: Pull docker image
+      run: sudo docker pull vihidun/depresio-backend:latest
+    -
+      name: delete old docker container
+      run: sudo docker rm -f depresio-backend-container || true
+    -
+      name: Run docker container
+      run: sudo docker run -d -p 5001:5001 --name depresio-backend-container vihidun/depresio-backend
+
+
+    
+
