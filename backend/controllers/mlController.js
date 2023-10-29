@@ -248,18 +248,18 @@ export async function spotify_recommend(req, res) {
 
     // Listen for data events from the Python script's stdout
     pythonProcess.stdout.on("data", (data) => {
-      output += data;
-      // output += data;
+      console.log(data.toString())
+      output += data.toString();
     });
 
     // Listen for the 'close' event to handle the completion of the Python script
     pythonProcess.on("close", (code) => {
       if (code === 0) {
         try {
-          // const result = JSON.parse(output);
+          const result = JSON.parse(output);
           // res.status(200).json(result);
           // const result = JSON.parse(output);  // Parse the output string to JSON
-          res.status(200).send(output);
+          res.status(200).json(result);
           // res.status(200).json({"result":output});
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });
