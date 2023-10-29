@@ -20,8 +20,8 @@ jobs:
       name: Build and push Docker images using Docker Compose
       run: |
         docker-compose -f docker-compose.yml build
-        docker tag depresio-backend vihidun/depresio_backend:latest
-        docker tag depresio-frontend vihidun/depresio_frontend:latest
+        docker tag backend vihidun/depresio_backend:latest
+        docker tag frontend vihidun/depresio_frontend:latest
         docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         docker push vihidun/depresio_backend:latest
         docker push vihidun/depresio_frontend:latest
