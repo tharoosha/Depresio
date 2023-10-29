@@ -21,6 +21,7 @@ const AI_Assistant = () => {
    const [response, setResponse] = useState('');
    const [chatLog, setChatLog] = useState([]);
    const [emotion, setEmotion] = useState('');
+   const [recommendations, setRecommendations] = useState('');
 
    const chatContainerRef = useRef(null);
 
@@ -36,6 +37,15 @@ const AI_Assistant = () => {
          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
    }, [response]);
+
+   useEffect(() =>  {
+      axios.get('http://localhost:5001/api/spotify_recommend', { mood: emotion })
+      .then((response) => {
+         setRecommendations(response.data);
+         console.log(response.data);
+      })
+      .catch((error) => console.error(error))
+   }, [emotion]);
 
    const startRecording = async () => {
       if (isRecording) {
@@ -65,13 +75,17 @@ const AI_Assistant = () => {
             const audioFile = new File([audioBlob], 'userVoice.wav', { type: 'audio/wav' });
             formData.append('audio', audioFile);
 
-            console.log(formData.get('audio'));
+            const audio = formData.get('audio');
+            console.log(audio);
+
             // Send the audio data to the Node.js backend
             axios
                .post('http://localhost:5001/api/voice-input', formData)
                .then((response) => {
                   console.log(response.data.result);
-                  const updatedChatLogWithVoice = [...chatLog, { user: 'User', message: response.data.result }];
+                  let data = response.data.result;
+                  data = String(data);
+                  const updatedChatLogWithVoice = [...chatLog, { user: 'User', message: data }];
                   setChatLog(updatedChatLogWithVoice);
                   // setMessage(response.data.result);
 
@@ -82,13 +96,21 @@ const AI_Assistant = () => {
                   axios
                      .post('http://localhost:5001/api/analyze', { message: voice_message })
                      .then((response) => {
-                        const updatedChatLogWithAI = [...chatLog, { user: 'AI_Consultant', message: response.data.result }];
+                        const updatedChatLogWithAI = [...chatLog, { user: 'User', message: voice_message }, { user: 'AI_Consultant', message: response.data.result }];
                         setChatLog(updatedChatLogWithAI);
                         setResponse(response.data.result);
                      })
                      .catch((error) => console.error(error));
 
-                  console.log('chatLog');
+                  axios
+                     .post('http://localhost:5001/api/emotion_analyze', { message: voice_message })
+                     .then((response) => {
+                        setEmotion(response.data.emotion);
+                        // console.log(response.data.emotion)
+                     })
+                     .catch((error) => console.error(error));
+                  // console.log(chatLog);
+                  console.log(emotion);
                })
                .catch((error) => console.error(error));
          };
@@ -114,21 +136,21 @@ const AI_Assistant = () => {
             const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
             setChatLog(updatedChatLogWithAI);
             setResponse(response.data.result);
+            // console.log(response.data.result)
          })
          .catch((error) => console.error(error));
 
-      console.log(message)
       axios
          .post('http://localhost:5001/api/emotion_analyze', { message: message })
          .then((response) => {
-            setEmotion(response.data);
-            // console.log(response.data)
+            setEmotion(response.data.emotion);
+            console.log(response.data.emotion)
          })
          .catch((error) => console.error(error));
       // Clear the input field after submitting
       setMessage('');
-      console.log(chatLog);
-      console.log(emotion);
+      // console.log(chatLog);
+      // console.log(emotion);
    };
 
    return (
@@ -161,14 +183,6 @@ const AI_Assistant = () => {
                         ))}
                      </div>
                      <div className="AI__wrapper__inner__2__footer">
-                        <div className="chat-suggestions">
-                           <p>Chat Suggestions</p>
-                           <div>
-                              <label>Regenerate Response</label>
-                              <label>Explain More</label>
-                              <label>Expand Answer</label>
-                           </div>
-                        </div>
                         <div className="flex">
                            <form onSubmit={handleSubmit}>
                               <div className="AI__wrapper__inner__2__footer__left">

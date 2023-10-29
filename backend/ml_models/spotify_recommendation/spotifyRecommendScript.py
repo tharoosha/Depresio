@@ -12,23 +12,32 @@ from tensorflow.keras.optimizers.legacy import Adam
 import pickle
 import os
 import config as cf
+import contextlib
+
+from dotenv import load_dotenv
 
 
+load_dotenv()
+
+# api_key = os.getenv("OPENAI_API_KEY")
+# print(api_key)
 
 # Replace these with your actual Spotify API credentials
 # CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
 # CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
 # REDIRECT_URI = "http://localhost:8081/callback"
-CLIENT_ID = cf.SPOTIFY_CLIENT_ID
-CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
-REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
+# CLIENT_ID = cf.SPOTIFY_CLIENT_ID
+# CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
+# REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
 
-os.environ["SPOTIPY_CLIENT_ID"] = CLIENT_ID
-os.environ["SPOTIPY_CLIENT_SECRET"] = CLIENT_SECRET
-os.environ["SPOTIPY_REDIRECT_URI"] = REDIRECT_URI
+os.environ["SPOTIPY_CLIENT_ID"] = os.getenv("SPOTIFY_CLIENT_ID")
+os.environ["SPOTIPY_CLIENT_SECRET"] = os.getenv("SPOTIFY_CLIENT_SECRET")
+os.environ["SPOTIPY_REDIRECT_URI"] = os.getenv("SPOTIFY_REDIRECT_URI")
 
-# client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+# client_credentials_manager = SpotifyClientCredentials(client_id=os.getenv("SPOTIFY_CLIENT_ID"), client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"))
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+# sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
 
 def decodeLabels(label):
         if label == 0: 
@@ -90,7 +99,9 @@ def initialize():
     #######################################################################################################################################
     '''Train model from scratch and save it along with the scaler'''
 
-    df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
+    df=pd.read_csv("/usr/src/app/ml_models/spotify_recommendation/dataset.csv")
+    # df=pd.read_csv("backend/ml_models/spotify_recommendation/dataset.csv")
+
 
     df['Mood'] = df['Mood'].apply(class_to_index)
 
@@ -127,20 +138,28 @@ def initialize():
     print(f"Test loss: {loss:.4f}, Test accuracy: {accuracy:.4f}")
 
     # Save the tokenizer
-    with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
+    # with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('backend/ml_models/spotify_recommendation/spotify_model')
+    model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+    # model.save('backend/ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
     
 def getRecommendation(mood, model, scaler):
 
     df_recentSongs = getRecentlyPlayed()
-    df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+
+    # Use contextlib.redirect_stdout to suppress output
+    with contextlib.redirect_stdout(None):
+        df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+
+    # df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
     df2['Mood']=df2.apply(get_max_index, axis=1)
     df_recentSongs['Mood'] = df2['Mood'].apply(decodeLabels)
     filtered_df = df_recentSongs[df_recentSongs['Mood']==mood]
+    
     return filtered_df.tail(10)[0].tolist()[::-1]
 
 if __name__ == "__main__":

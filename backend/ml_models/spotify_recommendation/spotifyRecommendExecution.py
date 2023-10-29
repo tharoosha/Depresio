@@ -4,16 +4,20 @@ import tensorflow as tf
 import json
 import sys
 sys.path.append("../backend/ml_models/config.py")
-from config import OPENAI_API_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI
+# from config import OPENAI_API_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI
 import os
+from dotenv import load_dotenv
 
-CLIENT_ID = "85828d1937e346c8a174c74766c1bb89"
-CLIENT_SECRET = "de99228ea35a4287bd2f1e25d35dec36"
-REDIRECT_URI = "http://localhost:8081/callback"
 
-os.environ["CLIENT_ID"] = CLIENT_ID
-os.environ["CLIENT_SECRET"] = CLIENT_SECRET
-os.environ["REDIRECT_URI"] = REDIRECT_URI
+load_dotenv()
+
+# CLIENT_ID = "85828d1937e346c8a174c74766c1bb89"
+# CLIENT_SECRET = "de99228ea35a4287bd2f1e25d35dec36"
+# REDIRECT_URI = "http://localhost:8081/callback"
+
+os.environ["SPOTIPY_CLIENT_ID"] = os.getenv("SPOTIFY_CLIENT_ID")
+os.environ["SPOTIPY_CLIENT_SECRET"] = os.getenv("SPOTIFY_CLIENT_SECRET")
+os.environ["SPOTIPY_REDIRECT_URI"] = os.getenv("SPOTIFY_REDIRECT_URI")
 
 # CLIENT_ID = SPOTIFY_CLIENT_ID
 # CLIENT_SECRET = SPOTIFY_CLIENT_SECRET
@@ -22,21 +26,25 @@ os.environ["REDIRECT_URI"] = REDIRECT_URI
 def script_run(input_mood):
     try:
 
-        file_path = 'backend/ml_models/spotify_recommendation/tokenizer.pkl'
+        file_path = '/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl'
+        # file_path = '../backend/ml_models/spotify_recommendation/tokenizer.pkl'
         if os.path.exists(file_path):
-            with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+            with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+            # with open('../backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
                 scaler = pickle.load(f)
 
-        model = tf.keras.models.load_model('backend/ml_models/spotify_recommendation/spotify_model')
+        model = tf.keras.models.load_model('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+        # model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
 
         result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
-        # result = json.dumps(result)
+        result = json.dumps(result)
         # response = str(result)
-        # output = {"result": result}
+        output = {"result": result}
 
         # output_json = json.dumps(output)
         # sys.stdout.flush()
-        print(result)
+        # print(result)
+        print(output)
 
     except Exception as e:
         error_message = str(e)
@@ -74,11 +82,11 @@ if __name__ == "__main__":
 
     # if len(sys.argv) > 1:
     #     # The first command-line argument (sys.argv[1]) will be the input_mood
-    #     input_mood = sys.argv[1]
+    input_mood = sys.argv[1]
     #     # input_mood = 'joy'
 
-    #     # Call the function with the received input_mood
-    #     script_run(input_mood)
+    # Call the function with the received input_mood
+    script_run(input_mood)
 
     #     # script_run("happiness")
         
@@ -86,7 +94,7 @@ if __name__ == "__main__":
     #     # If no input_mood is provided, handle the case accordingly
     #     print(json.dumps({"error": "No mood provided"}))
     #     sys.stdout.flush()
-    script_run('joy')
+    # script_run('joy')
 
     # file_path = 'ml_models/spotify_recommendation/tokenizer.pkl'
     # if os.path.exists(file_path):
