@@ -4,6 +4,10 @@ import config as cf
 
 # client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'
 # client_secret = 'd45466167e4149b59cb91717b0ef6e3d'
+os.environ["SPOTIPY_CLIENT_ID"] = os.getenv("SPOTIFY_CLIENT_ID")
+os.environ["SPOTIPY_CLIENT_SECRET"] = os.getenv("SPOTIFY_CLIENT_SECRET")
+os.environ["SPOTIPY_REDIRECT_URI"] = os.getenv("SPOTIFY_REDIRECT_URI")
+
 client_id = cf.SPOTIFY_CLIENT_ID
 client_secret = cf.SPOTIFY_CLIENT_SECRET
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)

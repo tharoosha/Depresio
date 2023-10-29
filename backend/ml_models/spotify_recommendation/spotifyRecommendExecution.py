@@ -4,16 +4,20 @@ import tensorflow as tf
 import json
 import sys
 sys.path.append("../backend/ml_models/config.py")
-from config import OPENAI_API_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI
+# from config import OPENAI_API_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI
 import os
+from dotenv import load_dotenv
 
-CLIENT_ID = "85828d1937e346c8a174c74766c1bb89"
-CLIENT_SECRET = "de99228ea35a4287bd2f1e25d35dec36"
-REDIRECT_URI = "http://localhost:8081/callback"
 
-os.environ["CLIENT_ID"] = CLIENT_ID
-os.environ["CLIENT_SECRET"] = CLIENT_SECRET
-os.environ["REDIRECT_URI"] = REDIRECT_URI
+load_dotenv()
+
+# CLIENT_ID = "85828d1937e346c8a174c74766c1bb89"
+# CLIENT_SECRET = "de99228ea35a4287bd2f1e25d35dec36"
+# REDIRECT_URI = "http://localhost:8081/callback"
+
+os.environ["SPOTIPY_CLIENT_ID"] = os.getenv("SPOTIFY_CLIENT_ID")
+os.environ["SPOTIPY_CLIENT_SECRET"] = os.getenv("SPOTIFY_CLIENT_SECRET")
+os.environ["SPOTIPY_REDIRECT_URI"] = os.getenv("SPOTIFY_REDIRECT_URI")
 
 # CLIENT_ID = SPOTIFY_CLIENT_ID
 # CLIENT_SECRET = SPOTIFY_CLIENT_SECRET

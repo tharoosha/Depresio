@@ -14,22 +14,30 @@ import os
 import config as cf
 import contextlib
 
+from dotenv import load_dotenv
 
+
+load_dotenv()
+
+# api_key = os.getenv("OPENAI_API_KEY")
+# print(api_key)
 
 # Replace these with your actual Spotify API credentials
 # CLIENT_ID = "07f4d94fc95d4955ad32cdf68dbefa0c"
 # CLIENT_SECRET = "cd95a4c259a94411b20b6929270c8ab8"
 # REDIRECT_URI = "http://localhost:8081/callback"
-CLIENT_ID = cf.SPOTIFY_CLIENT_ID
-CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
-REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
+# CLIENT_ID = cf.SPOTIFY_CLIENT_ID
+# CLIENT_SECRET = cf.SPOTIFY_CLIENT_SECRET
+# REDIRECT_URI = cf.SPOTIFY_REDIRECT_URI
 
-os.environ["SPOTIPY_CLIENT_ID"] = CLIENT_ID
-os.environ["SPOTIPY_CLIENT_SECRET"] = CLIENT_SECRET
-os.environ["SPOTIPY_REDIRECT_URI"] = REDIRECT_URI
+os.environ["SPOTIPY_CLIENT_ID"] = os.getenv("SPOTIFY_CLIENT_ID")
+os.environ["SPOTIPY_CLIENT_SECRET"] = os.getenv("SPOTIFY_CLIENT_SECRET")
+os.environ["SPOTIPY_REDIRECT_URI"] = os.getenv("SPOTIFY_REDIRECT_URI")
 
-# client_credentials_manager = SpotifyClientCredentials(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+# client_credentials_manager = SpotifyClientCredentials(client_id=os.getenv("SPOTIFY_CLIENT_ID"), client_secret=os.getenv("SPOTIFY_CLIENT_SECRET"))
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+# sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
 
 def decodeLabels(label):
         if label == 0: 
