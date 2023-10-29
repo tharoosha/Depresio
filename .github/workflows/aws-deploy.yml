@@ -21,7 +21,7 @@ jobs:
       run: sudo docker rm -f depresio-backend-container || true
     -
       name: Run docker container
-      run: sudo docker run -d -p 5001:5001 --name depresio-backend-container vihidun/depresio-backend
+      run: sudo docker run -d -p 8080:8080 --name depresio-backend-container vihidun/depresio-backend
 
 
     
