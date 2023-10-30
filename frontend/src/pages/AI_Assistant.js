@@ -3,17 +3,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../styles/AI.scss';
 import profileImg from '../images/chat-user.svg';
-import aiLoader from '../images/ai-loader.gif';
-import aiLoaderNew from '../images/ai-loader-new.gif';
-import recordingGif from '../images/recording.gif';
 import logo from '../images/depresio-logo-bg-removed.jpeg';
 import { BsFillMicFill, BsSendCheck } from 'react-icons/bs';
 import useFetch from '../hooks/fetch.hook';
 import { useAuthStore } from '../store/store';
 import { MediaRecorder, register } from 'extendable-media-recorder';
 import { connect } from 'extendable-media-recorder-wav-encoder';
-// import 'dotenv/config';
-
 
 import axios from 'axios';
 
@@ -27,29 +22,22 @@ const AI_Assistant = () => {
    const [chatLog, setChatLog] = useState([]);
    const [emotion, setEmotion] = useState('');
    const [recommendations, setRecommendations] = useState('');
-   const [loading, setLoading] = useState(false);
-   const [recording, setRecording] = useState(false);
 
    const chatContainerRef = useRef(null);
+
+   const [isRecording, setIsRecording] = useState(false);
+   // const [mediaRecorder, setMediaRecorder] = useState(null);
    const mediaRecorderRef = useRef(null);
 
+   // const stream = navigator.mediaDevices.getUserMedia({ audio: true });
+
+   //Scroll to the bottom of the chat container whenever a new message is added
    useEffect(() => {
       if (chatContainerRef.current) {
          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
    }, [response]);
 
-<<<<<<< HEAD
-
-   // useEffect(() =>  {
-   //    axios.get('${process.env.SERVER_ENDPOINT}/api/spotify_recommend', { mood: emotion })
-   //    .then((response) => {
-   //       setRecommendations(response.data);
-   //       console.log(response.data);
-   //    })
-   //    .catch((error) => console.error(error))
-   // }, [emotion]);
-=======
    useEffect(() => {
       axios
          .get('http://localhost:5001/api/spotify_recommend', { mood: emotion })
@@ -59,17 +47,16 @@ const AI_Assistant = () => {
          })
          .catch((error) => console.error(error));
    }, [emotion]);
->>>>>>> 7da3c13 (styles updated plus AI assistant updates)
-
 
    const startRecording = async () => {
-      if (recording) {
+      if (isRecording) {
          if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
-            setRecording(false);
+            setIsRecording(false);
          }
          return;
       }
+
       try {
          if (mediaRecorderRef.current === null) {
             await register(await connect());
@@ -77,49 +64,62 @@ const AI_Assistant = () => {
             mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: 'audio/wav' });
          }
          const audioChunks = [];
+
          mediaRecorderRef.current.ondataavailable = function (ev) {
             audioChunks.push(ev.data);
          };
+
          mediaRecorderRef.current.onstop = async () => {
             console.log('data available after MediaRecorder.stop() called.');
             const audioBlob = new Blob(audioChunks);
             const formData = new FormData();
             const audioFile = new File([audioBlob], 'userVoice.wav', { type: 'audio/wav' });
             formData.append('audio', audioFile);
-            setLoading(true);
-            setRecording(false); // Set recording to false when audio is sent
+
+            const audio = formData.get('audio');
+            console.log(audio);
+
+            // Send the audio data to the Node.js backend
             axios
-               .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/voice-input`, formData)
+               .post('http://localhost:5001/api/voice-input', formData)
                .then((response) => {
                   console.log(response.data.result);
                   let data = response.data.result;
                   data = String(data);
                   const updatedChatLogWithVoice = [...chatLog, { user: 'User', message: data }];
                   setChatLog(updatedChatLogWithVoice);
+                  // setMessage(response.data.result);
+
                   const voice_message = response.data.result;
+
+                  // console.log(chatLog)
+                  // Make an HTTP request to the backend API to analyze user input using axios
                   axios
-                     .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: voice_message })
+                     .post('http://localhost:5001/api/analyze', { message: voice_message })
                      .then((response) => {
                         const updatedChatLogWithAI = [...chatLog, { user: 'User', message: voice_message }, { user: 'AI_Consultant', message: response.data.result }];
                         setChatLog(updatedChatLogWithAI);
                         setResponse(response.data.result);
                      })
                      .catch((error) => console.error(error));
+
                   axios
-                     .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: voice_message })
+                     .post('http://localhost:5001/api/emotion_analyze', { message: voice_message })
                      .then((response) => {
                         setEmotion(response.data.emotion);
+                        // console.log(response.data.emotion)
                      })
                      .catch((error) => console.error(error));
-                  setLoading(false);
+                  // console.log(chatLog);
+                  console.log(emotion);
                })
-               .catch((error) => {
-                  console.error(error);
-                  setLoading(false);
-               });
+               .catch((error) => console.error(error));
          };
-         setRecording(true);
+
+         setIsRecording(true);
          mediaRecorderRef.current.start();
+         // console.log(mediaRecorder.state);
+         // setMediaRecorder(recorder);
       } catch (error) {
          console.error('Error accessing the microphone:', error);
       }
@@ -129,36 +129,29 @@ const AI_Assistant = () => {
       e.preventDefault();
       const updatedChatLog = [...chatLog, { user: 'User', message: message }];
       setChatLog(updatedChatLog);
-      // console.log('{$process.env.REACT_APP_SERVER_ENDPOINT}')
 
-      
-
-      setLoading(true);
-
+      // Make an HTTP request to the backend API to analyze user input using axios
       axios
-         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: message })
+         .post('http://localhost:5001/api/analyze', { message: message })
          .then((response) => {
             const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
             setChatLog(updatedChatLogWithAI);
             setResponse(response.data.result);
-            setLoading(false);
-         })
-         .catch((error) => {
-            console.error(error);
-            setLoading(false);
-         });
-
-      axios
-         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: message })
-         .then((response) => {
-            setEmotion(response.data.emotion);
-
-            console.log(emotion)
-
+            // console.log(response.data.result)
          })
          .catch((error) => console.error(error));
 
+      axios
+         .post('http://localhost:5001/api/emotion_analyze', { message: message })
+         .then((response) => {
+            setEmotion(response.data.emotion);
+            console.log(emotion)
+         })
+         .catch((error) => console.error(error));
+      // Clear the input field after submitting
       setMessage('');
+      // console.log(chatLog);
+      // console.log(emotion);
    };
 
    return (
@@ -181,6 +174,7 @@ const AI_Assistant = () => {
                                        <img src={chat.user === 'AI_Consultant' ? logo : profileImg} alt={chat.user} />
                                        <div className="chat--item--meta">
                                           <label>{chat.user === 'AI_Consultant' ? 'Depresio Assistant' : 'You'}</label>
+                                          {/* <label>Timestamp logic here</label> */}
                                        </div>
                                     </div>
                                  </div>
@@ -189,32 +183,23 @@ const AI_Assistant = () => {
                            </div>
                         ))}
                      </div>
-                     {loading && (
-                        <div className="loader ai-loader">
-                           <img src={aiLoaderNew} alt="Loading..." />
-                        </div>
-                     )}
                      <div className="AI__wrapper__inner__2__footer">
                         <div className="flex">
                            <form onSubmit={handleSubmit}>
                               <div className="AI__wrapper__inner__2__footer__left">
                                  <textarea placeholder="You can ask me anything! I am here to help 🙂" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
                               </div>
-                              <div className="btn-flex-container assistant-main-btns">
-                                 <button type="submit" className="submit-button">
-                                    <BsSendCheck />
-                                 </button>
-                                 <button type="button" className="record_button" onClick={startRecording}>
-                                    {recording ? (
-                                       <div class="wave">
-                                          <div class="dot"></div>
-                                          <div class="dot"></div>
-                                          <div class="dot"></div>
-                                       </div>
-                                    ) : (
+                              <div className="btn-flex-container">
+                                 <div className="AI__wrapper__inner__2__footer__right">
+                                    <button type="submit" className="submit-button">
+                                       <BsSendCheck />
+                                    </button>
+                                 </div>
+                                 <div className="AI__wrapper__inner__2__footer__right-2">
+                                    <button type="button" className="record_button" onClick={startRecording}>
                                        <BsFillMicFill />
-                                    )}
-                                 </button>
+                                    </button>
+                                 </div>
                               </div>
                            </form>
                         </div>
