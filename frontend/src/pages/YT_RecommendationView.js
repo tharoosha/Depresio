@@ -73,7 +73,7 @@ const YT_RecommendationView = () => {
                <div className="AI__wrapper">
                   <div className=" AI__wrapper__inner__2">
                      <div className="AI__wrapper__inner__2__header">
-                        <p>Videos recommended for you based on your preferences.</p>
+                        <h2>Videos recommended for you based on your preferences.</h2>
                      </div>
 
                      <div className="">
