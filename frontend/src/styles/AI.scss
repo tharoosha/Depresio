@@ -9,6 +9,25 @@
          gap: 24px;
          min-height: 82vh;
 
+         .ai-loader {
+            display: flex;
+            justify-content: center;
+         }
+
+         .assistant-main-btns {
+            button {
+               display: flex;
+               align-items: center;
+               background-color: #141c16;
+               width: 35%;
+               padding: 10px 20px;
+               justify-content: center;
+               border: 1px solid #474747;
+               cursor: pointer;
+               color: #fff;
+            }
+         }
+
          .AI__wrapper__inner {
             background-color: #0d0f10;
             border-radius: 5px;
@@ -439,6 +458,30 @@
    }
 }
 
+.wave {
+   display: flex;
+   justify-content: center;
+}
+
+.dot {
+   width: 10px;
+   height: 10px;
+   background-color: red; /* Change the color as needed */
+   border-radius: 50%;
+   margin: 0 10px; /* Adjust the margin to control spacing between dots */
+   animation: wave 1s ease-in-out infinite; /* Adjust animation duration as needed */
+}
+
+@keyframes wave {
+   0%,
+   100% {
+      transform: translateX(0);
+   }
+   50% {
+      transform: translateX(20px); /* Adjust the distance for the wave effect */
+   }
+}
+
 @media (max-width: 600px) {
    .btn-flex-container {
       flex-direction: column !important;
@@ -447,6 +490,13 @@
    .chat-suggestions {
       div {
          flex-direction: column;
+      }
+   }
+
+   .assistant-main-btns {
+      button {
+         width: 90% !important;
+         margin: auto;
       }
    }
 }
