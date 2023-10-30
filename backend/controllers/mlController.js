@@ -11,8 +11,8 @@ import { writeFileSync, unlinkSync } from 'fs';
 export async function analyzer(req, res) {
   const { message } = req.body;
   try {
-    const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/chatbotkb.py", message,]);
-    // const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
+    // const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/chatbotkb.py", message,]);
+    const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
 
     let result = "";
 

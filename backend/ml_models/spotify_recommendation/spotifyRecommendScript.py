@@ -144,7 +144,7 @@ def initialize():
     # with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+    # model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
     # model.save('backend/ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
