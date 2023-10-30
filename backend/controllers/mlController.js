@@ -130,11 +130,11 @@ export async function speech_to_text(req, res) {
 */
 
 export async function emotion_analyzer(req, res) {
-  const { tweet } = req.body;
+  const { message } = req.body;
   try {
-    console.log(tweet)
+    console.log(message)
     const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/emotion_detection/emotionScript.py", tweet,]);
-    // const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", tweet,]);
+    // const process = spawn("python3", ["../backend/ml_models/emotion_detection/emotionScript.py", message,]);
 
     let emotion = ""
     process.stdout.on("data", (data) => {
@@ -155,6 +155,7 @@ export async function emotion_analyzer(req, res) {
           const jsonData = JSON.parse(emotion);
           // const joy = jsonData.emotion;
           // console.log(joy);
+          // console.log(emotion);
           res.status(200).send(jsonData);
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });

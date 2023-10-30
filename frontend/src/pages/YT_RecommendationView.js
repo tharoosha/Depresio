@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import '../styles/YT_RecommendationView.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+// import 'dotenv/config';
+
 // get_youtube_videos_from_preferences
 
 /** POST: http://localhost:5001/api/youtube_list */
@@ -47,7 +49,7 @@ const YT_RecommendationView = () => {
          body: storedData,
       };
       axios
-         .post('http://localhost:5001/api/youtube_list', storedData)
+         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/youtube_list`, storedData)
          .then((response) => {
             console.log(typeof response.data);
             setVideoIds(response.data);

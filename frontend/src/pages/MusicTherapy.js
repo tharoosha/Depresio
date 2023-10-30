@@ -27,13 +27,15 @@ import profileImg from '../images/chat-user.svg';
 import chevronDown from '../images/chevron-down.svg';
 import { useEffect, useState } from 'react';
 import { Buffer } from 'buffer';
+// import 'dotenv/config';
 
 import axios from 'axios';
 const qs = require('qs');
-const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
-const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
-// const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
-// const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+
+// const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
+// const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
+const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 

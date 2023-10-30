@@ -9,6 +9,8 @@ import useFetch from '../hooks/fetch.hook';
 import { useAuthStore } from '../store/store';
 import { MediaRecorder, register } from 'extendable-media-recorder';
 import { connect } from 'extendable-media-recorder-wav-encoder';
+// import 'dotenv/config';
+
 
 import axios from 'axios';
 
@@ -38,14 +40,14 @@ const AI_Assistant = () => {
       }
    }, [response]);
 
-   useEffect(() =>  {
-      axios.get('http://localhost:5001/api/spotify_recommend', { mood: emotion })
-      .then((response) => {
-         setRecommendations(response.data);
-         console.log(response.data);
-      })
-      .catch((error) => console.error(error))
-   }, [emotion]);
+   // useEffect(() =>  {
+   //    axios.get('${process.env.SERVER_ENDPOINT}/api/spotify_recommend', { mood: emotion })
+   //    .then((response) => {
+   //       setRecommendations(response.data);
+   //       console.log(response.data);
+   //    })
+   //    .catch((error) => console.error(error))
+   // }, [emotion]);
 
    const startRecording = async () => {
       if (isRecording) {
@@ -80,7 +82,7 @@ const AI_Assistant = () => {
 
             // Send the audio data to the Node.js backend
             axios
-               .post('http://localhost:5001/api/voice-input', formData)
+               .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/voice-input`, formData)
                .then((response) => {
                   console.log(response.data.result);
                   let data = response.data.result;
@@ -94,7 +96,7 @@ const AI_Assistant = () => {
                   // console.log(chatLog)
                   // Make an HTTP request to the backend API to analyze user input using axios
                   axios
-                     .post('http://localhost:5001/api/analyze', { message: voice_message })
+                     .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: voice_message })
                      .then((response) => {
                         const updatedChatLogWithAI = [...chatLog, { user: 'User', message: voice_message }, { user: 'AI_Consultant', message: response.data.result }];
                         setChatLog(updatedChatLogWithAI);
@@ -103,7 +105,7 @@ const AI_Assistant = () => {
                      .catch((error) => console.error(error));
 
                   axios
-                     .post('http://localhost:5001/api/emotion_analyze', { message: voice_message })
+                     .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: voice_message })
                      .then((response) => {
                         setEmotion(response.data.emotion);
                         // console.log(response.data.emotion)
@@ -128,10 +130,13 @@ const AI_Assistant = () => {
       e.preventDefault();
       const updatedChatLog = [...chatLog, { user: 'User', message: message }];
       setChatLog(updatedChatLog);
+      // console.log('{$process.env.REACT_APP_SERVER_ENDPOINT}')
+
+      
 
       // Make an HTTP request to the backend API to analyze user input using axios
       axios
-         .post('http://localhost:5001/api/analyze', { message: message })
+         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: message })
          .then((response) => {
             const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
             setChatLog(updatedChatLogWithAI);
@@ -141,10 +146,10 @@ const AI_Assistant = () => {
          .catch((error) => console.error(error));
 
       axios
-         .post('http://localhost:5001/api/emotion_analyze', { message: message })
+         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: message })
          .then((response) => {
             setEmotion(response.data.emotion);
-            console.log(response.data.emotion)
+            console.log(emotion)
          })
          .catch((error) => console.error(error));
       // Clear the input field after submitting

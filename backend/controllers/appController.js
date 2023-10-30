@@ -314,4 +314,50 @@ export async function resetPassword(req,res){
     }
 }
 
+/** POST: http://localhost:5001/api/emotions/retrieve */
+/** Middleware for saving emotions for a user */
+export async function saveEmotions(req, res, next) {
+    try {
+      const { username, emotions } = req.body;
+  
+      // Check if the user exists
+      const user = await UserModel.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).send({ error: "User not found" });
+      }
+  
+      // Update the user's emotions field with the new data
+      user.emotions = emotions;
+  
+      await user.save();
+  
+      next();
+    } catch (error) {
+      return res.status(500).send({ error: "Server Error" });
+    }
+  }
 
+
+
+/** POST: http://localhost:5001/api/emotions/save */
+/** Middleware for retrieving emotions for a user */
+export async function retrieveEmotions(req, res, next) {
+    try {
+      const { username } = req.method === "GET" ? req.query : req.body;
+  
+      // Check if the user exists
+      const user = await UserModel.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).send({ error: "User not found" });
+      }
+  
+      // Assuming that emotions are stored as a field in the user model
+      req.userEmotions = user.emotions;
+  
+      next();
+    } catch (error) {
+      return res.status(500).send({ error: "Server Error" });
+    }
+  }
