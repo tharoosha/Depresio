@@ -51,19 +51,24 @@ const YT_RecommendationView = () => {
       axios
          .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/youtube_list`, storedData)
          .then((response) => {
-            console.log(typeof response.data);
-            setVideoIds(response.data);
+            console.log(response);
+            // const parsedArray = JSON.parse(response.data.replace(/\n/g, ''));
+            const videoIdsArray = response.data.split('\n').map(line => line.replace(/[[\]']/g, '')).filter(id => id !== 'undefined');
+            // videoIdsArray = videoIdsArray.split(', ');
+            // var videoUrls = JSON.parse(response.data);
+            console.log(videoIdsArray)
+            // setVideoIds(videoIdsArray);
          })
          .catch((error) => {
             console.log(error);
          });
    }, [storedData]);
 
-   console.log('Loaded Ids ', videoIds);
+   console.log(videoIds);
    // Convert the list to a JSON array
    // videoIds = JSON.parse(videoIds);
-   // const videoUrls = JSON.parse(videoIds);
-   console.log('Loaded Ids ', typeof videoIds);
+   
+   console.log('Loaded Ids ', typeof videoUrls);
 
    return (
       <>

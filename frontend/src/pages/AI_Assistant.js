@@ -13,6 +13,7 @@ import { useAuthStore } from '../store/store';
 import { MediaRecorder, register } from 'extendable-media-recorder';
 import { connect } from 'extendable-media-recorder-wav-encoder';
 // import 'dotenv/config';
+import { updateRecommendation } from '../helper/helper'
 
 
 import axios from 'axios';
@@ -26,7 +27,6 @@ const AI_Assistant = () => {
    const [response, setResponse] = useState('');
    const [chatLog, setChatLog] = useState([]);
    const [emotion, setEmotion] = useState('');
-   const [recommendations, setRecommendations] = useState('');
    const [loading, setLoading] = useState(false);
    const [recording, setRecording] = useState(false);
 
@@ -40,14 +40,7 @@ const AI_Assistant = () => {
    }, [response]);
 
 
-   // useEffect(() =>  {
-   //    axios.get('${process.env.SERVER_ENDPOINT}/api/spotify_recommend', { mood: emotion })
-   //    .then((response) => {
-   //       setRecommendations(response.data);
-   //       console.log(response.data);
-   //    })
-   //    .catch((error) => console.error(error))
-   // }, [emotion]);
+
 
 
    const startRecording = async () => {
@@ -68,14 +61,21 @@ const AI_Assistant = () => {
          mediaRecorderRef.current.ondataavailable = function (ev) {
             audioChunks.push(ev.data);
          };
+
          mediaRecorderRef.current.onstop = async () => {
+
             console.log('data available after MediaRecorder.stop() called.');
+            
             const audioBlob = new Blob(audioChunks);
             const formData = new FormData();
             const audioFile = new File([audioBlob], 'userVoice.wav', { type: 'audio/wav' });
+            
             formData.append('audio', audioFile);
+            
             setLoading(true);
+            
             setRecording(false); // Set recording to false when audio is sent
+            
             axios
                .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/voice-input`, formData)
                .then((response) => {
@@ -97,6 +97,8 @@ const AI_Assistant = () => {
                      .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: voice_message })
                      .then((response) => {
                         setEmotion(response.data.emotion);
+                        updateRecommendation({"recommendation" : emotion})
+                        console.log('database update done')
                      })
                      .catch((error) => console.error(error));
                   setLoading(false);
@@ -123,25 +125,27 @@ const AI_Assistant = () => {
 
       setLoading(true);
 
-      axios
-         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: message })
-         .then((response) => {
-            const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
-            setChatLog(updatedChatLogWithAI);
-            setResponse(response.data.result);
-            setLoading(false);
-         })
-         .catch((error) => {
-            console.error(error);
-            setLoading(false);
-         });
+      // axios
+      //    .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: message })
+      //    .then((response) => {
+      //       const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
+      //       setChatLog(updatedChatLogWithAI);
+      //       setResponse(response.data.result);
+      //       setLoading(false);
+      //    })
+      //    .catch((error) => {
+      //       console.error(error);
+      //       setLoading(false);
+      //    });
 
       axios
          .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: message })
          .then((response) => {
             setEmotion(response.data.emotion);
 
-            console.log(emotion)
+            console.log(emotion);
+            updateRecommendation({"recommendation" : emotion})
+            console.log('database update done')
 
          })
          .catch((error) => console.error(error));
@@ -194,10 +198,10 @@ const AI_Assistant = () => {
                                  </button>
                                  <button type="button" className="record_button" onClick={startRecording}>
                                     {recording ? (
-                                       <div class="wave">
-                                          <div class="dot"></div>
-                                          <div class="dot"></div>
-                                          <div class="dot"></div>
+                                       <div className="wave">
+                                          <div className="dot"></div>
+                                          <div className="dot"></div>
+                                          <div className="dot"></div>
                                        </div>
                                     ) : (
                                        <BsFillMicFill />

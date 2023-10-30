@@ -127,14 +127,14 @@ def initialize():
 
 
     # with open('/usr/src/app/ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
-    with open('tokenizer.pkl', 'rb') as f:
+    # with open('tokenizer.pkl', 'rb') as f:
 
-    # with open('../backend/ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
+    with open('../backend/ml_models/emotion_detection/tokenizer.pkl', 'rb') as f:
         tokenizer = pickle.load(f)
 
     # model = tf.keras.models.load_model('/usr/src/app/ml_models/emotion_detection/emotion_model')
-    # model = tf.keras.models.load_model('../backend/ml_models/emotion_detection/emotion_model')
-    model = tf.keras.models.load_model('emotion_model')
+    model = tf.keras.models.load_model('../backend/ml_models/emotion_detection/emotion_model')
+    # model = tf.keras.models.load_model('emotion_model')
 
 
     #################################################################################################################################################################################   

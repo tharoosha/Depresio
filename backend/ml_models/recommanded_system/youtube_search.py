@@ -105,7 +105,7 @@ def search_youtube_videos(video_types_probabilities):
     return videos_info[:max_videos]
 
 
-def get_youtube_videos_from_preferences(api_key, categories, max_results=3):
+def get_youtube_videos_from_preferences(api_key, categories, max_results=5):
     base_url = "https://www.googleapis.com/youtube/v3/search"
     video_links = []
 
@@ -137,7 +137,9 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=3):
 def youtube_lists(input):
     try:
         # Parse the JSON data
+
         category_list = input["categories"]
+        print(category_list)
         # print(category_list)
         # categories = ["Gaming"]
         videos = get_youtube_videos_from_preferences(os.getenv("YOUTUBE_API_KEY"), category_list)
@@ -150,7 +152,7 @@ def youtube_lists(input):
         # json_string = json.dumps(videos)
         # print(json_string)
 
-        videos = json.dumps(videos)
+        # videos = videos.split(',')
         print(videos)
         # return videos
     
@@ -164,7 +166,7 @@ def youtube_lists(input):
 
 if __name__ == '__main__':
     # json list looks like '["Gaming"]'
-    # input = sys.argv[1]
+    input = sys.argv[1]
     # data = json.loads(input)
     # youtube_lists(input)
     input = {"categories" : [input]}
