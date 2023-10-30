@@ -42,6 +42,18 @@ const MusicTherapy = () => {
    // const [trackData, setTrackData] = useState(null);
    const [trackIds, setTrackIds] = useState(['1HNkqx9Ahdgi1Ixy2xkKkL', '1ei3hzQmrgealgRKFxIcWn', '7eJMfftS33KTjuF7lTsMCx']);
    const [trackData, setTrackData] = useState([]);
+   const [username, setUsername] = useState('testUser008');
+
+   useEffect(() => {
+      axios.get(`/api/recommendations/${username}`)
+        .then((response) => {
+          const recommendations = response.data.recommendations;
+          setTrackIds(recommendations);
+        })
+        .catch((error) => {
+          console.error('Error fetching recommendations:', error);
+        });
+    }, [username]);    
 
    const getTrackData = async (accessToken, trackIds) => {
       try {
