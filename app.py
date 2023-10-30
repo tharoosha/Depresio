@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import warnings  # Import the warnings module to suppress warnings
+import warnings
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer
 from sklearn.multioutput import MultiOutputClassifier
@@ -37,21 +37,27 @@ def generate_embedding(text):
     embedding = np.hstack((word_transform, bert_transform, semantic_bert_transform))
     return embedding
 
-def get_topics(text):
-    text_embedding = generate_embedding(text)
-    pred_list = clf.predict([text_embedding])[0]
-    return mlb.classes_[pred_list == 1]
+def batch_generate_embeddings(texts):
+    embeddings = []
+    for text in texts:
+        word_transform = tf_idf.transform([text]).toarray()[0]
+        bert_transform = embedder.encode([text], show_progress_bar=False)[0]
+        semantic_bert_transform = semantic_embedder.encode([text], show_progress_bar=False)[0]
+        embedding = np.hstack((word_transform, bert_transform, semantic_bert_transform))
+        embeddings.append(embedding)
+    return np.array(embeddings)
 
-def classify_video(video_title):
-    categories = get_topics(video_title)
+def classify_video_batch(video_titles):
+    embeddings = batch_generate_embeddings(video_titles)
+    pred_lists = clf.predict(embeddings)
+    categories = [mlb.classes_[pred_list == 1] for pred_list in pred_lists]
     return categories
 
-video_title = "Revolutionary Ideas in Science, Math, and Society | Artificial Intelligence Podcast"
-categories = classify_video(video_title)
-print(categories)
+video_titles = [
+    "Revolutionary Ideas in Science, Math, and Society | Artificial Intelligence Podcast",
+    "The 7 Habits of Highly Effective People by Stephen Covey - Animated Book Review"
+]
 
-video_title = "The 7 Habits of Highly Effective People by Stephen Covey - Animated Book Review"
-categories = classify_video(video_title)
-print(categories)
-
-
+categories = classify_video_batch(video_titles)
+for category in categories:
+    print(category)
