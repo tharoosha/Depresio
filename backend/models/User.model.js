@@ -20,7 +20,8 @@ export const UserSchema  = new mongoose.Schema({
     lastName: { type: String},
     mobile : { type : Number},
     address: { type: String},
-    profile: { type: String}
+    profile: { type: String},
+    recommendation: { type: String},
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema );

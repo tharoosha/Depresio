@@ -31,9 +31,11 @@ router.route("/verifyOTP").get(controller.verifyOTP);
 router.route("/createResetSession").get(controller.createResetSession);
 // router.route("/youtube_videos").get(ml_controller.video_predict);
 router.route("/spotify_recommend").get(ml_controller.spotify_recommend);
+router.route("/getRecommendation").get(Auth, controller.getRecommendation);
 
 /** PUT Methods */
 router.route("/updateuser").put(Auth, controller.updateUser);
 router.route("/resetPassword").put(controller.verifyUser, controller.resetPassword);
+router.route("/updateRecommendation").put(Auth, controller.updateRecommendation);
 
 export default router;

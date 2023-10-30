@@ -314,4 +314,42 @@ export async function resetPassword(req,res){
     }
 }
 
+/** PUT: http://localhost:5001/api/updateRecommendation */
+export async function updateRecommendation(req, res) {
+    const { username, recommendations } = req.body;
+  
+    try {
+      const user = await UserModel.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).send({ error: "User not found" });
+      }
+  
+      user.recommendations = recommendations;
+  
+      await user.save();
+  
+      return res.status(200).send({ message: "Recommendations updated successfully" });
+    } catch (error) {
+      return res.status(500).send({ error: "Failed to update recommendations" });
+    }
+  }
+  
+/** GET: http://localhost:5001/api/recommendation/:username */
+export async function getRecommendation(req, res) {
+    const { username } = req.params;
 
+    try {
+        const user = await UserModel.findOne({ username });
+
+        if (!user) {
+        return res.status(404).send({ error: "User not found" });
+        }
+
+        const recommendations = user.recommendations;
+
+        return res.status(200).send({ recommendations });
+    } catch (error) {
+        return res.status(500).send({ error: "Failed to retrieve recommendations" });
+    }
+}

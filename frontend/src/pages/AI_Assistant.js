@@ -47,6 +47,19 @@ const AI_Assistant = () => {
          .catch((error) => console.error(error));
    }, [emotion]);
 
+   useEffect(() => {
+      if (recommendations) {
+        axios.post('http://localhost:5001/api/update_recommendations', { recommendations })
+          .then((response) => {
+            console.log('Recommendations updated in the database:', response.data);
+          })
+          .catch((error) => {
+            console.error('Error updating recommendations in the database:', error);
+          });
+      }
+    }, [recommendations]);
+    
+
    const startRecording = async () => {
       if (recording) {
          if (mediaRecorderRef.current) {
