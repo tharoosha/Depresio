@@ -123,7 +123,7 @@ const MusicTherapy = () => {
       console.log(typeof emotion)
       // const data = {"mood": emotion}
 
-      axios.get(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/spotify_recommend`, { emotion: emotion } )
+      axios.get(`http://localhost:5001/api/spotify_recommend`, { emotion: emotion } )
       .then((response) => {
          // const ytTrackIds = response.data.result;
          console.log(response.data.result);

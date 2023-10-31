@@ -20,13 +20,13 @@ def update_user_feedback(mood, video_type, user_feedback):
     text = mood + "," + video_type + "," + str(user_feedback)
 
     # Open the CSV file in 'a' (append) mode and write the text
-    with open('youtube_data.csv', 'a') as file:
+    with open('backend/ml_models/recommanded_system/youtube_data.csv', 'a') as file:
         file.write('\n' + text)
 
 
 def train_and_predict_video_types(input_mood):
     # Load the dataset with user feedback as NaN initially
-    df = pd.read_csv('youtube_data.csv')
+    df = pd.read_csv('backend/ml_models/recommanded_system/youtube_data.csv')
     # Fill missing user_feedback values with 0
     df['user_feedback'].fillna(0, inplace=True)
 

@@ -352,8 +352,6 @@ export async function updateRecommendation(req, res) {
     }
   }
 
-
-
 /** GET: http://localhost:5001/api/recommendation/:username */
 export async function getRecommendation(req, res) {
 
@@ -398,4 +396,33 @@ export async function getRecommendation(req, res) {
     // } catch (error) {
     //     return res.status(500).send({ error: "Failed to retrieve recommendations" });
     // }
+}
+
+/** PUT: http://localhost:5001/api/updateRecommendation */
+export async function updateEmotion(req, res){
+    try {
+        const { userId } = req.user;
+        
+        if (userId) {
+
+            const body = req.body;
+
+            // update the data
+            UserModel.updateOne({ _id : userId }, body).exec().then(
+                (response) => {
+                    res.status(201).send({ msg : "Record Updated...!"})
+                }
+            )
+
+        }else {
+            return res.status(401).send({ error : "User Not Found...!"});
+        }
+      
+    } catch (error) {
+      return res.status(500).send({ error: "Failed to update recommendations" });
+    }   
+}
+
+export async function getEmotion(req, res){
+
 }
