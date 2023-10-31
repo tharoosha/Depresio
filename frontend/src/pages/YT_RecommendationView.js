@@ -43,69 +43,69 @@ const YT_RecommendationView = () => {
       localStorage.setItem('rating', rating);
    }, [rating]);
 
-   // useEffect(() => {
-   //    const requestOptions = {
-   //       method: 'POST',
-   //       headers: { 'Content-Type': 'application/json' },
-   //       body: storedData,
-   //    };
-   //    axios
-   //       .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/youtube_list`, storedData)
-   //       .then((response) => {
-   //          console.log(response.data.result);
-   //          // const parsedArray = JSON.parse(response.data.replace(/\n/g, ''));
-   //          // const videoIdsArray = response.data.split('\n').map(line => line.replace(/[[\]']/g, '')).filter(id => id !== 'undefined');
-   //          // videoIdsArray = videoIdsArray.split(', ');
-   //          // var videoUrls = JSON.parse(response.data);
-   //          // console.log(videoIdsArray)
-   //          setVideoIds(JSON.parse(response.data.result));
-   //       })
-   //       .catch((error) => {
-   //          console.log(error);
-   //       });
-   // }, [storedData]);
+   useEffect(() => {
+      const requestOptions = {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: storedData,
+      };
+      axios
+         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/youtube_list`, storedData)
+         .then((response) => {
+            console.log(response);
+            // const parsedArray = JSON.parse(response.data.replace(/\n/g, ''));
+            // const videoIdsArray = response.data.split('\n').map(line => line.replace(/[[\]']/g, '')).filter(id => id !== 'undefined');
+            // videoIdsArray = videoIdsArray.split(', ');
+            // var videoUrls = JSON.parse(response.data);
+            // console.log(videoIdsArray)
+            setVideoIds((response.data.result));
+         })
+         .catch((error) => {
+            console.log(error);
+         });
+   }, [storedData]);
 
 
-   async function getYoutubeVideosFromPreferences(apiKey, categories, maxResults = 5) {
+   // async function getYoutubeVideosFromPreferences(apiKey, categories, maxResults = 5) {
    
-      const baseUrl = 'https://www.googleapis.com/youtube/v3/search';
-      const videoLinks = [];
+   //    const baseUrl = 'https://www.googleapis.com/youtube/v3/search';
+   //    const videoLinks = [];
 
-      for (const category of categories) {
-         const params = {
-            part: 'snippet',
-            q: category,
-            type: 'video',
-            maxResults: maxResults,
-            key: apiKey,
-         };
+   //    for (const category of categories) {
+   //       const params = {
+   //          part: 'snippet',
+   //          q: category,
+   //          type: 'video',
+   //          maxResults: maxResults,
+   //          key: apiKey,
+   //       };
 
-         try {
-            const response = await axios.get(baseUrl, { params });
-            const data = response.data;
+   //       try {
+   //          const response = await axios.get(baseUrl, { params });
+   //          const data = response.data;
 
-            if (!data.items) {
-            console.error(`Error fetching videos for category '${category}':`);
-            continue;
-            }
+   //          if (!data.items) {
+   //          console.error(`Error fetching videos for category '${category}':`);
+   //          continue;
+   //          }
 
-            for (const item of data.items) {
-               const videoId = item.id.videoId;
-               // const link = `https://www.youtube.com/watch?v=${videoId}`;
-               const link = videoId;
-               videoLinks.push(link);
-            }
-         } catch (error) {
-            console.error(`Error fetching videos for category '${category}':`, error);
-         }
-      }
+   //          for (const item of data.items) {
+   //             const videoId = item.id.videoId;
+   //             // const link = `https://www.youtube.com/watch?v=${videoId}`;
+   //             const link = videoId;
+   //             videoLinks.push(link);
+   //          }
+   //       } catch (error) {
+   //          console.error(`Error fetching videos for category '${category}':`, error);
+   //       }
+   //    }
 
-      return videoLinks;
-   }
+   //    return videoLinks;
+   // }
 
-   let videoLinks = getYoutubeVideosFromPreferences(process.env.YOUTUBE_API_KEY, storedData)
+   // let videoLinks = getYoutubeVideosFromPreferences(process.env.YOUTUBE_API_KEY, storedData)
 
-   console.log(videoLinks);
+   // console.log(videoLinks);
    // Convert the list to a JSON array
    // videoIds = JSON.parse(videoIds);
    // videoIds = JSON.parse(videoIds)
@@ -113,7 +113,7 @@ const YT_RecommendationView = () => {
    // const listData = JSON.parse(videoIds.replace(/'/g, '"'));
 
    // console.log(listData);
-   // console.log(videoIds)
+   console.log({videoIds})
    // console.log('Loaded Ids ', typeof videoUrls);
 
    return (
@@ -129,7 +129,7 @@ const YT_RecommendationView = () => {
 
                      <div className="">
                         <div className="yt-container">
-                           {/* {videoIds.map((videoId) => {
+                           {videoIds.map((videoId) => {
                               return (
                                  <>
                                     <div className="yt-recommendation-item">
@@ -151,7 +151,7 @@ const YT_RecommendationView = () => {
                                     </div>
                                  </>
                               );
-                           })} */}
+                           })}
                         </div>
                         <div className="popup-inner__button"></div>
                      </div>

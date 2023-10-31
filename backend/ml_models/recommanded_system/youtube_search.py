@@ -76,7 +76,9 @@ load_dotenv()
 
 
 def search_youtube_videos(video_types_probabilities):
-    api_key = os.getenv("YOUTUBE_API_KEY")
+    # api_key = os.getenv("YOUTUBE_API_KEY")
+    api_key = "AIzaSyBLplcZSVmjupMn-6drtByHPuFFuQui4MI"
+
     max_videos = sum(video_types_probabilities.values())
     videos_info = []
 
@@ -137,14 +139,15 @@ def get_youtube_videos_from_preferences(api_key, categories, max_results=5):
 def youtube_lists(input):
     try:
         # Parse the JSON data
+        api_key = "AIzaSyBLplcZSVmjupMn-6drtByHPuFFuQui4MI"
 
         category_list = input["categories"]
         # print(category_list)
         # print(category_list)
         # categories = ["Gaming"]
 
-        videos = get_youtube_videos_from_preferences(os.getenv("YOUTUBE_API_KEY"), category_list)
-
+        videos = get_youtube_videos_from_preferences(api_key, category_list)
+        # videos = ["FLDAuYJy4Tw", "XGdYhRxHNAQ", "MhZhezlx8ZU", "BejOWDwJYYM", "lg-oBTPvlgU"]
 
         # videos = get_youtube_videos_from_preferences(API_KEY, categories)
         # print(videos)
