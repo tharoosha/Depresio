@@ -3,6 +3,8 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
 import otpGenerator from "otp-generator";
+import mongoose from 'mongoose';
+
 
 /** middleware for verify user */
 export async function verifyUser(req, res, next){
@@ -317,41 +319,67 @@ export async function resetPassword(req,res){
 
 /** PUT: http://localhost:5001/api/updateRecommendation */
 export async function updateRecommendation(req, res) {
-
-    // const { username, recommendations } = req.body;
-
     try {
-        // const userId = req.query.id;
         const { userId } = req.user;
-        
+        const emotion = req.body;
+        const recommendation = { "recommendation": emotion };
+
         if (userId) {
-            // const user = await UserModel.findOne({ username });
-            const body = req.body;
-            // if (!user) {
-                // return res.status(404).send({ error: "User not found" });
-            // }
+            const user = await UserModel.findById(userId);
 
-            // update the data
-            UserModel.updateOne({ _id : userId }, body).exec().then(
-                (response) => {
-                    res.status(201).send({ msg : "Record Updated...!"})
-                }
-            )
+            if (!user) {
+                return res.status(404).send({ error: "User not found" });
+            }
 
-            // user.recommendations = recommendations;
+            // Get the current month and year
+            const date = new Date();
+            const month = date.toLocaleString('default', { month: 'long' });
+            const year = date.getFullYear();
 
-            // await user.save();
+            // Find the log for the current month and year
+            let log = user.logs.find(log => log.month === month && log.year === year);
 
-            // return res.status(200).send({ message: "Recommendations updated successfully" });   
-        }else {
+            if (!log) {
+                // Create a new log if it does not exist
+                log = new mongoose.Types.EmbeddedDocument(user, {
+                    month: month,
+                    year: year,
+                    joyful: 0,
+                    surprise: 0,
+                    anger: 0,
+                    sad: 0,
+                    happy: 0,
+                });
+
+                user.logs.push(log);
+            }
+
+            // Increment the counter for the received emotion
+            if (log[emotion]) {
+                log[emotion]++;
+            } else {
+                return res.status(400).send({ error: "Invalid emotion" });
+            }
+
+            // Update the recommendation field
+            user.recommendation = recommendation;
+
+            // Remove logs that are older than 12 months
+            user.logs = user.logs.filter(log => {
+                const logDate = new Date(log.year, new Date(log.month+' 1, 2012').getMonth());
+                return date.getFullYear() - logDate.getFullYear() < 1 || date.getMonth() - logDate.getMonth() < 0;
+            });
+
+            await user.save();
+
+            return res.status(200).send({ message: "Recommendations and logs updated successfully" });
+        } else {
             return res.status(401).send({ error : "User Not Found...!"});
         }
-      
     } catch (error) {
-      return res.status(500).send({ error: "Failed to update recommendations" });
+        return res.status(500).send({ error: "Failed to update recommendations and logs" });
     }
-  }
-
+}
 
 
 /** GET: http://localhost:5001/api/recommendation/:username */
