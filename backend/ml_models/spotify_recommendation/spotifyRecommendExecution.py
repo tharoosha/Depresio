@@ -26,25 +26,30 @@ os.environ["SPOTIPY_REDIRECT_URI"] = os.getenv("SPOTIFY_REDIRECT_URI")
 def script_run(input_mood):
     try:
 
-        file_path = '/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl'
+        # file_path = '/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl'
         # file_path = '../backend/ml_models/spotify_recommendation/tokenizer.pkl'
-        if os.path.exists(file_path):
-            with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
+        # if os.path.exists(file_path):
+            # with open('/usr/src/app/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
             # with open('../backend/ml_models/spotify_recommendation/tokenizer.pkl', 'rb') as f:
-                scaler = pickle.load(f)
+                # scaler = pickle.load(f)
 
-        model = tf.keras.models.load_model('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+        # model = tf.keras.models.load_model('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
         # model = tf.keras.models.load_model('../backend/ml_models/spotify_recommendation/spotify_model')
 
-        result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
-        result = json.dumps(result)
+        # result = spotifyRecommendScript.getRecommendation(input_mood, model, scaler)
+
+        # print({input_mood})
+        # result = '["1HNkqx9Ahdgi1Ixy2xkKkL", "1ei3hzQmrgealgRKFxIcWn", "7eJMfftS33KTjuF7lTsMCx"]'
+        # result = '["1bzsi0xA8MxBZICdtB23pO", "6XSCLKQcavtn1PaLAhmo1x", "0sfCRhw6gS3b1WepmTVPZE", "6u8KnNnGthVY4PaWiH2mgt", "4FIGOj3O3cyIf6Dg2TDoVv", "0FSk1OsGWoTCS8lA74x5lF", "55eUtE9v3uatR0y0NijM6N", "1bzsi0xA8MxBZICdtB23pO", "6XSCLKQcavtn1PaLAhmo1x", "0sfCRhw6gS3b1WepmTVPZE"]'
+        result = '["0wjno8lHmDep5uhLVowoSA", "42maX10SkL9u6KM2dCdgPm", "0ABeQP5ffDRiZTe3aorRGn", "3QPFWCPWmL7fed8jCQ8jty", "59s47nDkFz1UNXujnpzEPt", "4c2JHXheN3t6Wh13lqj91s", "6eABugchKfRPyrzUpv7UzJ", "42maX10SkL9u6KM2dCdgPm", "6PJrnbdGmbiXjFceEFlnaR", "4cFm2ZZcb4mQMXwKCeJgzs"]'
+        # result = json.dumps(result)
         # response = str(result)
         output = {"result": result}
 
-        # output_json = json.dumps(output)
+        output_json = json.dumps(output)
         # sys.stdout.flush()
         # print(result)
-        print(output)
+        print(output_json)
 
     except Exception as e:
         error_message = str(e)
@@ -87,6 +92,7 @@ if __name__ == "__main__":
 
     # Call the function with the received input_mood
     script_run(input_mood)
+    # print({input_mood})
 
     #     # script_run("happiness")
         
