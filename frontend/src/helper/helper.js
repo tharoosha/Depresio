@@ -34,6 +34,17 @@ export async function getUser({ username }){
     }
 }
 
+/** get User details */
+export async function getRecommendation({ username }){
+    try {
+        console.log(username)
+        const { data } = await axios.get(`http://localhost:5001/api/getRecommendation/${username}`);
+        return { data };
+    } catch (error) {
+        return { error : "Username doesn't Match...!"}
+    }
+}
+
 /** register user function */
 export async function registerUser(credentials){
     try {
@@ -70,6 +81,20 @@ export async function updateUser(response){
         
         const token = await localStorage.getItem('token');
         const data = await axios.put('http://localhost:5001/api/updateuser', response, { headers : { "Authorization" : `Bearer ${token}`}});
+
+        return Promise.resolve({ data })
+    } catch (error) {
+        return Promise.reject({ error : "Couldn't Update Profile...!"})
+    }
+}
+
+
+/** update user profile function */
+export async function updateRecommendation(response){
+    try {
+        
+        const token = await localStorage.getItem('token');
+        const data = await axios.put('http://localhost:5001/api/updateRecommendation', response, { headers : { "Authorization" : `Bearer ${token}`}});
 
         return Promise.resolve({ data })
     } catch (error) {

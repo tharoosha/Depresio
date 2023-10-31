@@ -32,7 +32,7 @@ export async function verifyUser(req, res, next){
 */
 export async function register(req, res){
     try{
-        const {username, password, profile, email} = req.body;
+        const {username, password, profile, email, recommendation } = req.body;
         // check the existing user
         const existUsername = new Promise((resolve, reject) => {
             UserModel.findOne({username: username}).exec().then(
@@ -74,7 +74,8 @@ export async function register(req, res){
                                 username: username,
                                 password: hashedPassword,
                                 profile: profile || '',
-                                email: email
+                                email: email,
+                                recommendation: recommendation || '',
                             });
 
                             // return save result as a response
@@ -314,4 +315,87 @@ export async function resetPassword(req,res){
     }
 }
 
+/** PUT: http://localhost:5001/api/updateRecommendation */
+export async function updateRecommendation(req, res) {
 
+    // const { username, recommendations } = req.body;
+
+    try {
+        // const userId = req.query.id;
+        const { userId } = req.user;
+        
+        if (userId) {
+            // const user = await UserModel.findOne({ username });
+            const body = req.body;
+            // if (!user) {
+                // return res.status(404).send({ error: "User not found" });
+            // }
+
+            // update the data
+            UserModel.updateOne({ _id : userId }, body).exec().then(
+                (response) => {
+                    res.status(201).send({ msg : "Record Updated...!"})
+                }
+            )
+
+            // user.recommendations = recommendations;
+
+            // await user.save();
+
+            // return res.status(200).send({ message: "Recommendations updated successfully" });   
+        }else {
+            return res.status(401).send({ error : "User Not Found...!"});
+        }
+      
+    } catch (error) {
+      return res.status(500).send({ error: "Failed to update recommendations" });
+    }
+  }
+
+
+
+/** GET: http://localhost:5001/api/recommendation/:username */
+export async function getRecommendation(req, res) {
+
+    const {username} = req.params;
+    try{
+        if (!username) return res.status(501).send({error: "Invalid Username"});
+
+        // UserModel.findOne({username},function(err,user){
+        //     if (err) return res.status(500).send({err});
+        //     if(!user) return res.status(501).send({ error : "Couldn't Find the User"});
+        //     return res.status(201).send(user);
+        // })
+
+        UserModel.findOne({username: username}).exec()
+            .then(
+                user =>{
+                     /** remove password from user */
+                    // mongoose return unnecessary data with object so convert it into json
+                    const { password, recommendation, ...rest } = Object.assign({}, user.toJSON());
+                    
+                    return res.status(201).send(recommendation);
+                }
+            )
+            .catch(
+                error => {return res.status(501).send({ error : "Couldn't Find the User"});}
+            )
+    }catch(error){
+        return res.status(404).send({error: "Cannot Find User Data"});
+    }
+
+
+    // try {
+    //     const user = await UserModel.findOne({ username });
+
+    //     if (!user) {
+    //     return res.status(404).send({ error: "User not found" });
+    //     }
+
+    //     const recommendations = user.recommendations;
+
+    //     return res.status(200).send({ recommendations });
+    // } catch (error) {
+    //     return res.status(500).send({ error: "Failed to retrieve recommendations" });
+    // }
+}

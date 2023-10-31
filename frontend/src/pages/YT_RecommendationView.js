@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import '../styles/YT_RecommendationView.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+// import 'dotenv/config';
+
 // get_youtube_videos_from_preferences
 
 /** POST: http://localhost:5001/api/youtube_list */
@@ -47,21 +49,26 @@ const YT_RecommendationView = () => {
          body: storedData,
       };
       axios
-         .post('http://localhost:5001/api/youtube_list', storedData)
+         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/youtube_list`, storedData)
          .then((response) => {
-            console.log(typeof response.data);
-            setVideoIds(response.data);
+            console.log(response);
+            // const parsedArray = JSON.parse(response.data.replace(/\n/g, ''));
+            const videoIdsArray = response.data.split('\n').map(line => line.replace(/[[\]']/g, '')).filter(id => id !== 'undefined');
+            // videoIdsArray = videoIdsArray.split(', ');
+            // var videoUrls = JSON.parse(response.data);
+            console.log(videoIdsArray)
+            // setVideoIds(videoIdsArray);
          })
          .catch((error) => {
             console.log(error);
          });
    }, [storedData]);
 
-   console.log('Loaded Ids ', videoIds);
+   console.log(videoIds);
    // Convert the list to a JSON array
    // videoIds = JSON.parse(videoIds);
-   // const videoUrls = JSON.parse(videoIds);
-   console.log('Loaded Ids ', typeof videoIds);
+   
+   console.log('Loaded Ids ', typeof videoUrls);
 
    return (
       <>
@@ -71,7 +78,7 @@ const YT_RecommendationView = () => {
                <div className="AI__wrapper">
                   <div className=" AI__wrapper__inner__2">
                      <div className="AI__wrapper__inner__2__header">
-                        <p>Videos recommended for you based on your preferences.</p>
+                        <h2>Videos recommended for you based on your preferences.</h2>
                      </div>
 
                      <div className="">

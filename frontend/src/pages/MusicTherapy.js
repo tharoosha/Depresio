@@ -27,21 +27,79 @@ import profileImg from '../images/chat-user.svg';
 import chevronDown from '../images/chevron-down.svg';
 import { useEffect, useState } from 'react';
 import { Buffer } from 'buffer';
+import { getUsername } from '../helper/helper'
+import { getRecommendation } from '../helper/helper'
+
+// import 'dotenv/config';
 
 import axios from 'axios';
 const qs = require('qs');
-const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
-const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
-// const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
-// const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+
+// const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
+// const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
+const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
 const MusicTherapy = () => {
    const [accessToken, setAccessToken] = useState('');
+   const [username, setUsername] = useState(''); // State for the username
+   const [emotion, setEmotion] = useState('');
+   const [recommendations, setRecommendations] = useState('');
+
+
+   useEffect(() => {
+
+      const getUsernameAndFetchData = async () => {
+
+         try {
+            // Fetch the username
+            const userData = await getUsername();
+            const fetchedUsername = userData.username;
+            setUsername(fetchedUsername); // Update the username state
+
+            const emotionData = await getRecommendation({username});
+            const emotion = emotionData.data;
+            setEmotion(emotion)
+
+         } catch (error) {
+            console.error('Error fetching username', error);
+         }
+         
+      };
+
+      getUsernameAndFetchData();
+   }, []);
+    
+
+    
+
+
+   // const handleSubmit = (e) => {
+      
+   //    console.log(emotion)
+   //    console.log("get the emotion done...")
+   // }
+
+   
+
    // const [trackData, setTrackData] = useState(null);
    const [trackIds, setTrackIds] = useState(['1HNkqx9Ahdgi1Ixy2xkKkL', '1ei3hzQmrgealgRKFxIcWn', '7eJMfftS33KTjuF7lTsMCx']);
    const [trackData, setTrackData] = useState([]);
+
+   useEffect(() =>  {
+      axios.get('${process.env.SERVER_ENDPOINT}/api/spotify_recommend', { mood: emotion })
+      .then((response) => {
+         const trackIds = response.data;
+         console.log(response.data);
+         // Store the track IDs in the trackData state
+         setTrackData(trackIds);
+      })
+      .catch((error) => {
+         console.error(error);
+      });
+   });
 
    const getTrackData = async (accessToken, trackIds) => {
       try {
@@ -100,7 +158,8 @@ const MusicTherapy = () => {
             <div className="mt-main-container mt--24 mb--48">
                <div className="mt-second-col">
                   <div>
-                     <h2 className="mb--16">Music Recommendations for You!</h2>
+                     <h2 className="mb--16">Music recommended for you based on your emotions.</h2>
+                     {/* <button className='btn' onClick={handleSubmit}>View your current emotion</button> */}
                      <div className="music-flex-cont">
                         {trackData.length > 0 ? (
                            trackData.map((track, index) => (

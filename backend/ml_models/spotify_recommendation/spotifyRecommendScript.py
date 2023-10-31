@@ -5,12 +5,14 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress INFO and WARNING messages
 import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from tensorflow.keras import layers, models
 from tensorflow.keras.optimizers.legacy import Adam
 import pickle
-import os
+
 import config as cf
 import contextlib
 
@@ -142,7 +144,7 @@ def initialize():
     # with open('backend/ml_models/spotify_recommendation/tokenizer.pkl', 'wb') as f:
         pickle.dump(scaler, f)
 
-    model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
+    # model.save('/usr/src/app/ml_models/spotify_recommendation/spotify_model')
     # model.save('backend/ml_models/spotify_recommendation/spotify_model')
 
     #######################################################################################################################################
@@ -152,8 +154,8 @@ def getRecommendation(mood, model, scaler):
     df_recentSongs = getRecentlyPlayed()
 
     # Use contextlib.redirect_stdout to suppress output
-    with contextlib.redirect_stdout(None):
-        df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
+    # with contextlib.redirect_stdout(None):
+    df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
 
     # df2 = pd.DataFrame(model.predict(scaler.fit_transform(df_recentSongs.iloc[:, 1:])))
     df2['Mood']=df2.apply(get_max_index, axis=1)
