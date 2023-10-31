@@ -17,9 +17,70 @@ import axios from 'axios';
 
 const YT_RecommendationView = () => {
    const [videoIds, setVideoIds] = useState([]);
+   const [emotion, setEmotion] = useState('');
    // const [videoTrack, setVideoTrack] = useState([]);
    const [isReviewDialogVisible, setIsReviewDialogVisible] = useState(false);
    const [rating, setRating] = useState(0);
+
+   const emotionCategories = {
+      'Sadness': ['Music', 'Comedy', 'Entertainment', 'Classics', 'Family', 'Pets & Animals', 'People & Blogs'],
+      'Fear': ['Comedy', 'Entertainment', 'Drama', 'Action/Adventure', 'Gaming', 'Pets & Animals'],
+      'Joy': ['Autos & Vehicles', 'Film & Animation', 'Sports', 'Gaming', 'Entertainment', 'Comedy', 'Horror', 'Documentary', 'Videoblogging', 'Travel & Events', 'Science & Technology'],
+      'Surprise': ['Entertainment', 'Pets & Animals', 'Autos & Vehicles', 'Family', 'Sci-Fi/Fantasy', 'Action/Adventure', 'Sports', 'Foreign', 'Thriller', 'Trailers', 'Classics'],
+      'Love': ['Family', 'Pets & Animals', 'Sports', 'People & Blogs', 'Movies', 'Shows', 'Classics'],
+      'Anger': ['Music', 'Short Movies', 'Travel & Events', 'Gaming', 'Science & Technology', 'Entertainment', 'Classics']
+  };
+  
+  useEffect(() => {
+      const categories = emotionCategories[emotion];
+      categories.forEach(category => {
+          getVideoIdsByCategory(category)
+              .then(videoIds => {
+                  console.log(`Video IDs for category '${category}':`, videoIds);
+                  videoIds.map((videoId) => {
+                     console.log(videoId);
+                     console.log(`https://www.youtube.com/embed/${videoId}`);
+                  });         
+              })
+              .catch(error => console.error(error));
+      });
+  }, [emotion]);
+
+   useEffect(() => {
+      getUsernameAndFetchData();
+   }, []);
+
+   const getUsernameAndFetchData = async () => {
+      try {
+         // Fetch the username
+         // const userData = await getUsername();
+         const { username } = await getUsername();
+         // const fetchedUsername = userData.username;
+         // setUsername(fetchedUsername); // Update the username state
+         console.log(username)
+   
+         const emotionData = await getRecommendation({username});
+         const emotion = emotionData.data;
+         setEmotion(emotion)
+         console.log(emotion)
+   
+      } catch (error) {
+         console.error('Error fetching username', error);
+      }       
+   };
+
+   // useEffect(() => {
+   //    getVideoIdsByCategory('music')
+   //    .then((videoIds) => {
+   //       console.log("hi", videoIds);
+   //       videoIds.map((videoId) => {
+   //          console.log(videoId);
+   //          console.log(`https://www.youtube.com/embed/${videoId}`);
+            
+   //       }); 
+   //    })
+   //    .catch(error => console.error(error));
+   // }, []);   
 
    async function getVideoIdsByCategory(category) {
       const baseUrl = "https://www.googleapis.com/youtube/v3/search";
@@ -52,16 +113,6 @@ const YT_RecommendationView = () => {
       return videoIds;
    }
 
-   getVideoIdsByCategory('music')
-   .then((videoIds) => {
-      console.log("hi", videoIds);
-      videoIds.map((videoId) => {
-         console.log(videoId);
-         console.log(`https://www.youtube.com/embed/${videoId}`);
-         
-      }); 
-   })
-   .catch(error => console.error(error));
 
    // const storedData = localStorage.getItem('selectedCategories');
 
