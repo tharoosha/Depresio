@@ -192,9 +192,14 @@ export async function youtube_lists(req, res) {
     // const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/recommanded_system/youtube_search.py", categories,]);
     const process = spawn("python3", ["../backend/ml_models/recommanded_system/youtube_search.py", categories,]);
 
-    let youtube_list = []
+    // let youtube_list = []
+    let youtube_list = "";
+
+
     process.stdout.on("data", (data) => {
-      youtube_list = data;
+      // youtube_list = data;
+      youtube_list += data.toString();
+
     });
 
     process.on("close", (code) => {
