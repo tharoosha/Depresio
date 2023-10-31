@@ -1,5 +1,36 @@
 import mongoose from "mongoose";
 
+const MonthlyEmotionSchema = new mongoose.Schema({
+    month: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+    },
+    joyful: {
+      type: Number,
+      required: true,
+    },
+    surprise: {
+      type: Number,
+      required: true,
+    },
+    anger: {
+      type: Number,
+      required: true,
+    },
+    sad: {
+      type: Number,
+      required: true,
+    },
+    happy: {
+      type: Number,
+      required: true,
+    },
+  });
+
 export const UserSchema  = new mongoose.Schema({
     username : {
         type: String,
@@ -22,6 +53,7 @@ export const UserSchema  = new mongoose.Schema({
     address: { type: String},
     profile: { type: String},
     recommendation: { type: String},
+    logs: [MonthlyEmotionSchema],
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema );

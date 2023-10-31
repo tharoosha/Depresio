@@ -144,7 +144,7 @@ const AI_Assistant = () => {
             setEmotion(response.data.emotion);
 
             console.log(emotion);
-            updateRecommendation({"recommendation" : emotion})
+            updateRecommendation({emotion})
             console.log('database update done')
 
          })
