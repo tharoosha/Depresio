@@ -139,21 +139,31 @@ def youtube_lists(input):
         # Parse the JSON data
 
         category_list = input["categories"]
-        print(category_list)
+        # print(category_list)
         # print(category_list)
         # categories = ["Gaming"]
+
         videos = get_youtube_videos_from_preferences(os.getenv("YOUTUBE_API_KEY"), category_list)
+
+
         # videos = get_youtube_videos_from_preferences(API_KEY, categories)
         # print(videos)
         # # for video in videos:
         # #     print(video)
 
+        output = {"result": videos}
+        # # output = {"result": ["lTxn2BuqyzU", "MU0HhH4dIHs", "i5gbWhRW_ZA", "FUqttxtk8y0", "8PD-Smkxsj0", "nqf8-vB_PWE", "TQgWzalijAw", "JbHk0ZjYM04", "GkIA4ldWRis", "puy5WYx1Wok", "DwuJeGYlYyw", "4GvI7M8PyKs", "n_NfxUQCoXE", "Fjp2TdlTTIU", "SCyFBeIgaDc"]}
+
+        output_json = json.dumps(output)
+        # # sys.stdout.flush()
+        # # print(result)
+        print(output_json)
         # json_string = json.dumps(videos)
         # json_string = json.dumps(videos)
         # print(json_string)
 
         # videos = videos.split(',')
-        print(videos)
+        # print(videos)
         # return videos
     
     except Exception as e:
@@ -170,7 +180,9 @@ if __name__ == '__main__':
     # data = json.loads(input)
     # youtube_lists(input)
     input = {"categories" : [input]}
+    # input = ["Film & Animation","Music","Shows"]
     youtube_lists(input)
+    # print(input)
     # print(input)
 
 
