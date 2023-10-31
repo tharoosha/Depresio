@@ -21,27 +21,69 @@ const YT_RecommendationView = () => {
    const [isReviewDialogVisible, setIsReviewDialogVisible] = useState(false);
    const [rating, setRating] = useState(0);
 
-   const storedData = localStorage.getItem('selectedCategories');
-
-   const handleRating = (selectedRating) => {
-      setRating(selectedRating);
-      console.log(selectedRating);
-   };
-
-   useEffect(() => {
-      if (isReviewDialogVisible) {
-         document.body.classList.add('no-scroll');
-      } else {
-         document.body.classList.remove('no-scroll');
-      }
-      return () => {
-         document.body.classList.remove('no-scroll');
+   async function getVideoIdsByCategory(category) {
+      const baseUrl = "https://www.googleapis.com/youtube/v3/search";
+      const API_KEY = "AIzaSyAl2WwD7bwArtURiDFRnzyE6oL6D8QEgHQ";
+      const videoIds = [];
+   
+      const params = {
+          part: 'snippet',
+          q: category,
+          type: 'video',
+          maxResults: 5,
+          key: API_KEY
       };
-   }, [isReviewDialogVisible]);
+   
+      try {
+          const response = await axios.get(baseUrl, { params: params });
+          const data = response.data;
+   
+          if ('items' in data) {
+              for (const item of data.items) {
+                  videoIds.push(item.id.videoId);
+              }
+          } else {
+              console.log(`No items found for category '${category}'.`);
+          }
+      } catch (error) {
+          console.error(`Error fetching videos for category '${category}': ${error}`);
+      }
+   
+      return videoIds;
+   }
 
-   useEffect(() => {
-      localStorage.setItem('rating', rating);
-   }, [rating]);
+   getVideoIdsByCategory('music')
+   .then((videoIds) => {
+      console.log("hi", videoIds);
+      videoIds.map((videoId) => {
+         console.log(videoId);
+         console.log(`https://www.youtube.com/embed/${videoId}`);
+         
+      }); 
+   })
+   .catch(error => console.error(error));
+
+   // const storedData = localStorage.getItem('selectedCategories');
+
+   // const handleRating = (selectedRating) => {
+   //    setRating(selectedRating);
+   //    console.log(selectedRating);
+   // };
+
+   // useEffect(() => {
+   //    if (isReviewDialogVisible) {
+   //       document.body.classList.add('no-scroll');
+   //    } else {
+   //       document.body.classList.remove('no-scroll');
+   //    }
+   //    return () => {
+   //       document.body.classList.remove('no-scroll');
+   //    };
+   // }, [isReviewDialogVisible]);
+
+   // useEffect(() => {
+   //    localStorage.setItem('rating', rating);
+   // }, [rating]);
 
    // useEffect(() => {
    //    const requestOptions = {
@@ -66,46 +108,46 @@ const YT_RecommendationView = () => {
    // }, [storedData]);
 
 
-   async function getYoutubeVideosFromPreferences(apiKey, categories, maxResults = 5) {
+   // async function getYoutubeVideosFromPreferences(apiKey, categories, maxResults = 5) {
    
-      const baseUrl = 'https://www.googleapis.com/youtube/v3/search';
-      const videoLinks = [];
+   //    const baseUrl = 'https://www.googleapis.com/youtube/v3/search';
+   //    const videoLinks = [];
 
-      for (const category of categories) {
-         const params = {
-            part: 'snippet',
-            q: category,
-            type: 'video',
-            maxResults: maxResults,
-            key: apiKey,
-         };
+   //    for (const category of categories) {
+   //       const params = {
+   //          part: 'snippet',
+   //          q: category,
+   //          type: 'video',
+   //          maxResults: maxResults,
+   //          key: apiKey,
+   //       };
 
-         try {
-            const response = await axios.get(baseUrl, { params });
-            const data = response.data;
+   //       try {
+   //          const response = await axios.get(baseUrl, { params });
+   //          const data = response.data;
 
-            if (!data.items) {
-            console.error(`Error fetching videos for category '${category}':`);
-            continue;
-            }
+   //          if (!data.items) {
+   //          console.error(`Error fetching videos for category '${category}':`);
+   //          continue;
+   //          }
 
-            for (const item of data.items) {
-               const videoId = item.id.videoId;
-               // const link = `https://www.youtube.com/watch?v=${videoId}`;
-               const link = videoId;
-               videoLinks.push(link);
-            }
-         } catch (error) {
-            console.error(`Error fetching videos for category '${category}':`, error);
-         }
-      }
+   //          for (const item of data.items) {
+   //             const videoId = item.id.videoId;
+   //             // const link = `https://www.youtube.com/watch?v=${videoId}`;
+   //             const link = videoId;
+   //             videoLinks.push(link);
+   //          }
+   //       } catch (error) {
+   //          console.error(`Error fetching videos for category '${category}':`, error);
+   //       }
+   //    }
 
-      return videoLinks;
-   }
+   //    return videoLinks;
+   // }
 
-   let videoLinks = getYoutubeVideosFromPreferences(process.env.YOUTUBE_API_KEY, storedData)
+   // let videoLinks = getYoutubeVideosFromPreferences(process.env.YOUTUBE_API_KEY, storedData)
 
-   console.log(videoLinks);
+   // console.log(videoLinks);
    // Convert the list to a JSON array
    // videoIds = JSON.parse(videoIds);
    // videoIds = JSON.parse(videoIds)
@@ -174,7 +216,7 @@ const YT_RecommendationView = () => {
                                  Rate the Recommendations
                               </h2>
                               <div className="stars">
-                                 {[...Array(5)].map((star, index) => {
+                                 {/* {[...Array(5)].map((star, index) => {
                                     return (
                                        <span
                                           key={index}
@@ -186,7 +228,7 @@ const YT_RecommendationView = () => {
                                           {index < rating ? '★' : '☆'}
                                        </span>
                                     );
-                                 })}
+                                 })} */}
                               </div>
                               <button className="review-submit btn" onClick={() => setIsReviewDialogVisible(false)}>
                                  Submit
