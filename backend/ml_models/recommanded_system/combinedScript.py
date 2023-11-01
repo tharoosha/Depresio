@@ -4,7 +4,7 @@ import sys
 import json
 
 def combined_script(input_mood):
-    try:
+    # try:
     # Call the function from mood_TO_video.py to get the output JSON
     # output_json = train_and_predict_video_types(input_mood)
 
@@ -26,27 +26,27 @@ def combined_script(input_mood):
         output_json = json.dumps(output)
         sys.stdout.flush()
         print(result)
-    except:
-        error_message = str(e)
-        output = {"error2011": error_message}
+    # except:
+    #     error_message = str(e)
+    #     output = {"error2011": error_message}
 
-        output_json = json.dumps(output)
-        # print(output_json)
-        sys.stdout.flush()
-        return(output_json)
+    #     output_json = json.dumps(output)
+    #     # print(output_json)
+    #     sys.stdout.flush()
+    #     return(output_json)
     
 if __name__ == '__main__':
     # Check if there is at least one command-line argument (excluding the script name)
-    if len(sys.argv) > 1:
+    # if len(sys.argv) > 1:
         # The first command-line argument (sys.argv[1]) will be the input_mood
         # input_mood = sys.argv[1]
 
         # Call the function with the received input_mood
         # combined_script(input_mood)
-        combined_script("Happiness")
+    combined_script("Happiness")
         
-    else:
-        # If no input_mood is provided, handle the case accordingly
-        print(json.dumps({"error": "No mood provided"}))
-        sys.stdout.flush()
+    # else:
+    #     # If no input_mood is provided, handle the case accordingly
+    #     print(json.dumps({"error": "No mood provided"}))
+    #     sys.stdout.flush()
     # combined_script('Happiness')

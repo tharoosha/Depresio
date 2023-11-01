@@ -77,7 +77,7 @@ const AI_Assistant = () => {
             setRecording(false); // Set recording to false when audio is sent
             
             axios
-               .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/voice-input`, formData)
+               .post(`http://localhost:5001/api/voice-input`, formData)
                .then((response) => {
                   console.log(response.data.result);
                   let data = response.data.result;
@@ -86,7 +86,7 @@ const AI_Assistant = () => {
                   setChatLog(updatedChatLogWithVoice);
                   const voice_message = response.data.result;
                   axios
-                     .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: voice_message })
+                     .post(`http://localhost:5001/api/analyze`, { message: voice_message })
                      .then((response) => {
                         const updatedChatLogWithAI = [...chatLog, { user: 'User', message: voice_message }, { user: 'AI_Consultant', message: response.data.result }];
                         setChatLog(updatedChatLogWithAI);
@@ -94,9 +94,10 @@ const AI_Assistant = () => {
                      })
                      .catch((error) => console.error(error));
                   axios
-                     .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: voice_message })
+                     .post(`http://localhost:5001/api/emotion_analyze`, { message: voice_message })
                      .then((response) => {
                         setEmotion(response.data.emotion);
+                        console.log(emotion)
                         updateRecommendation({"recommendation" : emotion})
                         console.log('database update done')
                      })
@@ -125,21 +126,21 @@ const AI_Assistant = () => {
 
       setLoading(true);
 
-      // axios
-      //    .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/analyze`, { message: message })
-      //    .then((response) => {
-      //       const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
-      //       setChatLog(updatedChatLogWithAI);
-      //       setResponse(response.data.result);
-      //       setLoading(false);
-      //    })
-      //    .catch((error) => {
-      //       console.error(error);
-      //       setLoading(false);
-      //    });
+      axios
+         .post(`http://localhost:5001/api/analyze`, { message: message })
+         .then((response) => {
+            const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
+            setChatLog(updatedChatLogWithAI);
+            setResponse(response.data.result);
+            setLoading(false);
+         })
+         .catch((error) => {
+            console.error(error);
+            setLoading(false);
+         });
 
       axios
-         .post(`${process.env.REACT_APP_SERVER_ENDPOINT}/api/emotion_analyze`, { message: message })
+         .post(`http://localhost:5001/api/emotion_analyze`, { message: message })
          .then((response) => {
             setEmotion(response.data.emotion);
 

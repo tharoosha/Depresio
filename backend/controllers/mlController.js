@@ -192,9 +192,14 @@ export async function youtube_lists(req, res) {
     // const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/recommanded_system/youtube_search.py", categories,]);
     const process = spawn("python3", ["../backend/ml_models/recommanded_system/youtube_search.py", categories,]);
 
-    let youtube_list = []
+    // let youtube_list = []
+    let youtube_list = "";
+
+
     process.stdout.on("data", (data) => {
-      youtube_list = data;
+      // youtube_list = data;
+      youtube_list += data.toString();
+
     });
 
     process.on("close", (code) => {
@@ -242,18 +247,18 @@ export async function youtube_lists(req, res) {
 // Define the controller function to execute the Python script
 export async function spotify_recommend(req, res) {
   try {
-    const { mood } = req.body;
+    const { emotion } = req.body;
 
     // Spawn the Python script as a child process
     // const pythonProcess = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/spotify_recommendation/spotifyRecommendExecution.py", mood,]);
-    const pythonProcess = spawn("python3", [ "../backend/ml_models/spotify_recommendation/spotifyRecommendExecution.py", mood,]);
+    const pythonProcess = spawn("python3", [ "../backend/ml_models/spotify_recommendation/spotifyRecommendExecution.py", emotion,]);
 
     let output = "";
     // let output = [];
 
     // Listen for data events from the Python script's stdout
     pythonProcess.stdout.on("data", (data) => {
-      console.log(data.toString())
+      // console.log(data.toString())
       output += data.toString();
     });
 
@@ -261,10 +266,10 @@ export async function spotify_recommend(req, res) {
     pythonProcess.on("close", (code) => {
       if (code === 0) {
         try {
-          const result = JSON.parse(output);
+          // const result = JSON.parse(output);
           // res.status(200).json(result);
           // const result = JSON.parse(output);  // Parse the output string to JSON
-          res.status(200).json(result);
+          res.status(200).send(output);
           // res.status(200).json({"result":output});
         } catch (error) {
           res.status(500).json({ error: "Failed to parse JSON response" });

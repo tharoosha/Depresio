@@ -22,6 +22,16 @@ export const UserSchema  = new mongoose.Schema({
     address: { type: String},
     profile: { type: String},
     recommendation: { type: String},
+
+    emotions: {
+        Monday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+        Tuesday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+        Wednesday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+        Thursday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+        Friday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+        Saturday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+        Sunday: { Joy: Number, Surprise: Number, Anger: Number, Sad: Number, Happy: Number },
+    },
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema );

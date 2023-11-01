@@ -17,6 +17,7 @@ import axios from 'axios';
 
 const YT_RecommendationView = () => {
    const [videoIds, setVideoIds] = useState([]);
+   // const [videoTrack, setVideoTrack] = useState([]);
    const [isReviewDialogVisible, setIsReviewDialogVisible] = useState(false);
    const [rating, setRating] = useState(0);
 
@@ -53,22 +54,67 @@ const YT_RecommendationView = () => {
          .then((response) => {
             console.log(response);
             // const parsedArray = JSON.parse(response.data.replace(/\n/g, ''));
-            const videoIdsArray = response.data.split('\n').map(line => line.replace(/[[\]']/g, '')).filter(id => id !== 'undefined');
+            // const videoIdsArray = response.data.split('\n').map(line => line.replace(/[[\]']/g, '')).filter(id => id !== 'undefined');
             // videoIdsArray = videoIdsArray.split(', ');
             // var videoUrls = JSON.parse(response.data);
-            console.log(videoIdsArray)
-            // setVideoIds(videoIdsArray);
+            // console.log(videoIdsArray)
+            setVideoIds((response.data.result));
          })
          .catch((error) => {
             console.log(error);
          });
    }, [storedData]);
 
-   console.log(videoIds);
+
+   // async function getYoutubeVideosFromPreferences(apiKey, categories, maxResults = 5) {
+   
+   //    const baseUrl = 'https://www.googleapis.com/youtube/v3/search';
+   //    const videoLinks = [];
+
+   //    for (const category of categories) {
+   //       const params = {
+   //          part: 'snippet',
+   //          q: category,
+   //          type: 'video',
+   //          maxResults: maxResults,
+   //          key: apiKey,
+   //       };
+
+   //       try {
+   //          const response = await axios.get(baseUrl, { params });
+   //          const data = response.data;
+
+   //          if (!data.items) {
+   //          console.error(`Error fetching videos for category '${category}':`);
+   //          continue;
+   //          }
+
+   //          for (const item of data.items) {
+   //             const videoId = item.id.videoId;
+   //             // const link = `https://www.youtube.com/watch?v=${videoId}`;
+   //             const link = videoId;
+   //             videoLinks.push(link);
+   //          }
+   //       } catch (error) {
+   //          console.error(`Error fetching videos for category '${category}':`, error);
+   //       }
+   //    }
+
+   //    return videoLinks;
+   // }
+
+   // let videoLinks = getYoutubeVideosFromPreferences(process.env.YOUTUBE_API_KEY, storedData)
+
+   // console.log(videoLinks);
    // Convert the list to a JSON array
    // videoIds = JSON.parse(videoIds);
-   
-   console.log('Loaded Ids ', typeof videoUrls);
+   // videoIds = JSON.parse(videoIds)
+   // console.log(typeof videoIds)
+   // const listData = JSON.parse(videoIds.replace(/'/g, '"'));
+
+   // console.log(listData);
+   console.log({videoIds})
+   // console.log('Loaded Ids ', typeof videoUrls);
 
    return (
       <>

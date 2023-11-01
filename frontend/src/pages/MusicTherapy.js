@@ -29,20 +29,25 @@ import { useEffect, useState } from 'react';
 import { Buffer } from 'buffer';
 import { getUsername } from '../helper/helper'
 import { getRecommendation } from '../helper/helper'
+import useFetch from '../hooks/fetch.hook';
+import { useAuthStore } from '../store/store';
 
 // import 'dotenv/config';
 
 import axios from 'axios';
 const qs = require('qs');
 
-// const client_id = '07f4d94fc95d4955ad32cdf68dbefa0c'; // Your client id
-// const client_secret = 'cd95a4c259a94411b20b6929270c8ab8'; // Your secret
-const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
-const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
+const client_id = '85828d1937e346c8a174c74766c1bb89'; // Your client id
+const client_secret = 'de99228ea35a4287bd2f1e25d35dec36'; // Your secret
+// const client_id = process.env.SPOTIFY_CLIENT_ID; // Your client id
+// const client_secret = process.env.SPOTIFY_CLIENT_SECRET; // Your secret
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI;
 const auth_token = Buffer.from(`${client_id}:${client_secret}`, 'utf-8').toString('base64');
 
 const MusicTherapy = () => {
+   // const { username } = useAuthStore((state) => state.auth);
+   // const [{ isLoading, apiData, serverError }] = useFetch(`/user/${username}`);
+
    const [accessToken, setAccessToken] = useState('');
    const [username, setUsername] = useState(''); // State for the username
    const [emotion, setEmotion] = useState('');
@@ -50,56 +55,117 @@ const MusicTherapy = () => {
 
 
    useEffect(() => {
-
-      const getUsernameAndFetchData = async () => {
-
-         try {
-            // Fetch the username
-            const userData = await getUsername();
-            const fetchedUsername = userData.username;
-            setUsername(fetchedUsername); // Update the username state
-
-            const emotionData = await getRecommendation({username});
-            const emotion = emotionData.data;
-            setEmotion(emotion)
-
-         } catch (error) {
-            console.error('Error fetching username', error);
-         }
-         
-      };
-
       getUsernameAndFetchData();
+      // getRecommendation(apiData.username)
    }, []);
+
+   const getUsernameAndFetchData = async () => {
+      try {
+         // Fetch the username
+         // const userData = await getUsername();
+         const { username } = await getUsername();
+         // const fetchedUsername = userData.username;
+         // setUsername(fetchedUsername); // Update the username state
+         console.log(username)
+   
+         const emotionData = await getRecommendation({username});
+         const emotion = emotionData.data;
+         setEmotion(emotion)
+         console.log(emotion)
+   
+      } catch (error) {
+         console.error('Error fetching username', error);
+      }       
+   };
+
+   // useEffect(() => {
+
+   //    const getUsernameAndFetchData = async () => {
+
+   //       try {
+   //          // Fetch the username
+   //          const userData = await getUsername();
+   //          const fetchedUsername = userData.username;
+   //          setUsername(fetchedUsername); // Update the username state
+   //          console.log(username)
+
+   //          const emotionData = await getRecommendation({username});
+   //          const emotion = emotionData.data;
+   //          setEmotion(emotion)
+   //          console.log(emotion)
+
+   //       } catch (error) {
+   //          console.error('Error fetching username', error);
+   //       }
+         
+   //    };
+
+   //    getUsernameAndFetchData();
+   // }, []);
     
 
     
 
 
-   // const handleSubmit = (e) => {
-      
-   //    console.log(emotion)
-   //    console.log("get the emotion done...")
-   // }
+ 
 
    
 
    // const [trackData, setTrackData] = useState(null);
-   const [trackIds, setTrackIds] = useState(['1HNkqx9Ahdgi1Ixy2xkKkL', '1ei3hzQmrgealgRKFxIcWn', '7eJMfftS33KTjuF7lTsMCx']);
+   const [trackIds, setTrackIds] = useState(['1ei3hzQmrgealgRKFxIcWn', '7eJMfftS33KTjuF7lTsMCx']);
+   // const [trackIds, setTrackIds] = useState([]);
    const [trackData, setTrackData] = useState([]);
 
-   useEffect(() =>  {
-      axios.get('${process.env.SERVER_ENDPOINT}/api/spotify_recommend', { mood: emotion })
+   const handleSubmit = (e) => {
+      console.log(emotion)
+      console.log("get the emotion done...")
+      // const emo = JSON.parse(emotion)
+      console.log(typeof emotion)
+      // const data = {"mood": emotion}
+
+      axios.get(`http://localhost:5001/api/spotify_recommend`, { emotion: emotion } )
       .then((response) => {
-         const trackIds = response.data;
-         console.log(response.data);
-         // Store the track IDs in the trackData state
-         setTrackData(trackIds);
+         // const ytTrackIds = response.data.result;
+         console.log(response.data.result);
+         setTrackIds(JSON.parse(response.data.result));
+         // const parsedArray = JSON.parse(ytTrackIds);
+         // console.log(typeof parsedArray)
+         // trackIds.forEach(function(item) {
+         //    console.log(item.id);
+         //    // item = JSON.parse(item)
+         //    setTrackData((prevTrackData) => [...prevTrackData, item.id])
+         //  });
+          
+         // trackData.map((track, index) =>{
+         //    console.log(typeof track.id)
+         // })
+         //  console.log(newList)
+         //  newList.forEach(function(item2){
+         //    setTrackData((prevTrackData) => [...prevTrackData, ...ytTrackIds])
+         //  })
+         // setTrackData([ytTrackIds])
+         // console.log(trackIds)
+   //       // Store the track IDs in the trackData state
+   //       setTrackData(trackIds);
+   //       console.log(trackIds)
       })
       .catch((error) => {
          console.error(error);
       });
-   });
+   }
+
+   // useEffect(() =>  {
+   //    axios.get(`${process.env.SERVER_ENDPOINT}/api/spotify_recommend`, { mood: emotion })
+   //    .then((response) => {
+   //       const trackIds = response.data;
+   //       console.log(response.data);
+   //       // Store the track IDs in the trackData state
+   //       setTrackData(trackIds);
+   //    })
+   //    .catch((error) => {
+   //       console.error(error);
+   //    });
+   // });
 
    const getTrackData = async (accessToken, trackIds) => {
       try {
@@ -121,6 +187,8 @@ const MusicTherapy = () => {
    };
 
    useEffect(() => {
+      getUsernameAndFetchData();
+
       // Retrieve access token from Spotify
       axios('https://accounts.spotify.com/api/token', {
          headers: {
@@ -132,10 +200,15 @@ const MusicTherapy = () => {
       })
          .then((tokenResponse) => {
             setAccessToken(tokenResponse.data.access_token);
+            // console.log(client_id)
+            // console.log(client_secret)
+            
          })
          .catch((error) => {
             console.error('Error retrieving access token:', error);
          });
+      
+      
    }, []);
 
    useEffect(() => {
@@ -158,8 +231,8 @@ const MusicTherapy = () => {
             <div className="mt-main-container mt--24 mb--48">
                <div className="mt-second-col">
                   <div>
+                     
                      <h2 className="mb--16">Music recommended for you based on your emotions.</h2>
-                     {/* <button className='btn' onClick={handleSubmit}>View your current emotion</button> */}
                      <div className="music-flex-cont">
                         {trackData.length > 0 ? (
                            trackData.map((track, index) => (
@@ -171,6 +244,9 @@ const MusicTherapy = () => {
                            <p>No recommended songs...</p>
                         )}
                      </div>
+
+                     <button className='btn' onClick={handleSubmit}>View your recommendations</button>
+
                      {/*
                         {getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL') ? (
                            <div>
