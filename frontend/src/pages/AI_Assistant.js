@@ -122,8 +122,6 @@ const AI_Assistant = () => {
       setChatLog(updatedChatLog);
       // console.log('{$process.env.REACT_APP_SERVER_ENDPOINT}')
 
-      
-
       setLoading(true);
 
       axios
@@ -133,24 +131,27 @@ const AI_Assistant = () => {
             setChatLog(updatedChatLogWithAI);
             setResponse(response.data.result);
             setLoading(false);
+
+            axios
+               .post(`http://localhost:5001/api/emotion_analyze`, { message: message })
+               .then((response) => {
+                  setEmotion(response.data.emotion);
+                  console.log(message)
+                  console.log(response.data.emotion);
+                  updateRecommendation({"recommendation" : response.data.emotion})
+                  console.log('database update done')
+               })
+               .catch((error) => console.error(error));
+
          })
          .catch((error) => {
             console.error(error);
             setLoading(false);
          });
 
-      axios
-         .post(`http://localhost:5001/api/emotion_analyze`, { message: message })
-         .then((response) => {
-            setEmotion(response.data.emotion);
-
-            console.log(emotion);
-            updateRecommendation({"recommendation" : emotion})
-            console.log('database update done')
-
-         })
-         .catch((error) => console.error(error));
-
+      
+      
+      
       setMessage('');
    };
 
