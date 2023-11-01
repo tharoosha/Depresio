@@ -14,6 +14,7 @@ import { MediaRecorder, register } from 'extendable-media-recorder';
 import { connect } from 'extendable-media-recorder-wav-encoder';
 // import 'dotenv/config';
 import { updateRecommendation } from '../helper/helper'
+import { updateEmotion } from '../helper/helper'
 
 
 import axios from 'axios';
@@ -99,6 +100,7 @@ const AI_Assistant = () => {
                         setEmotion(response.data.emotion);
                         console.log(emotion)
                         updateRecommendation({"recommendation" : emotion})
+                        updateEmotion(emotion)
                         console.log('database update done')
                      })
                      .catch((error) => console.error(error));
@@ -146,6 +148,7 @@ const AI_Assistant = () => {
 
             console.log(emotion);
             updateRecommendation({"recommendation" : emotion})
+            updateEmotion(emotion)
             console.log('database update done')
 
          })

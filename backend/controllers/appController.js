@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import ENV from "../config.js";
 import otpGenerator from "otp-generator";
+import moment from 'moment';
 
 /** middleware for verify user */
 export async function verifyUser(req, res, next){
@@ -398,28 +399,49 @@ export async function getRecommendation(req, res) {
     // }
 }
 
-/** PUT: http://localhost:5001/api/updateRecommendation */
+/** PUT: http://localhost:5001/api/updateEmotion */
 export async function updateEmotion(req, res){
     try {
         const { userId } = req.user;
+        const { emotion } = req.body;
         
         if (userId) {
+            const user = await UserModel.findById(userId);
+            if (!user) {
+                return res.status(404).send({ error: "User not found" });
+            }
 
-            const body = req.body;
+            // Get current day
+            const currentDay = moment().format('dddd');
 
-            // update the data
-            UserModel.updateOne({ _id : userId }, body).exec().then(
-                (response) => {
-                    res.status(201).send({ msg : "Record Updated...!"})
-                }
-            )
+            // Initialize emotions field if it does not exist
+            if (!user.emotions) {
+                user.emotions = {
+                    Monday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                    Tuesday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                    Wednesday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                    Thursday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                    Friday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                    Saturday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                    Sunday: { Joy: 0, Surprise: 0, Anger: 0, Sad: 0, Happy: 0 },
+                };
+            }
 
-        }else {
+            // Increment the count of the relevant emotion
+            if (emotion in user.emotions[currentDay]) {
+                user.emotions[currentDay][emotion]++;
+            } else {
+                return res.status(400).send({ error: "Invalid emotion" });
+            }
+
+            await user.save();
+
+            return res.status(200).send({ message: "Emotion updated successfully" });   
+        } else {
             return res.status(401).send({ error : "User Not Found...!"});
         }
-      
     } catch (error) {
-      return res.status(500).send({ error: "Failed to update recommendations" });
+      return res.status(500).send({ error: "Failed to update emotion" });
     }   
 }
 

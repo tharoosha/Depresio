@@ -38,6 +38,7 @@ router.route("/getRecommendation/:username").get(controller.getRecommendation);
 router.route("/updateuser").put(Auth, controller.updateUser);
 router.route("/resetPassword").put(controller.verifyUser, controller.resetPassword);
 router.route("/updateRecommendation").put(Auth, controller.updateRecommendation);
+router.route("/updateEmotion").put(Auth, controller.updateEmotion);
 
 
 export default router;

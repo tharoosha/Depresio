@@ -102,6 +102,19 @@ export async function updateRecommendation(response){
     }
 }
 
+/** update user emotion function */
+export async function updateEmotion(response){
+    try {
+        
+        const token = await localStorage.getItem('token');
+        const data = await axios.put(`http://localhost:5001/api/updateEmotion`, response, { headers : { "Authorization" : `Bearer ${token}`}});
+
+        return Promise.resolve({ data })
+    } catch (error) {
+        return Promise.reject({ error : "Couldn't Update Profile...!"})
+    }
+}
+
 /** generate OTP */
 export async function generateOTP(username){
     try {
