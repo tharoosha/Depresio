@@ -3,7 +3,7 @@ import { Chart } from 'react-google-charts';
 
 const EmotionLineChart = () => {
   const data = [
-    ['Day', 'Joyful', 'Surprise', 'Anger', 'Sad', 'Happy'],
+    ['Day', 'Joy', 'Surprise', 'Anger', 'Sad', 'Happy'],
     ['Monday', 20, 15, 10, 5, 8],
     ['Tuesday', 18, 13, 11, 7, 10],
     ['Wednesday', 22, 17, 9, 4, 6],
