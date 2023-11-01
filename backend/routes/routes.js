@@ -32,6 +32,7 @@ router.route("/createResetSession").get(controller.createResetSession);
 // router.route("/youtube_videos").get(ml_controller.video_predict);
 router.route("/spotify_recommend").get(ml_controller.spotify_recommend);
 router.route("/getRecommendation/:username").get(controller.getRecommendation);
+router.route("/getEmotion/:username").get(controller.getEmotion);
 
 
 /** PUT Methods */

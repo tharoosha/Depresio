@@ -445,6 +445,27 @@ export async function updateEmotion(req, res){
     }   
 }
 
-export async function getEmotion(req, res){
 
+
+/** GET: http://localhost:5001/api/getEmotion/:username */
+export async function getEmotion(req, res) {
+
+    const {username} = req.params;
+    try{
+        if (!username) return res.status(501).send({error: "Invalid Username"});
+        
+        UserModel.findOne({username: username}).exec()
+            .then(
+                user =>{
+                    const { password, emotions, ...rest } = Object.assign({}, user.toJSON());
+                    
+                    return res.status(201).send(emotions);
+                }
+            )
+            .catch(
+                error => {return res.status(501).send({ error : "Couldn't Find the User"});}
+            )
+    }catch(error){
+        return res.status(404).send({error: "Cannot Find User Data"});
+    }
 }

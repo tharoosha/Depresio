@@ -115,6 +115,17 @@ export async function updateEmotion(response){
     }
 }
 
+/** get emotion details */
+export async function getEmotion({ username }){
+    try {
+        console.log(username)
+        const { data } = await axios.get(`http://localhost:5001/api/getEmotion/${username}`);
+        return { data };
+    } catch (error) {
+        return { error : "Username doesn't Match...!"}
+    }
+}
+
 /** generate OTP */
 export async function generateOTP(username){
     try {
